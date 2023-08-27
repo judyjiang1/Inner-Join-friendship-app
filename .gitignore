@@ -1,1 +1,6 @@
 secrets.sh
+*.DS_Store
+.DS_Store
+.prettierignore
+__pycache__/
+grouping.py

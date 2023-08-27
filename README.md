@@ -1,1 +1,1 @@
-# Inner-Join
+# Inner-Join Friendship App

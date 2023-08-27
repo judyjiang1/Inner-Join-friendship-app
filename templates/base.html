@@ -3,11 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{% block title %}{% endblock %}</title>
-
-    {% block head %}{% endblock %}
+    <title>{% block title %}Title Goes Here{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.js"></script>
   </head>
   <body>
-    {% block body %}{% endblock %} {% block after_body %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block js %}{% endblock %}
   </body>
 </html>
+
+
+
+<!-- <div id="root"></div>
+<script type="text/jsx" src="/static/js/components/Landing.jsx"></script> -->

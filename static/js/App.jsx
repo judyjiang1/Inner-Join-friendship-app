@@ -22,28 +22,28 @@ function App() {
   }, [loginStatus]);
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/" exact>
-          <div>
-            <Landing></Landing>
-          </div>
-        </Route>
-        <Route path="/login/" exact>
-          <div>
-            <Login></Login>
-          </div>
-        </Route>
-        <Route path="/register/" exact>
-          <div>
-            <Register></Register>
-          </div>
-        </Route>
-        <Route path={"*"}>
-          <div className="container">
-            <PageNotFound></PageNotFound>
-          </div>
-        </Route>
-      </Switch>
+      {/* <Switch> */}
+      <Route path="/" exact>
+        <div>
+          <Landing></Landing>
+        </div>
+      </Route>
+      <Route path="/login/" exact>
+        <div>
+          <Login></Login>
+        </div>
+      </Route>
+      <Route path="/register/" exact>
+        <div>
+          <Register></Register>
+        </div>
+      </Route>
+      <Route path={"*"}>
+        <div className="container">
+          <PageNotFound></PageNotFound>
+        </div>
+      </Route>
+      {/* </Switch> */}
     </BrowserRouter>
   );
 }

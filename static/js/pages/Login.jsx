@@ -11,8 +11,9 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Login() {
-  // const { setLoginStatus } = props;
+function Login(props) {
+  document.title = "User Login";
+  const history = useHistory();
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
   const submitLoginForm = (evt) => {
@@ -49,40 +50,21 @@ function Login() {
           onChange={(evt) => setPassword(evt.target.value.trim())}
         />
         <button>Log in</button>
+
+        <button onClick={(evt) => history.push("/")}>Back to Home</button>
+
         <p>
           Don't have an account?
-          {/* <Link to={urlsMap.registerUrl}>Sign Up</Link> */}
+          <Link to="/register">Sign Up</Link>
         </p>
       </form>
     </div>
   );
 }
 
-ReactDOM.render(<Login />, document.querySelector("#login"));
-
-// const Login = () => {
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form action="/submit" method="post">
-//         <br />
-//         <br />
-//         <label htmlFor="email">Email</label>
-//         <br />
-//         <input type="email" id="email" name="email" required />
-//         <br />
-//         <br />
-
-//         <label htmlFor="password">Password</label>
-//         <br />
-//         <input type="password" id="password" name="password" required />
-//         <br />
-//         <br />
-//         <input type="submit" value="Submit" />
-//         <p>Click here to register.</p>
-//       </form>
-//     </div>
-//   );
-// };
-
-// ReactDOM.render(<Login />, document.querySelector("#login"));
+ReactDOM.render(
+  <BrowserRouter>
+    <Login />
+  </BrowserRouter>,
+  document.querySelector("#root")
+);

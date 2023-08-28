@@ -14,10 +14,18 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 def homepage():
     return render_template("homepage.html")
 
+# @app.route('/<path:sub_path>')
+# def route(sub_path):
+#     return render_template('homepage.html')
 
-@app.route('/login')
-def login():
-    return render_template("login.html")
+# @app.route('/login')
+# def login():
+#     return render_template("login.html")
+
+
+# @app.route('/register')
+# def register():
+#     return render_template("register.html")
 
 
 # @app.route('/<path>')
@@ -32,4 +40,4 @@ def login():
 
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=3001, debug=True)

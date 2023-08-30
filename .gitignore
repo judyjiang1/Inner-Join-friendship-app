@@ -3,4 +3,3 @@ secrets.sh
 .DS_Store
 .prettierignore
 __pycache__/
-grouping.py

@@ -33,7 +33,7 @@ print(coordinates)
 
 
 # add coordinates to user data 
-file_path = "data.json"
+file_path = "user_data.json"
 
 with open(file_path, "r") as json_file:
     json_data = json.load(json_file)

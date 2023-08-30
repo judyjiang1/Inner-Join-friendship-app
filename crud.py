@@ -1,14 +1,15 @@
 """CRUD operations."""
 
-from model import db, User, Category_tag, Group, connect_to_db
+from model import db, User, Category_tag, Group, UserGroup, UserTag, connect_to_db
+import json
 
 
 # Users
-def get_by_id(user_id):
+def get_user_by_id(user_id):
     """Return a user by primary key."""
     return User.query.get(user_id)
 
-def get_by_email(email):
+def get_user_by_email(email):
     """Return a user by email."""
     return User.query.filter(User.email == email).first()
 
@@ -17,11 +18,22 @@ def all_users():
     return User.query.all()
 
 
+# # Load user data from JSON file 
+# with open("data/user_data.json") as f:
+#     user_data = json.loads(f.read())
+
+
+# def get_user_by_college():
+#     """Return all users with the same college."""
+#     return User.query.filter
+
+
 
 # Category_tags
-def get_by_id(category_tag_id):
+def get_category_by_id(category_tag_id):
     """Return a category tag by primary key."""
     return Category_tag.query.get(category_tag_id)
+
 
 def all_category_tags():
     """Return all category tags."""
@@ -33,6 +45,11 @@ def all_category_tags():
 def get_by_id(group_id):
     """Return a group by primary key."""
     return Group.query.get(group_id)
+
+
+# def get_group_id_by_name(group_name):
+#     return Group.query.get(group_name)
+
 
 def all_category_tags():
     """Return all category tags"""
@@ -54,6 +71,11 @@ def get_group_tags(group_id):
 def get_user_groups(user_id):
     user = User.query.get(user_id)
     return user.groups
+
+
+# users=User.all_users()
+# print(users)
+
 
 
 

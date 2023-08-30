@@ -9,16 +9,14 @@ const {
   Link,
   useHistory,
   withRouter,
-  useRouteError,
 } = ReactRouterDOM;
 
-function PageNotFound(props) {
-  let history = useHistory();
-  document.title = "Page Not Found";
+function MyGroups(props) {
+  document.title = "Your Groups";
+  const history = useHistory();
   return (
     <div>
-      <div>Page Not Found</div>
-      <button onClick={(evt) => history.push("/")}>Back to Home</button>
+      <h2>My Groups</h2>
     </div>
   );
 }

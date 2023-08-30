@@ -19,12 +19,14 @@ class User(db.Model):
     gender = db.Column(db.String, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     ethnicity = db.Column(db.String)
-    personality_type = db.Column(db.String)
-    occupation = db.Column(db.String)
-    city_code = db.Column(db.Integer, nullable=False)
-    state_code = db.Column(db.Integer, nullable=False)
-    zipcode = db.Column(db.String, nullable=False)
-    
+    # personality_type = db.Column(db.String)
+    # occupation = db.Column(db.String)
+    # city_code = db.Column(db.Integer, nullable=False)
+    # state_code = db.Column(db.Integer, nullable=False)
+    # zipcode = db.Column(db.String, nullable=False)
+    # city_code=None, state_code=None, zipcode=None, ethnicity=None, personality_type=None, occupation=None
+    #, ethnicity=ethnicity, personality_type=personality_type, occupation=occupation, city_code=city_code, state_code=state_code, zipcode=zipcode
+
     category_tags = db.relationship("Category_tag", secondary="user_tags", back_populates="users")
     groups = db.relationship("Group", secondary="user_groups", back_populates="users")
 
@@ -32,9 +34,9 @@ class User(db.Model):
         return f"<User user_id={self.user_id} email={self.email}>"
     
     @classmethod
-    def create(cls, username, email, password, first_name, last_name, gender, age, city_code, state_code, zipcode, ethnicity=None, personality_type=None, occupation=None):
+    def create(cls, username, email, password, fname, lname, gender, age, ethnicity=None):
        """Create and return a new user."""
-       return cls(username=username, email=email, password=password, first_name=first_name, last_name=last_name, gender=gender, age=age, ethnicity=ethnicity, personality_type=personality_type, occupation=occupation, city_code=city_code, state_code=state_code, zipcode=zipcode)
+       return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, ethnicity=ethnicity)
 
     # @classmethod
     # def get_by_id(cls, user_id):
@@ -44,9 +46,9 @@ class User(db.Model):
     # def get_by_email(cls, email):
     #     return cls.query.filter(User.email == email).first()
 
-    # @classmethod
-    # def all_users(cls):
-    #     return cls.query.all()
+    @classmethod
+    def all_users(cls):
+        return cls.query.all()
     
 
 
@@ -56,7 +58,7 @@ class Category_tag(db.Model):
     __tablename__ = 'category_tags'
 
     category_tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    category_name = db.Column(db.String, nullable=False)
+    category_tag_name = db.Column(db.String, nullable=False)
 
     users = db.relationship("User", secondary="user_tags", back_populates="category_tags")
     groups = db.relationship("Group", secondary="group_tags", back_populates="category_tags")
@@ -65,17 +67,17 @@ class Category_tag(db.Model):
         return f"<Category category_tag_id={self.category_tag_id} category_name={self.category_name}>"
     
     @classmethod
-    def create(cls, category_tag_id, category_tag_name):
+    def create(cls, category_tag_name):
         """Create and return a new category tag."""
-        return cls(category_tag_id=category_tag_id, category_tag_name=category_tag_name)
+        return cls(category_tag_name=category_tag_name)
     
     # @classmethod
     # def get_by_id(cls, category_tag_id):
     #     return cls.query.get(category_tag_id)
 
-    # @classmethod
-    # def all_category_tags(cls):
-    #     return cls.query.all()
+    @classmethod
+    def all_category_tags(cls):
+        return cls.query.all()
 
     
 
@@ -101,9 +103,10 @@ class Group(db.Model):
     __tablename__ = 'groups'
 
     group_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    matched_at = db.Column(db.String, nullable=False)
-    active_status = db.Column(db.Boolean, nullable=False)
-    user_defined = db.Column(db.Boolean, nullable=False)
+    group_name = db.Column(db.String, nullable=False)
+    matched_at = db.Column(db.String)
+    active_status = db.Column(db.Boolean)
+    user_defined = db.Column(db.Boolean)
 
     category_tags = db.relationship("Category_tag", secondary="group_tags", back_populates="groups")
     users = db.relationship("User", secondary="user_groups", back_populates="groups")
@@ -112,17 +115,17 @@ class Group(db.Model):
         return f"<Group group_id={self.group_id}>"
     
     @classmethod
-    def create(cls, group_id, matched_at, active_status, user_defined):
+    def create(cls, group_name, matched_at=None, active_status=None, user_defined=False):
         """Create and return a new group."""
-        return cls(group_id=group_id, matched_at=matched_at, active_status=active_status, user_defined=user_defined)
+        return cls(group_name=group_name, matched_at=matched_at, active_status=active_status, user_defined=user_defined)
     
     # @classmethod
     # def get_by_id(cls, group_id):
     #     return cls.query.get(group_id)
 
-    # @classmethod
-    # def all_category_tags(cls):
-    #     return cls.query.all()
+    @classmethod
+    def all_groups(cls):
+        return cls.query.all()
     
 
     
@@ -154,7 +157,7 @@ class UserGroup(db.Model):
 
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///friends", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

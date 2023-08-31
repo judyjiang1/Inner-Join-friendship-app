@@ -13,6 +13,11 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-select/5.7.4/react-select.cjs.default.min.js" integrity="sha512-cbtrH4RSIRWL21Chiq6XQg0YK9tWn7Ex0RljsW6dfn5YC5xuOt77NZQvo6g6NIurwcer0OlONQvMXV/lGzc6dA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   </head>
   <body>
+    {% for msg in get_flashed_messages() %}
+      <p class="flash-msg">
+        {{ msg }}
+      </p>
+    {% endfor %}
     {% block body %}{% endblock %}
     {% block js %}{% endblock %}
   </body>

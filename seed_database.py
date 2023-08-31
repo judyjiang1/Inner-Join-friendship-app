@@ -46,7 +46,7 @@ if __name__ == "__main__":
                 user["first_name"],
                 user["last_name"],
                 user["gender"],
-                user["cultural_background"]
+                user["cultural background"]
             )
             
             age = calculate_age(user["birthdate"])
@@ -123,7 +123,7 @@ if __name__ == "__main__":
           
         groups = model.Group.all_groups()
 
-        category_mapping = {"hobby": 1,"cultural_background": 2,"support": 3,"company": 4,"college": 5,"high_school": 6}
+        category_mapping = {"hobbies & interests": 1,"cultural background": 2,"support groups": 3,"current or past workplace(s)": 4,"current or past college(s) attended": 5,"current or past high school(s) attended": 6}
 
         for user in user_data:
             user_id = user["id"]
@@ -169,12 +169,12 @@ if __name__ == "__main__":
         combined_list = []
         for user in user_data:
             user_id = user["id"]
-            combined_list.extend(user.get("hobby", []))
-            combined_list.append(user.get("cultural_background"))
-            combined_list.extend(user.get("support", []))
-            combined_list.extend(user.get("company", []))
-            combined_list.append(user.get("college"))
-            combined_list.append(user.get("high_school"))
+            combined_list.extend(user.get("hobbies & interests", []))
+            combined_list.append(user.get("cultural background"))
+            combined_list.extend(user.get("support groups", []))
+            combined_list.extend(user.get("current or past workplace(s)", []))
+            combined_list.append(user.get("current or past college(s) attended"))
+            combined_list.append(user.get("current or past high school(s) attended"))
             cleaned_list = [item for item in combined_list if item is not None]
             # print(cleaned_list)
 

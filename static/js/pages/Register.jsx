@@ -13,29 +13,50 @@ const {
 
 function Register(props) {
   document.title = "User Registration";
+  const [registerError, setRegisterError] = useState(false);
   let history = useHistory();
   const [fname, setFname] = useState(" ");
   const [lname, setLname] = useState(" ");
   const [username, setUsername] = useState(" ");
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  const submitRegisterForm = (evt) => {
+
+  const handleRegister = (evt) => {
     evt.preventDefault();
-    console.log(fname, lname, email, username, password);
-    // makeRequest({
-    //   method: "post",
-    //   url: "/register",
-    //   data: { username, email, password },
-    // }).then((response) => {
-    //   if (response.status === 200) {
-    //     const { success, errors } = response.data;
-    //   }
-    // });
+
+    const registerData = new FormData(evt.target);
+    const userInfo = {
+      fname: registerData.get("fname"),
+      lname: registerData.get("lname"),
+      username: registerData.get("username"),
+      email: registerData.get("email"),
+      password: registerData.get("password"),
+    };
+
+    fetch("/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userInfo),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          history.push("/register-success");
+        } else {
+          setRegisterError(true);
+          setFname("");
+          setLname("");
+          setUsername("");
+          setEmail("");
+          setPassword("");
+        }
+      });
   };
+
   return (
     <div>
       <h2>Create a new account</h2>
-      <form onSubmit={submitRegisterForm}>
+      <form onSubmit={handleRegister}>
         <Field
           type={"text"}
           name={"fname"}
@@ -106,9 +127,10 @@ function Register(props) {
           updateValue={(val) => setZipcode(val)}
         /> */}
 
-        <button onClick={(evt) => history.push("/register-success/")}>
-          Sign up
-        </button>
+        <button type="submit">Sign up</button>
+        {registerError && (
+          <p>Account already exists. Please log in or use another email.</p>
+        )}
         <button onClick={(evt) => history.push("/")}>Back to Home</button>
         <p className="more">
           Already have an account?

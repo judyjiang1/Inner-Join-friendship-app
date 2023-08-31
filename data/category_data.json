@@ -1,5 +1,5 @@
 {
-  "hobbies": [
+  "hobbies & interests": [
     "Reading",
     "Sport & Fitness",
     "Music",
@@ -14,7 +14,7 @@
     "Photography & Film",
     "Arts & Crafts"
   ],
-  "cultural_background": [
+  "cultural background": [
     "American",
     "Chinese",
     "Indian",
@@ -41,7 +41,7 @@
     "Indigenous",
     "Pacific Islander"
   ],
-  "support": [
+  "support groups": [
     "Stress & Anxiety",
     "Relationships",
     "Career & Education",
@@ -50,7 +50,7 @@
     "Personal Development",
     "Life Events & Transitions"
   ],
-  "companies": [
+  "current or past workplace(s)": [
     "Walmart",
     "Amazon",
     "Exxon Mobil",
@@ -152,7 +152,7 @@
     "Abbott Laboratories",
     "Coca-Cola"
   ],
-  "colleges": [
+  "current or past college(s) attended": [
     "Massachusetts Institute of Technology",
     "Stanford University",
     "Duke University",
@@ -204,7 +204,7 @@
     "University of California - San Diego",
     "University of California - Santa Barbara"
   ],
-  "high_schools": [
+  "current or past high school(s) attended": [
     "Academy at the Lakes",
     "Arlington Catholic High School",
     "Army & Navy Academy",

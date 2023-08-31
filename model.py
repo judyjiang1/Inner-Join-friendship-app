@@ -16,8 +16,8 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     fname = db.Column(db.String, nullable=False)
     lname = db.Column(db.String, nullable=False)
-    gender = db.Column(db.String, nullable=False)
-    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String)
+    age = db.Column(db.Integer)
     ethnicity = db.Column(db.String)
     # personality_type = db.Column(db.String)
     # occupation = db.Column(db.String)
@@ -34,7 +34,7 @@ class User(db.Model):
         return f"<User user_id={self.user_id} email={self.email}>"
     
     @classmethod
-    def create(cls, username, email, password, fname, lname, gender, age, ethnicity=None):
+    def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None):
        """Create and return a new user."""
        return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, ethnicity=ethnicity)
 
@@ -64,7 +64,7 @@ class Category_tag(db.Model):
     groups = db.relationship("Group", secondary="group_tags", back_populates="category_tags")
 
     def __repr__(self):
-        return f"<Category category_tag_id={self.category_tag_id} category_name={self.category_name}>"
+        return f"<Category category_tag_id={self.category_tag_id} category_name={self.category_tag_name}>"
     
     @classmethod
     def create(cls, category_tag_name):

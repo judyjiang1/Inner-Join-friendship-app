@@ -12,44 +12,74 @@ const {
 } = ReactRouterDOM;
 
 function Login(props) {
-  document.title = "User Login";
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  // const { setLoginStatus } = props;
   const history = useHistory();
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
-  const submitLoginForm = (evt) => {
+
+  const handleLogin = (evt) => {
     evt.preventDefault();
-    console.log(email, username, password);
-    makeRequest({
-      method: "post",
-      url: "/login",
-      data: { email, password },
-    }).then((response) => {
-      if (response.status === 200) {
-        const { success, errors } = response.data;
-      }
-    });
+
+    const loginData = new FormData(evt.target);
+    const credentials = {
+      email: loginData.get("email"),
+      password: loginData.get("password"),
+    };
+
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setIsLoggedIn(true);
+          history.push("/my-groups");
+        } else {
+          setLoginError(true);
+          setEmail("");
+          setPassword("");
+        }
+      });
+    // .catch((error) => {
+    //   console.error("An error occurred:", error);
+    // });
   };
   return (
     <div>
-      <div>User Login</div>
-      <form onSubmit={submitLoginForm}>
+      <h1>User Login</h1>
+      <form onSubmit={handleLogin}>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
+          id="email"
+          name="email"
           placeholder="Enter your email"
           required={true}
           autoComplete="off"
           value={email}
           onChange={(evt) => setEmail(evt.target.value.trim())}
         />
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
-          placeholder="Password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
           required={true}
           autoComplete="off"
           value={password}
           onChange={(evt) => setPassword(evt.target.value.trim())}
         />
-        <button>Log in</button>
+        <button type="submit">Log in</button>
+        {loginError && (
+          <p>
+            The email or password you entered was incorrect. Please try again.
+          </p>
+        )}
 
         <button onClick={(evt) => history.push("/")}>Back to Home</button>
 
@@ -64,7 +94,8 @@ function Login(props) {
 
 ReactDOM.render(
   <BrowserRouter>
-    <Login />
+    <Login />,
   </BrowserRouter>,
+
   document.querySelector("#root")
 );

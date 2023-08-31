@@ -17,6 +17,8 @@ def all_users():
     """Return all users."""
     return User.query.all()
 
+def store_temp_user_info():
+    pass
 
 # # Load user data from JSON file 
 # with open("data/user_data.json") as f:
@@ -33,6 +35,10 @@ def all_users():
 def get_category_by_id(category_tag_id):
     """Return a category tag by primary key."""
     return Category_tag.query.get(category_tag_id)
+
+def get_category_by_name(category_tag_name):
+    """Return a category tag by primary key."""
+    return Category_tag.query.filter(Category_tag.category_tag_name == category_tag_name).first()
 
 
 def all_category_tags():
@@ -75,6 +81,11 @@ def get_user_groups(user_id):
 
 # users=User.all_users()
 # print(users)
+
+
+def save_user_tags():
+    pass
+
 
 
 

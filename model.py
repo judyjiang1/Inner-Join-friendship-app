@@ -46,9 +46,9 @@ class User(db.Model):
     # def get_by_email(cls, email):
     #     return cls.query.filter(User.email == email).first()
 
-    @classmethod
-    def all_users(cls):
-        return cls.query.all()
+    # @classmethod
+    # def all_users(cls):
+    #     return cls.query.all()
     
 
 
@@ -75,9 +75,9 @@ class Category_tag(db.Model):
     # def get_by_id(cls, category_tag_id):
     #     return cls.query.get(category_tag_id)
 
-    @classmethod
-    def all_category_tags(cls):
-        return cls.query.all()
+    # @classmethod
+    # def all_category_tags(cls):
+    #     return cls.query.all()
 
     
 
@@ -123,9 +123,9 @@ class Group(db.Model):
     # def get_by_id(cls, group_id):
     #     return cls.query.get(group_id)
 
-    @classmethod
-    def all_groups(cls):
-        return cls.query.all()
+    # @classmethod
+    # def all_groups(cls):
+    #     return cls.query.all()
     
 
     

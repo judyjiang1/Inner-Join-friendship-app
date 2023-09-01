@@ -98,6 +98,91 @@ def select_category():
 
 
 
+@app.route("/get-user-tags", methods=["POST"])
+def get_user_categories():
+
+
+    if 'email' in session:
+        email = session['email']
+    user = crud.get_user_by_email(email)
+    user_tags = user.category_tags
+    user_tag_names = []
+    for tag in user_tags:
+        user_tag_names.append(tag.category_tag_name)
+    
+    return jsonify(user_tag_names)
+
+
+@app.route("/submit-user-info", methods=["POST"])
+def submit_user_info():
+    if 'email' in session:
+        email = session['email']
+    user = crud.get_user_by_email(email)
+    user_id = user.user_id 
+
+    data = request.json
+    gender = data.get('gender')
+    zip_code = data.get('zipCode')
+    birthMonth = data.get('birthMonth')
+    birthDay = data.get('birthDay')
+    birthYear = data.get('birthYear')
+    ethnicity = data.get('ethnicity')
+    # occupation = data.get('occupation')
+
+    formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
+
+    crud.update_user_info(user_id, gender, formatted_date, ethnicity)
+
+    combined_list = []
+    combined_list.extend(data.get('hobbies', []))
+    combined_list.extend(data.get('culturalBackground', []))
+    combined_list.extend(data.get('supportGroups', []))
+    combined_list.extend(data.get('work', []))
+    combined_list.extend(data.get('college', []))
+    combined_list.extend(data.get('highSchool', []))
+    print(combined_list)
+
+    for item in combined_list:
+        item = item.capitalize()
+        print(item)
+        group = Group.query.filter_by(group_name=item).first()
+        print(group)
+        if group:
+            group_id = group.group_id
+            user_group = UserGroup(user_id=user_id, group_id=group_id)
+            db.session.add(user_group)
+            db.session.commit()
+
+    response = {'message': 'Information submitted successfully'}
+    return jsonify(response), 200
+
+
+
+
+
+
+
+@app.route("/enter-user-info", methods=["POST"])
+def enter_user_info():
+
+    if 'email' in session:
+        email = session['email']
+    
+    user = crud.get_user_by_email(email)
+    user_tags = user.category_tags
+    user_tag_names = []
+    for tag in user_tags:
+        user_tag_names.append(tag.category_tag_name)
+    
+    return user_tag_names
+
+
+
+
+
+
+
+
 
 
 # @app.route("/register-success")

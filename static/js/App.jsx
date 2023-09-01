@@ -50,7 +50,7 @@ function App() {
         </Route>
         <Route path="/enter-user-info/" exact>
           <div>
-            <EnterUserInfo></EnterUserInfo>
+            <AllUserInfo></AllUserInfo>
           </div>
         </Route>
         <Route path="/my-groups/" exact>

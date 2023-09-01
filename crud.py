@@ -2,6 +2,7 @@
 
 from model import db, User, Category_tag, Group, UserGroup, UserTag, connect_to_db
 import json
+from datetime import datetime
 
 
 # Users
@@ -17,19 +18,23 @@ def all_users():
     """Return all users."""
     return User.query.all()
 
-def store_temp_user_info():
-    pass
+def calculate_age(birthdate):
+    birthdate = datetime.strptime(birthdate, '%m/%d/%Y')
+    today = datetime.today()
+    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    return age
 
-# # Load user data from JSON file 
-# with open("data/user_data.json") as f:
-#     user_data = json.loads(f.read())
+def format_birthdate(birthMonth, birthDay, birthYear):
+    dt = datetime.strptime(birthMonth, '%B')
+    birthMonth = dt.month
+    formatted_date = f"{birthMonth}/{birthDay}/{birthYear}"
+    return formatted_date
 
-
-# def get_user_by_college():
-#     """Return all users with the same college."""
-#     return User.query.filter
-
-
+def update_user_info(user_id, gender, birthdate, ethnicity):
+    user = User.query.get(user_id)
+    user.gender = gender
+    user.age = calculate_age(birthdate)
+    user.ethnicity = ethnicity 
 
 # Category_tags
 def get_category_by_id(category_tag_id):
@@ -48,16 +53,11 @@ def all_category_tags():
 
 
 # Groups
-def get_by_id(group_id):
+def get_group_by_id(group_id):
     """Return a group by primary key."""
     return Group.query.get(group_id)
 
-
-# def get_group_id_by_name(group_name):
-#     return Group.query.get(group_name)
-
-
-def all_category_tags():
+def all_groups():
     """Return all category tags"""
     return Group.query.all()
 
@@ -77,14 +77,6 @@ def get_group_tags(group_id):
 def get_user_groups(user_id):
     user = User.query.get(user_id)
     return user.groups
-
-
-# users=User.all_users()
-# print(users)
-
-
-def save_user_tags():
-    pass
 
 
 

@@ -133,6 +133,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {hobbyOptions.map((option) => (
               <option key={option} value={option}>
@@ -153,6 +154,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {culturalBackgroundOptions.map((option) => (
               <option key={option} value={option}>
@@ -173,6 +175,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {supportOptions.map((option) => (
               <option key={option} value={option}>
@@ -193,6 +196,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {companyOptions.map((option) => (
               <option key={option} value={option}>
@@ -213,6 +217,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {collegeOptions.map((option) => (
               <option key={option} value={option}>
@@ -233,6 +238,7 @@ const CategoryInfo = ({ onChange }) => {
               )
             }
             multiple
+            required
           >
             {highSchoolOptions.map((option) => (
               <option key={option} value={option}>
@@ -485,7 +491,7 @@ const companyOptions = [
 
 const hobbyOptions = [
   "Reading",
-  "Sport & Fitness",
+  "Sports & Fitness",
   "Music",
   "Gardening",
   "Cooking & Baking",

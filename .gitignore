@@ -3,3 +3,5 @@ secrets.sh
 .DS_Store
 .prettierignore
 __pycache__/
+try.py
+try2.py

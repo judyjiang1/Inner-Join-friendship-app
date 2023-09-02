@@ -33,6 +33,8 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
     
+    
+    
     @classmethod
     def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None):
        """Create and return a new user."""
@@ -59,17 +61,28 @@ class Category_tag(db.Model):
 
     category_tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     category_tag_name = db.Column(db.String, nullable=False)
+    img_url = db.Column(db.String, nullable=False)
 
     users = db.relationship("User", secondary="user_tags", back_populates="category_tags")
     groups = db.relationship("Group", secondary="group_tags", back_populates="category_tags")
 
+    def __init__(self, img_url, category_tag_name):
+        self.img_url = img_url
+        self.category_tag_name = category_tag_name
+    
+    
     def __repr__(self):
         return f"<Category category_tag_id={self.category_tag_id} category_name={self.category_tag_name}>"
     
+    def to_dict(self):
+        return {'category_tag_id': self.category_tag_id,
+                'category_tag_name': self.category_tag_name,
+                'image_url': self.img_url}
+
     @classmethod
-    def create(cls, category_tag_name):
+    def create(cls, img_url, category_tag_name):
         """Create and return a new category tag."""
-        return cls(category_tag_name=category_tag_name)
+        return cls(img_url=img_url, category_tag_name=category_tag_name)
     
     # @classmethod
     # def get_by_id(cls, category_tag_id):
@@ -113,6 +126,9 @@ class Group(db.Model):
 
     def __repr__(self):
         return f"<Group group_id={self.group_id}>"
+    
+
+    
     
     @classmethod
     def create(cls, group_name, matched_at=None, active_status=None, user_defined=False):

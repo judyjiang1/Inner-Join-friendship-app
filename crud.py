@@ -3,6 +3,7 @@
 from model import db, User, Category_tag, Group, UserGroup, UserTag, connect_to_db
 import json
 from datetime import datetime
+from sqlalchemy import func
 
 
 # Users
@@ -57,8 +58,13 @@ def get_group_by_id(group_id):
     """Return a group by primary key."""
     return Group.query.get(group_id)
 
+
+def get_group_by_name(group_name):
+    """Return a group by primary key."""
+    return Group.query.filter(Group.group_name == group_name).first()
+
 def all_groups():
-    """Return all category tags"""
+    """Return all groups"""
     return Group.query.all()
 
 
@@ -77,6 +83,18 @@ def get_group_tags(group_id):
 def get_user_groups(user_id):
     user = User.query.get(user_id)
     return user.groups
+
+def get_users_in_group(group_id):
+    db.session.query(User)\
+    .join(UserGroup, UserGroup.user_id == User.user_id)\
+    .filter(UserGroup.group_id == group_id)\
+    .all()
+
+
+# def groups_with_ppl(group_id):
+#     groups=db.session.query(Group.group_name).join(UserGroup, Group.group_id == group_id).group_by(Group.group_id).having(func.count(UserGroup.user_id) > 1).all()
+#     return groups
+
 
 
 

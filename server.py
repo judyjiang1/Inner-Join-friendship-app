@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, flash, session, redirect, jso
 from model import connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup,GroupTag
 import crud
 from jinja2 import StrictUndefined
+from sqlalchemy import func
 
 
 app = Flask(__name__)
@@ -37,7 +38,7 @@ def process_login():
         return jsonify({'success': False}), 401
     else:
         # Log in user by storing the user's email in session
-        session["user_email"] = user.email
+        session["email"] = user.email
         flash(f"Welcome back, {user.email}!")
 
         return jsonify({'success': True}), 200
@@ -133,14 +134,23 @@ def submit_user_info():
 
     crud.update_user_info(user_id, gender, formatted_date, ethnicity)
 
+    # combined_list = []
+    # combined_list.extend(data.get('hobbies', []))
+    # combined_list.extend(data.get('culturalBackground', []))
+    # combined_list.extend(data.get('supportGroups', []))
+    # combined_list.extend(data.get('work', []))
+    # combined_list.extend(data.get('college', []))
+    # combined_list.extend(data.get('highSchool', []))
+    # print(combined_list)
+
     combined_list = []
-    combined_list.extend(data.get('hobbies', []))
-    combined_list.extend(data.get('culturalBackground', []))
-    combined_list.extend(data.get('supportGroups', []))
-    combined_list.extend(data.get('work', []))
-    combined_list.extend(data.get('college', []))
-    combined_list.extend(data.get('highSchool', []))
-    print(combined_list)
+
+    for element in ['hobbies', 'culturalBackground', 'supportGroups', 'work', 'college', 'highSchool']:
+        item = data.get(element, [])
+        if isinstance(item, str):
+            combined_list.append(item)
+        elif isinstance(item, list):
+            combined_list.extend(item)
 
     for item in combined_list:
         item = item.capitalize()
@@ -158,36 +168,103 @@ def submit_user_info():
 
 
 
-
-
-
-
-@app.route("/enter-user-info", methods=["POST"])
-def enter_user_info():
+@app.route("/get-user-groups_participants", methods=["POST"])
+def get_user_groups_participants():
 
     if 'email' in session:
         email = session['email']
-    
     user = crud.get_user_by_email(email)
-    user_tags = user.category_tags
-    user_tag_names = []
-    for tag in user_tags:
-        user_tag_names.append(tag.category_tag_name)
+    user_groups = user.groups
+    user_id = user.user_id
     
-    return user_tag_names
+    ############# Find Basic Match ################
+    # this will show groups and its participants 
+    group_users = {}
+    basic_group_formed = []
+    for group in user_groups:
+        group_id = group.group_id
+        user_count_in_group = (
+        db.session.query(func.count(UserGroup.user_id).label('user_count'))
+        .filter(UserGroup.group_id == group_id)
+        .scalar())
+
+        if user_count_in_group > 1:
+            basic_group_formed.append(group.group_name)
+       
+    
+    for group in basic_group_formed:
+        group_obj = crud.get_group_by_name(group)
+        group_id = group_obj.group_id
+        users_in_group = crud.get_users_in_group(group_id)
+        
+        users_in_group = (
+        db.session.query(User)
+        .join(UserGroup, User.user_id == UserGroup.user_id)
+        .filter(UserGroup.group_id == group_id)
+    .all())
+        
+        user_full_names = []
+        for user in users_in_group:
+            user_full_names.append(user.fname + ' ' + user.lname)
+        group_users[group] = user_full_names
+    
+       
+    # show all the groups of a particular user and its participants 
+    return jsonify(group_users)
+
+
+@app.route("/get-user-groups", methods=["POST"])
+def get_user_groups():
+
+    if 'email' in session:
+        email = session['email']
+    user = crud.get_user_by_email(email)
+    user_groups = user.groups
+    user_id = user.user_id
+    
+   
+    # this will show groups and its images 
+    basic_group_formed = []
+    for group in user_groups:
+        group_id = group.group_id
+        user_count_in_group = (
+        db.session.query(func.count(UserGroup.user_id).label('user_count'))
+        .filter(UserGroup.group_id == group_id)
+        .scalar())
+
+        if user_count_in_group > 1:
+            basic_group_formed.append(group.group_name)
+       
+    groups = {}
+    for group in basic_group_formed:
+        tag_img_dict = {}
+        
+        group_obj = crud.get_group_by_name(group)
+        tag_obj = group_obj.category_tags
+        tag = tag_obj[0]
+        
+        tag_img_dict["categoryName"] = tag.category_tag_name
+        tag_img_dict['imgURL'] = tag.img_url
+        groups[group_obj.group_name] = tag_img_dict
+    
+  
+        
+    return jsonify(groups)
+
+   
+
+@app.route('/my-groups/<group_name>')
+def my_group(group_name):
+    return jsonify({'group_name': group_name})
+
+
+@app.route('/<path>')
+def route(path):
+
+    return render_template('homepage.html')
 
 
 
-
-
-
-
-
-
-
-# @app.route("/register-success")
-# def register_success():
-#     return render_template("homepage.html")
 
 @app.route("/users")
 def all_users():
@@ -200,144 +277,6 @@ def all_users():
     # user_tags = User.category_tags(user_id=1)
 
     return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
-
-
-@app.route("/my_groups")
-def my_groups():
-    """View all users."""
-
-    users = User.all_users()
-    print(users)
-
-    tags = Category_tag.all_category_tags()
-    tag_names = []
-    for tag in tags:
-        tag_names.append((tag.category_tag_name,tag.category_tag_id))
-    print(tag_names)
-   
-
-    groups = Group.all_groups()
-
-    user_groups = crud.get_user_groups(user_id=1)
-
-    with open("data/user_data.json") as f:
-        user_data = json.loads(f.read())
-        for userd in user_data: 
-            username = firstname + lastname 
-            #fill out all variables for users 
-            user = create(cls, username, email, password, fname, lname, gender, age, ethnicity=None)
-            # if user hobby > 0 
-            # add user tag 
-            
-
-
-    # for user in users:
-    #     for tag in tags:
-
-            # user_id = user.user_id
-            # category_tag_id = tag.category_tag_id
-            # tag_name = tag.category_tag_name 
-
-            # with open("data/user_data.json") as f:
-            #     user_data = json.loads(f.read())
-
-            # for userd in user_data:
-            #     if userd["id"] == user_id:
-            #         match_user = userd
-            # if match_user and tag_name in match_user and match_user[tag_name]:
-            #     user_tag = UserTag(user_id=user_id, category_tag_id=category_tag_id)
-            #     db.session.add(user_tag)
-            #     db.session.commit()
-
-            #     print(UserTag.query.all())
-            #     print(UserTag.query.count())
-
-
-
-
-
-
-
-
-
-                # for tag in tag_names:
-                #     if tag in user and user[tag] != []:
-                #         userdb = crud.get_user_by_id(user_id)
-                #         print(userdb)
-                #         userdb.category_tags.append(tag)
-
-
-
-
-
-# #########
-#     with open("data/user_data.json") as f:
-#         user_data = json.loads(f.read())
-
-#     for user in user_data:
-#         user_id = user["id"]
-#         print(user_id)
-
-#         for tag in tag_names:
-#             if tag in user and user[tag] != []:
-#                 userdb = crud.get_user_by_id(user_id)
-#                 print(userdb)
-#                 userdb.category_tags.append(tag)
-    
-#     print(UserTag.query.all())
-
-
-    return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.route("/users/<user_id>")
-# def show_user(user_id):
-#     """Show details on a particular user."""
-
-#     user = User.get_by_id(user_id)
-
-#     return render_template("user_details.html", user=user)
-
-
-
-# @app.route('/register')
-# def register():
-#     return render_template("register.html")
-
-
-# @app.route('/<path>')
-# def route(path):
-
-#     return render_template('homepage.html')
-
-
-
 
 
 

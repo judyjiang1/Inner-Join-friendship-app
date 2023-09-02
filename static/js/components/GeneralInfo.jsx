@@ -95,7 +95,7 @@ const GeneralInfo = ({ onChange }) => {
       <h2>General Information</h2>
       <div>
         <label>Gender:</label>
-        <select name="gender" onChange={handleChange}>
+        <select name="gender" onChange={handleChange} required>
           <option value="">Select</option>
           {genderOptions.map((option) => (
             <option key={option} value={option}>
@@ -106,7 +106,7 @@ const GeneralInfo = ({ onChange }) => {
       </div>
       <div>
         <label>Zip Code:</label>
-        <input type="text" name="zipCode" onChange={handleChange} />
+        <input type="text" name="zipCode" onChange={handleChange} required />
       </div>
       <div>
         <label>Birthday:</label>
@@ -118,7 +118,7 @@ const GeneralInfo = ({ onChange }) => {
             </option>
           ))}
         </select>
-        <select name="birthDay" onChange={handleChange}>
+        <select name="birthDay" onChange={handleChange} required>
           <option value="">Select Day</option>
           {days.map((day) => (
             <option key={day} value={day}>
@@ -126,7 +126,7 @@ const GeneralInfo = ({ onChange }) => {
             </option>
           ))}
         </select>
-        <select name="birthYear" onChange={handleChange}>
+        <select name="birthYear" onChange={handleChange} required>
           <option value="">Select Year</option>
           {years.map((year) => (
             <option key={year} value={year}>
@@ -137,7 +137,7 @@ const GeneralInfo = ({ onChange }) => {
       </div>
       <div>
         <label>Ethnicity:</label>
-        <select name="ethnicity" onChange={handleChange}>
+        <select name="ethnicity" onChange={handleChange} required>
           <option value="">Select</option>
           {ethnicityOptions.map((option) => (
             <option key={option} value={option}>
@@ -148,7 +148,7 @@ const GeneralInfo = ({ onChange }) => {
       </div>
       <div>
         <label>Occupation:</label>
-        <select name="occupation" onChange={handleChange}>
+        <select name="occupation" onChange={handleChange} required>
           <option value="">Select</option>
           {occupationOptions.map((option) => (
             <option key={option} value={option}>

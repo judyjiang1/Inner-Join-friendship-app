@@ -84,7 +84,8 @@ if __name__ == "__main__":
         category_tags_in_db = []
 
         for tag in all_categories:
-            db_category = model.Category_tag.create(tag)
+            img = f"/static/img/{tag}.jpg"           
+            db_category = model.Category_tag.create(img_url=img, category_tag_name=tag)
             category_tags_in_db.append(db_category)
             
         model.db.session.add_all(category_tags_in_db)
@@ -117,11 +118,11 @@ if __name__ == "__main__":
 
         # seed UserTag association table data
 
-        users = model.User.all_users()
+        users = crud.all_users()
        
-        tags = model.Category_tag.all_category_tags()
+        tags = crud.all_category_tags()
           
-        groups = model.Group.all_groups()
+        groups = crud.all_groups()
 
         category_mapping = {"hobbies & interests": 1,"cultural background": 2,"support groups": 3,"current or past workplace(s)": 4,"current or past college(s) attended": 5,"current or past high school(s) attended": 6}
 
@@ -166,30 +167,35 @@ if __name__ == "__main__":
 
         # seed UserGroup association table data
 
-        combined_list = []
+        
+        
+
         for user in user_data:
             user_id = user["id"]
-            combined_list.extend(user.get("hobbies & interests", []))
-            combined_list.append(user.get("cultural background"))
-            combined_list.extend(user.get("support groups", []))
-            combined_list.extend(user.get("current or past workplace(s)", []))
-            combined_list.append(user.get("current or past college(s) attended"))
-            combined_list.append(user.get("current or past high school(s) attended"))
-            cleaned_list = [item for item in combined_list if item is not None]
-            # print(cleaned_list)
+            user_combined_list = []  
 
-            for item in combined_list:
+            for category_name in ["hobbies & interests", "cultural background", "support groups",
+                                "current or past workplace(s)", "current or past college(s) attended",
+                                "current or past high school(s) attended"]:
+                group_name = user.get(category_name)
+                if isinstance(group_name, str):
+                    user_combined_list.append(group_name)
+                elif isinstance(group_name, list):
+                    user_combined_list.extend(group_name)
+
+            
+            for item in user_combined_list:
                 item = item.capitalize()
-                # print(item)
+                print(item)
                 group = model.Group.query.filter_by(group_name=item).first()
-                # print(group)
+                print(group)
                 if group:
                     group_id = group.group_id
                     user_group = model.UserGroup(user_id=user_id, group_id=group_id)
                     model.db.session.add(user_group)
                     model.db.session.commit()
-        
 
+    
 
 #############################################################################################################################################################
 
@@ -220,6 +226,11 @@ if __name__ == "__main__":
         #                 group_tag = model.GroupTag(category_tag_id=category_tag_id, group_id=group_id)
         #                 model.db_session.add(group_tag)
         #                 model.db_session.commit()
+
+
+
+        
+        
           
 
         

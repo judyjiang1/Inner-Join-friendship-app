@@ -19,11 +19,8 @@ class User(db.Model):
     gender = db.Column(db.String)
     age = db.Column(db.Integer)
     ethnicity = db.Column(db.String)
-    # personality_type = db.Column(db.String)
-    # occupation = db.Column(db.String)
-    # city_code = db.Column(db.Integer, nullable=False)
-    # state_code = db.Column(db.Integer, nullable=False)
-    # zipcode = db.Column(db.String, nullable=False)
+    occupation = db.Column(db.String)
+    zipcode = db.Column(db.String, nullable=False)
     
 
     category_tags = db.relationship("Category_tag", secondary="user_tags", back_populates="users")
@@ -35,9 +32,10 @@ class User(db.Model):
     
     
     @classmethod
-    def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None):
+    def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None, occupation=None, zipcode=None):
        """Create and return a new user."""
-       return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, ethnicity=ethnicity)
+       return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, 
+                  ethnicity=ethnicity, occupation=occupation, zipcode=zipcode)
 
     # @classmethod
     # def get_by_id(cls, user_id):

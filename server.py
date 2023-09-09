@@ -251,7 +251,16 @@ def get_user_groups():
         
     return jsonify(groups)
 
-   
+@app.route('/store-group-in-session/<group_name>', methods=['POST'])
+def store_group_in_session(group_name):
+    try:
+        # Store the group name in the session
+        session['group_name'] = group_name
+        return jsonify({'message': 'Group information stored in session'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    
 
 @app.route('/my-groups/<group_name>')
 def my_group(group_name):

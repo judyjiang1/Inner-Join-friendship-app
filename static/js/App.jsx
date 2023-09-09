@@ -58,6 +58,8 @@ function App() {
             <MyGroups></MyGroups>
           </div>
         </Route>
+        <Route exact path="/" component={MyGroups} />
+        <Route path="/my-groups/:groupName" component={GroupDetail} />
         <Route path={"*"}>
           <div className="container">
             <PageNotFound></PageNotFound>

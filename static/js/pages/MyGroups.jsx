@@ -38,8 +38,26 @@ function MyGroups(props) {
     fetchData();
   }, []);
 
-  function joinMyGroup() {
-    history.push(`/my-groups/${groupName}`);
+  function joinMyGroup(groupName) {
+    fetch(`/store-group-in-session/${groupName}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Group information successfully stored in the session
+          // Now, navigate to the GroupDetail page
+          history.push(`/my-groups/${groupName}`);
+        } else {
+          // Handle errors if needed
+          console.error("Error storing group information in session");
+        }
+      })
+      .catch((error) => {
+        console.error("Error storing group information:", error);
+      });
   }
 
   const groupCards = [];
@@ -52,7 +70,7 @@ function MyGroups(props) {
         categoryName={group.categoryName}
         groupName={groupName}
         imgUrl={group.imgURL}
-        handleImageClick={joinMyGroup}
+        handleImageClick={() => joinMyGroup(groupName)}
       />
     );
     groupCards.push(groupCard);

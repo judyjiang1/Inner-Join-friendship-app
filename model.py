@@ -24,8 +24,7 @@ class User(db.Model):
     # city_code = db.Column(db.Integer, nullable=False)
     # state_code = db.Column(db.Integer, nullable=False)
     # zipcode = db.Column(db.String, nullable=False)
-    # city_code=None, state_code=None, zipcode=None, ethnicity=None, personality_type=None, occupation=None
-    #, ethnicity=ethnicity, personality_type=personality_type, occupation=occupation, city_code=city_code, state_code=state_code, zipcode=zipcode
+    
 
     category_tags = db.relationship("Category_tag", secondary="user_tags", back_populates="users")
     groups = db.relationship("Group", secondary="user_groups", back_populates="users")

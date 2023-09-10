@@ -9,7 +9,7 @@ from sqlalchemy import func
 
 
 app = Flask(__name__)
-app.secret_key = "dev"
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -37,7 +37,6 @@ def process_login():
     if not user or user.password != password:
         return jsonify({'success': False}), 401
     else:
-        # Log in user by storing the user's email in session
         session["email"] = user.email
         flash(f"Welcome back, {user.email}!")
 
@@ -123,7 +122,7 @@ def submit_user_info():
 
     data = request.json
     gender = data.get('gender')
-    zip_code = data.get('zipCode')
+    zip_code = data.get('zipcode')
     birthMonth = data.get('birthMonth')
     birthDay = data.get('birthDay')
     birthYear = data.get('birthYear')
@@ -267,25 +266,64 @@ def my_group(group_name):
     return jsonify({'group_name': group_name})
 
 
-@app.route('/<path>')
-def route(path):
 
-    return render_template('homepage.html')
+@app.route('/get-group-members', methods=["POST", "GET"])
+def get_group_members():
+
+    if 'email' in session:
+        email = session['email']
+    else:
+        return jsonify({'error': 'Email not found in session'}), 400
+
+    user = crud.get_user_by_email(email)
+   
+        
+    if 'group_name' in session:
+        group_name = session['group_name']
+    else:
+        return jsonify({'error': 'Group name not found in session'}), 400
+
+
+    
+    
+    group_obj = crud.get_group_by_name(group_name)
+    group_id = group_obj.group_id
+    users_in_group = crud.get_users_in_group(group_id)
+    
+    users_in_group = (
+    db.session.query(User)
+    .join(UserGroup, User.user_id == UserGroup.user_id)
+    .filter(UserGroup.group_id == group_id).all()) 
+
+    user_full_names = {}
+    for user in users_in_group:
+        user_full_names[user.user_id] = user.fname + ' ' + user.lname
+    
+    return jsonify(user_full_names)
 
 
 
 
-@app.route("/users")
-def all_users():
-    """View all users."""
 
-    users = User.all_users()
-    tags = Category_tag.all_category_tags()
-    groups = Group.all_groups()
-    user_groups = crud.get_user_groups(user_id=1)
-    # user_tags = User.category_tags(user_id=1)
+# @app.route('/<path>')
+# def route(path):
 
-    return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
+#     return render_template('homepage.html')
+
+
+
+
+# @app.route("/users")
+# def all_users():
+#     """View all users."""
+
+#     users = User.all_users()
+#     tags = Category_tag.all_category_tags()
+#     groups = Group.all_groups()
+#     user_groups = crud.get_user_groups(user_id=1)
+#     # user_tags = User.category_tags(user_id=1)
+
+#     return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
 
 
 

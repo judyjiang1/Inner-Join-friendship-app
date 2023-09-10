@@ -21,7 +21,7 @@ function GroupDetail() {
   return (
     <div>
       <h1>{capitalizeTitleCase(groupName)}</h1>
-      {/* You can display additional group details here */}
+      <GroupMember />
     </div>
   );
 }

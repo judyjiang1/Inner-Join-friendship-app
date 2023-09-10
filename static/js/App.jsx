@@ -13,13 +13,13 @@ const {
   useRouteError,
 } = ReactRouterDOM;
 
-let isLogin = true;
+// let isLogin = true;
 
 function App() {
-  const [loginStatus, setLoginStatus] = useState(isLogin);
-  useEffect(() => {
-    console.log(loginStatus);
-  }, [loginStatus]);
+  // const [loginStatus, setLoginStatus] = useState(isLogin);
+  // useEffect(() => {
+  //   console.log(loginStatus);
+  // }, [loginStatus]);
   return (
     <BrowserRouter>
       <Switch>

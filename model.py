@@ -20,7 +20,7 @@ class User(db.Model):
     age = db.Column(db.Integer)
     ethnicity = db.Column(db.String)
     occupation = db.Column(db.String)
-    zipcode = db.Column(db.String, nullable=False)
+    zipcode = db.Column(db.String)
     
 
     category_tags = db.relationship("Category_tag", secondary="user_tags", back_populates="users")
@@ -32,7 +32,7 @@ class User(db.Model):
     
     
     @classmethod
-    def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None, occupation=None, zipcode=None):
+    def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None, occupation=None, zipcode=0):
        """Create and return a new user."""
        return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, 
                   ethnicity=ethnicity, occupation=occupation, zipcode=zipcode)

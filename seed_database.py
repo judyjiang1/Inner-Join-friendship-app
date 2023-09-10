@@ -52,7 +52,7 @@ if __name__ == "__main__":
             )
             
             age = calculate_age(user["birthdate"])
-            db_user = model.User.create(username,email,password,fname,lname,gender,age,ethnicity, occupation, zipcode)
+            db_user = model.User.create(username,email,password,fname,lname,gender,age,ethnicity,occupation,zipcode)
 
             # if len(user["hobby"]) > 0:
             #     tag1 = model.UserTag(user_id=model.User.user_id,category_tag_id=1)

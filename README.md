@@ -7,6 +7,10 @@ source env/bin/activate
 
 pip3 install -r requirements.txt
 
+# source secrets
+
+source secrets.sh
+
 # Seed database
 
 python3 seed_database.py

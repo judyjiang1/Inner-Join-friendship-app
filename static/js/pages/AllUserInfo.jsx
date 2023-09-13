@@ -13,6 +13,11 @@ const {
 
 //////////////////////////
 function AllUserInfo() {
+  const [dialogShown, setDialogShown] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogInfo, setDialogInfo] = useState(null);
+  const [dialogButtons, setDialogButtons] = useState(null);
+
   document.title = "Enter your information";
   let history = useHistory();
   const [formData, setFormData] = useState({
@@ -69,6 +74,11 @@ function AllUserInfo() {
       "highSchool",
     ];
 
+    // const formKeys = Object.keys(formData);
+    // return fieldsToCheck.some(
+    //   (field) => formKeys.includes(field) && formData[field].length === 0
+    // );
+
     return fieldsToCheck.some((field) => formData[field].length > 0);
   };
 
@@ -78,11 +88,44 @@ function AllUserInfo() {
 
     // Check if the "Gender" field is filled out
     if (isRequiredFieldsEmpty()) {
-      alert("Please fill out all the required fields.");
+      // alert("Please fill out all the required fields.");
+      setDialogTitle("Warning");
+      setDialogInfo(<div>Please fill out all the required fields.</div>);
+      setDialogButtons(
+        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+          Got it
+        </button>
+      );
+      setDialogShown("show");
     } else if (!isValidUSZipCode(formData.zipCode)) {
-      alert("Please enter a valid ZIP code.");
+      // alert("Please enter a valid ZIP code.");
+      setDialogTitle("Warning");
+      setDialogInfo(<div>Please enter a valid ZIP code.</div>);
+      setDialogButtons(
+        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+          Got it
+        </button>
+      );
+      setDialogShown("show");
     } else if (!isAtLeastOneFieldFilled()) {
-      alert("Please fill out at least one of the fields.");
+      // alert("Please fill out at least one of the fields.");
+      setDialogTitle("Warning");
+      setDialogInfo(
+        <div>
+          Please make selections.
+          {/* <ul>
+            <li>Hobby & Interests</li>
+            <li>Cultural Background</li>
+            <li>Support Groups</li>
+          </ul> */}
+        </div>
+      );
+      setDialogButtons(
+        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+          Got it
+        </button>
+      );
+      setDialogShown("show");
     } else {
       try {
         const response = await fetch("/submit-user-info", {
@@ -104,11 +147,27 @@ function AllUserInfo() {
   };
 
   return (
-    <div>
-      <GeneralInfo onChange={handleChange} />
-      <CategoryInfo onChange={handleChange} />
-      <button onClick={handleSubmit}>Submit</button>
-      {/* {isLoading && <p>Matching...</p>} */}
-    </div>
+    <DialogContext.Provider
+      value={{
+        show: dialogShown,
+        setShow: setDialogShown,
+        title: dialogTitle,
+        setTitle: setDialogTitle,
+        info: dialogInfo,
+        setInfo: setDialogInfo,
+        buttons: dialogButtons,
+        setButtons: setDialogButtons,
+      }}
+    >
+      <div className="container">
+        <GeneralInfo onChange={handleChange} />
+        <CategoryInfo onChange={handleChange} />
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Submit
+        </button>
+        {/* {isLoading && <p>Matching...</p>} */}
+      </div>
+      <Dialog></Dialog>
+    </DialogContext.Provider>
   );
 }

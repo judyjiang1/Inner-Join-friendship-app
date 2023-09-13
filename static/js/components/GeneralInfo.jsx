@@ -90,12 +90,37 @@ const GeneralInfo = ({ onChange }) => {
     onChange(name, value);
   };
 
+  const handleBirthdayChange = (evt) => {
+    const { name, value } = evt.target;
+    let d = new Date(value);
+
+    onChange("birthMonth", months[d.getMonth()]);
+    onChange("birthDay", d.getDate());
+    onChange("birthYear", d.getFullYear());
+
+    // console.log(
+    //   name,
+    //   value,
+    //   months[d.getMonth()],
+    //   d.getDate(),
+    //   d.getFullYear()
+    // );
+  };
+
   return (
     <div>
       <h2>General Information</h2>
-      <div>
-        <label>Gender:</label>
-        <select name="gender" onChange={handleChange} required>
+      <div dir="form-group">
+        <label htmlFor="gender" className="form-label">
+          Gender: <span className="text-danger">*</span>
+        </label>
+        <select
+          name="gender"
+          id="gender"
+          className="form-control form-select"
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           {genderOptions.map((option) => (
             <option key={option} value={option}>
@@ -104,11 +129,20 @@ const GeneralInfo = ({ onChange }) => {
           ))}
         </select>
       </div>
-      <div>
-        <label>Zip Code:</label>
-        <input type="text" name="zipCode" onChange={handleChange} required />
+      <div className="form-group">
+        <label htmlFor="zipCode" className="form-label">
+          Zip Code: <span className="text-danger">*</span>
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="zipCode"
+          name="zipCode"
+          onChange={handleChange}
+          required
+        />
       </div>
-      <div>
+      {/* <div>
         <label>Birthday:</label>
         <select name="birthMonth" onChange={handleChange}>
           <option value="">Select Month</option>
@@ -134,10 +168,33 @@ const GeneralInfo = ({ onChange }) => {
             </option>
           ))}
         </select>
+      </div> */}
+      <div className="form-group">
+        <label className="form-label" htmlFor="birthday">
+          Birthday: <span className="text-danger">*</span>
+        </label>
+        <input
+          type="date"
+          id="birthday"
+          name="birthday"
+          className="form-control"
+          min="1980-04-01"
+          max="2005-01-01"
+          required
+          onChange={handleBirthdayChange}
+        />
       </div>
-      <div>
-        <label>Ethnicity:</label>
-        <select name="ethnicity" onChange={handleChange} required>
+      <div className="form-group">
+        <label className="form-label" htmlFor="ethnicity">
+          Ethnicity: <span className="text-danger">*</span>
+        </label>
+        <select
+          name="ethnicity"
+          id="ethnicity"
+          className="form-control"
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           {ethnicityOptions.map((option) => (
             <option key={option} value={option}>
@@ -146,9 +203,17 @@ const GeneralInfo = ({ onChange }) => {
           ))}
         </select>
       </div>
-      <div>
-        <label>Occupation:</label>
-        <select name="occupation" onChange={handleChange} required>
+      <div className="form-group">
+        <label htmlFor="occupation">
+          Occupation: <span className="text-danger">*</span>
+        </label>
+        <select
+          name="occupation"
+          id="occupation"
+          className="form-control"
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           {occupationOptions.map((option) => (
             <option key={option} value={option}>

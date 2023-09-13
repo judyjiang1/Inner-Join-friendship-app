@@ -78,6 +78,7 @@ function MyGroups(props) {
 
   return (
     <div>
+      <NavBar></NavBar>
       <h1>My Groups</h1>
       <div className="col-12 col-md-9 d-flex flex-wrap">{groupCards}</div>
     </div>

@@ -20,8 +20,13 @@ function GroupDetail() {
 
   return (
     <div>
+      <NavBar></NavBar>
       <h1>{capitalizeTitleCase(groupName)}</h1>
       <GroupMember />
+      {/* <ChatBox /> */}
     </div>
   );
 }
+
+// const groupDetailContainer = document.getElementById("group-member");
+// ReactDOM.render(<GroupDetail />, groupDetailContainer);

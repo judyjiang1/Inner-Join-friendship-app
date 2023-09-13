@@ -6,11 +6,42 @@ from model import connect_to_db, db, User, Category_tag, Group, UserTag, UserGro
 import crud
 from jinja2 import StrictUndefined
 from sqlalchemy import func
+from flask_socketio import SocketIO, emit
+
 
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
+
+socketio = SocketIO(app)
+
+users = {}
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected!")
+
+@socketio.on("user_join")
+def handle_user_join(username):
+    print(f"User {username} joined!")
+    users[username] = request.sid
+
+@socketio.on("new_message")
+def handle_new_message(message):
+    print(f"New message: {message}")
+    username = None 
+    for user in users:
+        if users[user] == request.sid:
+            username = user
+    emit("chat", {"message": message, "username": username}, broadcast=True)
+
+
+@app.route('/chat')
+def chatpage():
+    """View homepage."""
+    
+    return render_template("index.html")
 
 
 @app.route('/')
@@ -19,9 +50,9 @@ def homepage():
     
     return render_template("homepage.html")
 
-# @app.route('/<path:sub_path>')
-# def route(sub_path):
-#     return render_template('homepage.html')
+@app.route('/<path:sub_path>')
+def route(sub_path):
+    return render_template('homepage.html')
 
 
 @app.route("/login", methods=["POST"])
@@ -284,8 +315,6 @@ def get_group_members():
         return jsonify({'error': 'Group name not found in session'}), 400
 
 
-    
-    
     group_obj = crud.get_group_by_name(group_name)
     group_id = group_obj.group_id
     users_in_group = crud.get_users_in_group(group_id)
@@ -302,8 +331,27 @@ def get_group_members():
     return jsonify(user_full_names)
 
 
+@app.route('/get-user', methods=["POST", "GET"])
+def get_user():
+    if 'email' in session:
+        email = session['email']
+    else:
+        return jsonify({'error': 'Email not found in session'}), 400
+
+    user_obj = crud.get_user_by_email(email)
+    user_fname = user_obj.fname
+    
+
+    return jsonify(user_fname)
 
 
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return jsonify({ "status": "success" })
+   
 
 # @app.route('/<path>')
 # def route(path):
@@ -329,4 +377,5 @@ def get_group_members():
 
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="0.0.0.0", port=3001, debug=True)
+    # app.run(host="0.0.0.0", port=3001, debug=True)
+    socketio.run(app, host='0.0.0.0', port=3001, debug=True)

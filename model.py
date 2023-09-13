@@ -169,6 +169,16 @@ class UserGroup(db.Model):
         return f"<UserGroup user_group_id={self.user_group_id}>"
 
 
+class Message(db.Model):
+    
+    __tablename__ = "message"
+
+    content_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    group_id = db.Column(db.Integer, db.ForeignKey("groups.group_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    content = db.Column(db.String)
+
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///friends", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

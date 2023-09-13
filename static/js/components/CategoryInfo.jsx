@@ -52,26 +52,100 @@ const CategoryInfo = ({ onChange }) => {
     fetchData();
   }, []);
 
+  const h1 = useRef();
+  const h2 = useRef();
+  const h3 = useRef();
+  const h4 = useRef();
+  const h5 = useRef();
+  const h6 = useRef();
+
   useEffect(() => {
     if (userTags.includes("hobbies & interests")) {
       setSelectHobby(true);
+
+      let ivt = setInterval(() => {
+        if (h1.current) {
+          clearInterval(ivt);
+          new Choices(h1.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
 
     if (userTags.includes("cultural background")) {
       setSelectCulture(true);
+      let ivt = setInterval(() => {
+        if (h2.current) {
+          clearInterval(ivt);
+          new Choices(h2.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
 
     if (userTags.includes("support groups")) {
       setSelectSupport(true);
+      let ivt = setInterval(() => {
+        if (h3.current) {
+          clearInterval(ivt);
+          new Choices(h3.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
     if (userTags.includes("current or past workplace(s)")) {
       setSelectWork(true);
+      let ivt = setInterval(() => {
+        if (h4.current) {
+          clearInterval(ivt);
+          new Choices(h4.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
     if (userTags.includes("current or past college(s) attended")) {
       setSelectCollege(true);
+      let ivt = setInterval(() => {
+        if (h5.current) {
+          clearInterval(ivt);
+          new Choices(h5.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
     if (userTags.includes("current or past high school(s) attended")) {
       setSelectHighSchool(true);
+      let ivt = setInterval(() => {
+        if (h6.current) {
+          clearInterval(ivt);
+          new Choices(h6.current, {
+            allowHTML: true,
+            addItems: true,
+            removeItems: true,
+            removeItemButton: true,
+          });
+        }
+      });
     }
   }, [userTags]);
 
@@ -122,10 +196,14 @@ const CategoryInfo = ({ onChange }) => {
 
   return (
     <div>
+      <h3>Please make selections for each category below.</h3>
       {selectHobby && (
         <div>
-          <label>Hobby & Interests:</label>
+          <label>
+            Hobby & Interests: <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h1}
             name="hobbies"
             onChange={(e) =>
               handleHobbyChange(
@@ -145,8 +223,11 @@ const CategoryInfo = ({ onChange }) => {
       )}
       {selectCulture && (
         <div>
-          <label>Cultural Background:</label>
+          <label>
+            Cultural Background: <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h2}
             name="culturalBackground"
             onChange={(e) =>
               handleCultureChange(
@@ -166,8 +247,11 @@ const CategoryInfo = ({ onChange }) => {
       )}
       {selectSupport && (
         <div>
-          <label>Support Groups:</label>
+          <label>
+            Support Groups: <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h3}
             name="supportGroups"
             onChange={(e) =>
               handleSupportChange(
@@ -187,8 +271,11 @@ const CategoryInfo = ({ onChange }) => {
       )}
       {selectWork && (
         <div>
-          <label>Current or Past Workplace(s):</label>
+          <label>
+            Current or Past Workplace(s): <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h4}
             name="work"
             onChange={(e) =>
               handleWorkChange(
@@ -208,8 +295,12 @@ const CategoryInfo = ({ onChange }) => {
       )}
       {selectCollege && (
         <div>
-          <label>Current or Past College(s) Attended:</label>
+          <label>
+            Current or Past College(s) Attended:{" "}
+            <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h5}
             name="college"
             onChange={(e) =>
               handleCollegeChange(
@@ -229,8 +320,12 @@ const CategoryInfo = ({ onChange }) => {
       )}
       {selectHighSchool && (
         <div>
-          <label>Current or Past High School(s) Attended:</label>
+          <label>
+            Current or Past High School(s) Attended:{" "}
+            <span className="text-danger">*</span>
+          </label>
           <select
+            ref={h6}
             name="highSchool"
             onChange={(e) =>
               handleHighSchoolChange(

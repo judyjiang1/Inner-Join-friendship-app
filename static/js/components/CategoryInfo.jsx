@@ -36,7 +36,7 @@ const CategoryInfo = ({ onChange }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/get-user-tags", {
+        const response = await fetch("/api/get-user-tags", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

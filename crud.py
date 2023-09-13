@@ -31,11 +31,12 @@ def format_birthdate(birthMonth, birthDay, birthYear):
     formatted_date = f"{birthMonth}/{birthDay}/{birthYear}"
     return formatted_date
 
-def update_user_info(user_id, gender, birthdate, ethnicity):
+def update_user_info(user_id, gender, birthdate, ethnicity, zipcode):
     user = User.query.get(user_id)
     user.gender = gender
     user.age = calculate_age(birthdate)
-    user.ethnicity = ethnicity 
+    user.ethnicity = ethnicity
+    user.zipcode = zipcode 
 
 # Category_tags
 def get_category_by_id(category_tag_id):

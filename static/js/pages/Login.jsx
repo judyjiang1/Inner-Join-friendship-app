@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Login(props) {
+function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
   // const { setLoginStatus } = props;
@@ -23,12 +23,13 @@ function Login(props) {
     evt.preventDefault();
 
     const loginData = new FormData(evt.target);
+
     const credentials = {
       email: loginData.get("email"),
       password: loginData.get("password"),
     };
 
-    fetch("/login", {
+    fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -43,11 +44,12 @@ function Login(props) {
           setEmail("");
           setPassword("");
         }
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
       });
-    // .catch((error) => {
-    //   console.error("An error occurred:", error);
-    // });
   };
+
   return (
     <div>
       <h1>User Login</h1>

@@ -21,31 +21,42 @@ function Landing() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    getUser();
-  }, []);
+    let isMounted = true;
 
-  const getUser = () => {
-    fetch("/get-user", {
-      method: "GET",
-      credentials: "include", // Use "include" to send cookies with the request
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Assuming the response contains user data, parse it as JSON
-          return response.json();
-        } else {
-          throw new Error("User not authenticated");
+    const getUser = async () => {
+      try {
+        const response = await fetch("/api/get-user", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!isMounted) {
+          return;
         }
-      })
-      .then((userData) => {
-        setUser(userData); // Update the user state with the fetched data
-        setLoggedIn(true);
-      })
-      .catch((error) => {
-        console.error("Login error:", error);
-        setUser(null); // Set user state to null if there's an error
-      });
-  };
+
+        if (response.status === 401) {
+          // Handle the "User not logged in" scenario quietly
+          setUser(null); // Set the user to null or perform any other necessary actions
+        } else if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+          setLoggedIn(true);
+        } else {
+          throw new Error("Request failed");
+        }
+      } catch (error) {
+        // Handle other errors here
+        console.error(error);
+        setUser(null);
+      }
+    };
+
+    getUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="bg">
@@ -71,6 +82,7 @@ function Landing() {
             </>
           ) : null}
         </div>
+
         <div className="flex-container">
           {/* Description */}
           <div>

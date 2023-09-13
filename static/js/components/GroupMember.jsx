@@ -16,7 +16,7 @@ function GroupMember() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/get-group-members")
+    fetch("/api/get-group-members")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");

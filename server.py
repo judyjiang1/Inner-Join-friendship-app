@@ -1,12 +1,12 @@
 """Server for inner-join friendship app."""
 
 import os
-from flask import Flask, render_template, request, flash, session, redirect, jsonify
+from flask import Flask, render_template, request, flash, session, redirect, jsonify, abort
 from model import connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup,GroupTag
 import crud
 from jinja2 import StrictUndefined
 from sqlalchemy import func
-from flask_socketio import SocketIO, emit
+# from flask_socketio import SocketIO, emit
 
 
 
@@ -14,48 +14,48 @@ app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
 
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
-users = {}
+# users = {}
 
-@socketio.on("connect")
-def handle_connect():
-    print("Client connected!")
+# @socketio.on("connect")
+# def handle_connect():
+#     print("Client connected!")
 
-@socketio.on("user_join")
-def handle_user_join(username):
-    print(f"User {username} joined!")
-    users[username] = request.sid
+# @socketio.on("user_join")
+# def handle_user_join(username):
+#     print(f"User {username} joined!")
+#     users[username] = request.sid
 
-@socketio.on("new_message")
-def handle_new_message(message):
-    print(f"New message: {message}")
-    username = None 
-    for user in users:
-        if users[user] == request.sid:
-            username = user
-    emit("chat", {"message": message, "username": username}, broadcast=True)
+# @socketio.on("new_message")
+# def handle_new_message(message):
+#     print(f"New message: {message}")
+#     username = None 
+#     for user in users:
+#         if users[user] == request.sid:
+#             username = user
+#     emit("chat", {"message": message, "username": username}, broadcast=True)
 
 
-@app.route('/chat')
-def chatpage():
-    """View homepage."""
+# @app.route('/chat')
+# def chatpage():
+#     """View homepage."""
     
-    return render_template("index.html")
+#     return render_template("index.html")
 
 
 @app.route('/')
 def homepage():
     """View homepage."""
-    
     return render_template("homepage.html")
+
 
 @app.route('/<path:sub_path>')
 def route(sub_path):
     return render_template('homepage.html')
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def process_login():
     """Process user login."""
 
@@ -69,13 +69,12 @@ def process_login():
         return jsonify({'success': False}), 401
     else:
         session["email"] = user.email
-        flash(f"Welcome back, {user.email}!")
-
+        # flash(f"Welcome back, {user.email}!")
         return jsonify({'success': True}), 200
 
 
 ##############
-@app.route("/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def register_user():
     """Create a new user."""
 
@@ -88,7 +87,7 @@ def register_user():
     
     user = crud.get_user_by_email(email)
     if user:
-        return jsonify({'success': False}), 401
+        return jsonify({'success': False}), 400
     else:
         session["fname"] = fname
         session["lname"] = lname
@@ -104,7 +103,7 @@ def register_user():
 
 
 
-@app.route("/select-categories", methods=["POST"])
+@app.route("/api/select-categories", methods=["POST"])
 def select_category():
     """Select category."""
     
@@ -129,7 +128,7 @@ def select_category():
 
 
 
-@app.route("/get-user-tags", methods=["POST"])
+@app.route("/api/get-user-tags", methods=["POST"])
 def get_user_categories():
 
 
@@ -144,7 +143,7 @@ def get_user_categories():
     return jsonify(user_tag_names)
 
 
-@app.route("/submit-user-info", methods=["POST"])
+@app.route("/api/submit-user-info", methods=["POST"])
 def submit_user_info():
     if 'email' in session:
         email = session['email']
@@ -162,7 +161,7 @@ def submit_user_info():
 
     formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
 
-    crud.update_user_info(user_id, gender, formatted_date, ethnicity)
+    crud.update_user_info(user_id, gender, formatted_date, ethnicity,zip_code)
 
     # combined_list = []
     # combined_list.extend(data.get('hobbies', []))
@@ -198,7 +197,7 @@ def submit_user_info():
 
 
 
-@app.route("/get-user-groups_participants", methods=["POST"])
+@app.route("/api/get-user-groups_participants", methods=["POST"])
 def get_user_groups_participants():
 
     if 'email' in session:
@@ -243,7 +242,7 @@ def get_user_groups_participants():
     return jsonify(group_users)
 
 
-@app.route("/get-user-groups", methods=["POST"])
+@app.route("/api/get-user-groups", methods=["POST"])
 def get_user_groups():
 
     if 'email' in session:
@@ -281,7 +280,7 @@ def get_user_groups():
         
     return jsonify(groups)
 
-@app.route('/store-group-in-session/<group_name>', methods=['POST'])
+@app.route('/api/store-group-in-session/<group_name>', methods=['POST'])
 def store_group_in_session(group_name):
     try:
         # Store the group name in the session
@@ -292,13 +291,13 @@ def store_group_in_session(group_name):
     
     
 
-@app.route('/my-groups/<group_name>')
+@app.route('/api/my-groups/<group_name>')
 def my_group(group_name):
     return jsonify({'group_name': group_name})
 
 
 
-@app.route('/get-group-members', methods=["POST", "GET"])
+@app.route('/api/get-group-members', methods=["POST", "GET"])
 def get_group_members():
 
     if 'email' in session:
@@ -331,12 +330,12 @@ def get_group_members():
     return jsonify(user_full_names)
 
 
-@app.route('/get-user', methods=["POST", "GET"])
+@app.route('/api/get-user', methods=["POST", "GET"])
 def get_user():
     if 'email' in session:
         email = session['email']
     else:
-        return jsonify({'error': 'Email not found in session'}), 400
+        return jsonify({'message': 'User not logged in'}), 401
 
     user_obj = crud.get_user_by_email(email)
     user_fname = user_obj.fname
@@ -347,7 +346,7 @@ def get_user():
 
 
 
-@app.route('/logout')
+@app.route('/api/logout')
 def logout():
     session.clear()
     return jsonify({ "status": "success" })
@@ -377,5 +376,5 @@ def logout():
 
 if __name__ == "__main__":
     connect_to_db(app)
-    # app.run(host="0.0.0.0", port=3001, debug=True)
-    socketio.run(app, host='0.0.0.0', port=3001, debug=True)
+    app.run(host="0.0.0.0", port=3001, debug=True)
+    # socketio.run(app, host='0.0.0.0', port=3001, debug=True)

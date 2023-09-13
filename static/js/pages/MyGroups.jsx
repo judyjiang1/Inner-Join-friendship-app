@@ -22,7 +22,7 @@ function MyGroups(props) {
 
     async function fetchData() {
       try {
-        const response = await fetch("/get-user-groups", {
+        const response = await fetch("/api/get-user-groups", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function MyGroups(props) {
   }, []);
 
   function joinMyGroup(groupName) {
-    fetch(`/store-group-in-session/${groupName}`, {
+    fetch(`/api/store-group-in-session/${groupName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

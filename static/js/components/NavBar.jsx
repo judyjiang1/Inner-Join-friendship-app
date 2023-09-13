@@ -20,7 +20,7 @@ const NavBar = () => {
   }, []);
 
   const getUser = () => {
-    fetch("/get-user", {
+    fetch("/api/get-user", {
       method: "GET",
       credentials: "include",
     })
@@ -41,7 +41,7 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    fetch("/logout", {
+    fetch("/api/logout", {
       method: "GET",
       credentials: "include",
     })

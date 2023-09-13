@@ -58,7 +58,7 @@ function SelectCategory(props) {
       };
 
       try {
-        const response = await fetch("/select-categories", {
+        const response = await fetch("/api/select-categories", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

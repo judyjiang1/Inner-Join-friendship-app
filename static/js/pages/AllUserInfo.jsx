@@ -128,7 +128,7 @@ function AllUserInfo() {
       setDialogShown("show");
     } else {
       try {
-        const response = await fetch("/submit-user-info", {
+        const response = await fetch("/api/submit-user-info", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

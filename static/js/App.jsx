@@ -14,6 +14,7 @@ const {
 } = ReactRouterDOM;
 
 // let isLogin = true;
+const AuthContext = createContext();
 
 function App() {
   // const [loginStatus, setLoginStatus] = useState(isLogin);

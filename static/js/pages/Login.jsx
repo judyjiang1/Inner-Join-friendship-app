@@ -118,10 +118,10 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
   );
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <Login />,
-  </BrowserRouter>,
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Login />,
+//   </BrowserRouter>,
 
-  document.querySelector("#root")
-);
+//   document.querySelector("#root")
+// );

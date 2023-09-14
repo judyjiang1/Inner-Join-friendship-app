@@ -64,6 +64,7 @@ function Register({ loggedIn }) {
   return (
     <div>
       <h2>Create a new account</h2>
+
       <form onSubmit={handleRegister}>
         <Field
           type={"text"}
@@ -149,9 +150,9 @@ function Register({ loggedIn }) {
   );
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <Register />
-  </BrowserRouter>,
-  document.querySelector("#root")
-);
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Register />
+//   </BrowserRouter>,
+//   document.querySelector("#root")
+// );

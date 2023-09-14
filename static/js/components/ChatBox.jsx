@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-const socket = window.io();
+// const socket = window.io();
 
 function ChatBox() {
   const [username, setUsername] = useState("");

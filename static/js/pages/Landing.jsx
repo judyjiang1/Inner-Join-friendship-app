@@ -131,9 +131,9 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
   );
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <Landing />
-  </BrowserRouter>,
-  document.querySelector("#root")
-);
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Landing />
+//   </BrowserRouter>,
+//   document.querySelector("#root")
+// );

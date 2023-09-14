@@ -24,7 +24,9 @@ function Register({ loggedIn }) {
   useEffect(() => {
     // Check if the user is already logged in when the component mounts
     if (loggedIn) {
-      alert("Already logged in! Redirecting to your account.");
+      alert(
+        "Already logged in! Redirecting to your account. Please log out if this is not your account."
+      );
       history.push("/my-groups");
     }
   }, [loggedIn, history]);

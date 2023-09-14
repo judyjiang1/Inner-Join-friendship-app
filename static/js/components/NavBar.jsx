@@ -59,8 +59,15 @@ const NavBar = ({ updateLoginStatus }) => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
+      {/* <Link className="navbar-brand" to="/">
         InnerJoin
+      </Link> */}
+      <Link to="/">
+        <img
+          src="/static/img/app logo.png"
+          alt="App Logo"
+          style={{ width: "250px" }}
+        />
       </Link>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">

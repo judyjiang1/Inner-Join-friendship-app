@@ -64,9 +64,16 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
         {/* Logo and Website Name */}
         <div className="col-md-6">
           <div className="cover-header">
-            <div className="logo img">
+            {/* <div className="logo img">
               <img src="/static/img/app logo.png" alt="Logo" />
-            </div>
+            </div> */}
+            <Link to="/">
+              <img
+                src="/static/img/app logo.png"
+                alt="App Logo"
+                style={{ width: "300px" }}
+              />
+            </Link>
             {/* <div className="web-name">
               <h1>InnerJoin</h1>
             </div> */}

@@ -59,18 +59,27 @@ def route(sub_path):
 def process_login():
     """Process user login."""
 
-    data = request.json
-    email = data.get("email")
-    password = data.get("password")
-
-    user = crud.get_user_by_email(email)
+    if 'email' in session:
+        return redirect('/my-groups')
     
-    if not user or user.password != password:
-        return jsonify({'success': False}), 401
     else:
-        session["email"] = user.email
-        # flash(f"Welcome back, {user.email}!")
-        return jsonify({'success': True}), 200
+
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+
+        user = crud.get_user_by_email(email)
+        
+        if not user or user.password != password:
+            return jsonify({'success': False}), 401
+        else:
+            session["user_id"] = user.user_id
+            session["fname"] = user.fname
+            session["lname"] = user.lname
+            session["username"] = user.username
+            session["email"] = user.email
+            # flash(f"Welcome back, {user.email}!")
+            return jsonify({'success': True}), 200
 
 
 ##############
@@ -78,7 +87,7 @@ def process_login():
 def register_user():
     """Create a new user."""
 
-    data = request.json
+    data = request.get_json()
     fname = data.get("fname")
     lname = data.get("lname")
     username = data.get("username")
@@ -105,7 +114,7 @@ def register_user():
 
 @app.route("/api/select-categories", methods=["POST"])
 def select_category():
-    """Select category."""
+    """Get user category selections and save to database."""
     
     if 'email' in session:
         email = session['email']
@@ -117,7 +126,7 @@ def select_category():
 
     for category in selections:
         selected_category = crud.get_category_by_name(category.lower())
-        print(selected_category)
+        # print(selected_category)
         user_tag=UserTag(user_id=user.user_id,category_tag_id=selected_category.category_tag_id)
         db.session.add(user_tag)
         db.session.commit()
@@ -206,7 +215,7 @@ def get_user_groups_participants():
     user_groups = user.groups
     user_id = user.user_id
     
-    ############# Find Basic Match ################
+    
     # this will show groups and its participants 
     group_users = {}
     basic_group_formed = []
@@ -253,7 +262,7 @@ def get_user_groups():
     
    
     # this will show groups and its images 
-    basic_group_formed = []
+    groups_formed = []
     for group in user_groups:
         group_id = group.group_id
         user_count_in_group = (
@@ -262,10 +271,10 @@ def get_user_groups():
         .scalar())
 
         if user_count_in_group > 1:
-            basic_group_formed.append(group.group_name)
+            groups_formed.append(group.group_name)
        
     groups = {}
-    for group in basic_group_formed:
+    for group in groups_formed:
         tag_img_dict = {}
         
         group_obj = crud.get_group_by_name(group)
@@ -330,7 +339,7 @@ def get_group_members():
     return jsonify(user_full_names)
 
 
-@app.route('/api/get-user', methods=["POST", "GET"])
+@app.route('/api/get-user')
 def get_user():
     if 'email' in session:
         email = session['email']
@@ -343,6 +352,16 @@ def get_user():
 
     return jsonify(user_fname)
 
+
+@app.route('/check_login', methods=['GET'])
+def check_login():
+    if 'email' in session:
+        email = session['email']
+        user_obj = crud.get_user_by_email(email)
+        user_fname = user_obj.fname
+        return jsonify({'loggedIn': True, 'userfname': user_fname})
+    else:
+        return jsonify({'loggedIn': False})
 
 
 

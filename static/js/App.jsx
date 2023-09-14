@@ -20,22 +20,53 @@ function App() {
   // useEffect(() => {
   //   console.log(loginStatus);
   // }, [loginStatus]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [fname, setFname] = useState(null);
+
+  useEffect(() => {
+    // Check if the user is logged in when the component mounts
+    fetch("/check_login")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          setLoggedIn(true);
+          setFname(data.userfname);
+        }
+      })
+      .catch((error) => console.error("Error checking login status", error));
+  }, []);
+
+  const updateLoginStatus = (status) => {
+    setLoggedIn(status);
+  };
+
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
           <div>
-            <Landing></Landing>
+            <Landing
+              loggedIn={loggedIn}
+              fname={fname}
+              updateLoginStatus={updateLoginStatus}
+            />
           </div>
         </Route>
         <Route path="/login/" exact>
           <div>
-            <Login></Login>
+            <Login
+              loggedIn={loggedIn}
+              fname={fname}
+              updateLoginStatus={updateLoginStatus}
+            />
           </div>
         </Route>
         <Route path="/register/" exact>
           <div>
-            <Register></Register>
+            <Register
+              loggedIn={loggedIn}
+              updateLoginStatus={updateLoginStatus}
+            />
           </div>
         </Route>
         <Route path="/register-success/" exact>
@@ -50,12 +81,12 @@ function App() {
         </Route>
         <Route path="/enter-user-info/" exact>
           <div>
-            <AllUserInfo></AllUserInfo>
+            <AllUserInfo updateLoginStatus={updateLoginStatus} />
           </div>
         </Route>
         <Route path="/my-groups/" exact>
           <div>
-            <MyGroups></MyGroups>
+            <MyGroups updateLoginStatus={updateLoginStatus} />
           </div>
         </Route>
         <Route exact path="/" component={MyGroups} />

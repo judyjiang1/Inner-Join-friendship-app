@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-const NavBar = () => {
+const NavBar = ({ updateLoginStatus }) => {
   const [user, setUser] = useState(null);
   const history = useHistory();
 
@@ -48,6 +48,7 @@ const NavBar = () => {
       .then((response) => {
         if (response.ok) {
           setUser(null);
+          updateLoginStatus(false);
           history.push("/");
         }
       })

@@ -12,7 +12,7 @@ const {
 } = ReactRouterDOM;
 
 //////////////////////////
-function AllUserInfo() {
+function AllUserInfo({ updateLoginStatus }) {
   const [dialogShown, setDialogShown] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogInfo, setDialogInfo] = useState(null);
@@ -137,6 +137,7 @@ function AllUserInfo() {
         });
 
         if (response.ok) {
+          updateLoginStatus(true);
           history.push("/my-groups");
         }
       } catch (error) {

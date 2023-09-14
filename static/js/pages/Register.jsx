@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Register(props) {
+function Register({ loggedIn }) {
   document.title = "User Registration";
   const [registerError, setRegisterError] = useState(false);
   let history = useHistory();
@@ -20,6 +20,14 @@ function Register(props) {
   const [username, setUsername] = useState(" ");
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+
+  useEffect(() => {
+    // Check if the user is already logged in when the component mounts
+    if (loggedIn) {
+      alert("Already logged in! Redirecting to your account.");
+      history.push("/my-groups");
+    }
+  }, [loggedIn, history]);
 
   const handleRegister = (evt) => {
     evt.preventDefault();

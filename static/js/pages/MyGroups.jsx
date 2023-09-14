@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function MyGroups(props) {
+function MyGroups({ updateLoginStatus }) {
   const history = useHistory();
   const [groupsWithPeople, setGroupsWithPeople] = useState([]);
 
@@ -78,7 +78,7 @@ function MyGroups(props) {
 
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar updateLoginStatus={updateLoginStatus} />
       <h1>My Groups</h1>
       <div className="col-12 col-md-9 d-flex flex-wrap">{groupCards}</div>
     </div>

@@ -11,13 +11,37 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Login({ loggedIn, fname, updateLoginStatus }) {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
   // const { setLoginStatus } = props;
   const history = useHistory();
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+
+  // useEffect(() => {
+  //   // Check if the user is already logged in when the component mounts
+  //   if (loggedIn) {
+  //     // Show an alert
+  //     alert("Already logged in! Redirecting you to My Groups page.");
+  //     // Redirect to another page immediately (e.g., home page)
+  //     history.push("/my-groups");
+  //   }
+  // }, [loggedIn, history]);
+
+  // if (loggedIn) {
+  //   alert("Already logged in! Redirecting to your account.");
+  //   history.push("/my-groups");
+  //   // return null; // Render nothing if already logged in and redirected
+  // }
+
+  useEffect(() => {
+    // Check if the user is already logged in when the component mounts
+    if (loggedIn) {
+      // alert("Already logged in! Redirecting to your account.");
+      history.push("/my-groups");
+    }
+  }, [loggedIn, history]);
 
   const handleLogin = (evt) => {
     evt.preventDefault();
@@ -37,7 +61,7 @@ function Login() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setIsLoggedIn(true);
+          updateLoginStatus(true);
           history.push("/my-groups");
         } else {
           setLoginError(true);

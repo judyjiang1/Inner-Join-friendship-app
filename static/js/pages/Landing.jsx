@@ -11,52 +11,52 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Landing() {
+function Landing({ loggedIn, fname, updateLoginStatus }) {
   document.title = "Welcome";
   const [isOpen, setIsOpen] = useState(false);
   const toggleOnOFF = () => {
     setIsOpen(!isOpen);
   };
-  const [user, setUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [user, setUser] = useState(null);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    let isMounted = true;
+  // useEffect(() => {
+  //   let isMounted = true;
 
-    const getUser = async () => {
-      try {
-        const response = await fetch("/api/get-user", {
-          method: "GET",
-          credentials: "include",
-        });
+  //   const getUser = async () => {
+  //     try {
+  //       const response = await fetch("/api/get-user", {
+  //         method: "GET",
+  //         credentials: "include",
+  //       });
 
-        if (!isMounted) {
-          return;
-        }
+  //       if (!isMounted) {
+  //         return;
+  //       }
 
-        if (response.status === 401) {
-          // Handle the "User not logged in" scenario quietly
-          setUser(null); // Set the user to null or perform any other necessary actions
-        } else if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-          setLoggedIn(true);
-        } else {
-          throw new Error("Request failed");
-        }
-      } catch (error) {
-        // Handle other errors here
-        console.error(error);
-        setUser(null);
-      }
-    };
+  //       if (response.status === 401) {
+  //         // Handle the "User not logged in" scenario quietly
+  //         setUser(null); // Set the user to null or perform any other necessary actions
+  //       } else if (response.ok) {
+  //         const userData = await response.json();
+  //         setUser(userData);
+  //         setLoggedIn(true);
+  //       } else {
+  //         throw new Error("Request failed");
+  //       }
+  //     } catch (error) {
+  //       // Handle other errors here
+  //       console.error(error);
+  //       setUser(null);
+  //     }
+  //   };
 
-    getUser();
+  //   getUser();
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
 
   return (
     <div className="bg">
@@ -67,15 +67,15 @@ function Landing() {
             <div className="logo img">
               <img src="/static/img/app logo.png" alt="Logo" />
             </div>
-            <div className="web-name">
+            {/* <div className="web-name">
               <h1>InnerJoin</h1>
-            </div>
+            </div> */}
           </div>
         </div>
         <div>
           {loggedIn ? (
             <>
-              <a>Welcome, {user} </a>{" "}
+              <a>Welcome, {fname} </a>{" "}
               <Link className="navbar-brand" to="/my-groups">
                 My Account
               </Link>

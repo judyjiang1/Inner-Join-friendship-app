@@ -195,154 +195,159 @@ const CategoryInfo = ({ onChange }) => {
   };
 
   return (
-    <div>
-      <h3>Please make selections for each category below.</h3>
-      {selectHobby && (
-        <div>
-          <label>
-            Hobby & Interests: <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h1}
-            name="hobbies"
-            onChange={(e) =>
-              handleHobbyChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {hobbyOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      {selectCulture && (
-        <div>
-          <label>
-            Cultural Background: <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h2}
-            name="culturalBackground"
-            onChange={(e) =>
-              handleCultureChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {culturalBackgroundOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      {selectSupport && (
-        <div>
-          <label>
-            Support Groups: <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h3}
-            name="supportGroups"
-            onChange={(e) =>
-              handleSupportChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {supportOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      {selectWork && (
-        <div>
-          <label>
-            Current or Past Workplace(s): <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h4}
-            name="work"
-            onChange={(e) =>
-              handleWorkChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {companyOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      {selectCollege && (
-        <div>
-          <label>
-            Current or Past College(s) Attended:{" "}
-            <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h5}
-            name="college"
-            onChange={(e) =>
-              handleCollegeChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {collegeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      {selectHighSchool && (
-        <div>
-          <label>
-            Current or Past High School(s) Attended:{" "}
-            <span className="text-danger">*</span>
-          </label>
-          <select
-            ref={h6}
-            name="highSchool"
-            onChange={(e) =>
-              handleHighSchoolChange(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            multiple
-            required
-          >
-            {highSchoolOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+    <div className="info-content">
+      <h3 className="category-text">
+        Please make selection(s) for each category below.
+      </h3>
+      <div className="category-select">
+        {selectHobby && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Hobby & Interests: <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h1}
+              name="hobbies"
+              onChange={(e) =>
+                handleHobbyChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {hobbyOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectCulture && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Cultural Background: <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h2}
+              name="culturalBackground"
+              onChange={(e) =>
+                handleCultureChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {culturalBackgroundOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectSupport && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Support Groups: <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h3}
+              name="supportGroups"
+              onChange={(e) =>
+                handleSupportChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {supportOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectWork && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Current or Past Workplace(s):{" "}
+              <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h4}
+              name="work"
+              onChange={(e) =>
+                handleWorkChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {companyOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectCollege && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Current or Past College(s) Attended:{" "}
+              <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h5}
+              name="college"
+              onChange={(e) =>
+                handleCollegeChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {collegeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {selectHighSchool && (
+          <div style={{ marginBottom: "20px" }}>
+            <label>
+              Current or Past High School(s) Attended:{" "}
+              <span className="text-danger">*</span>
+            </label>
+            <select
+              ref={h6}
+              name="highSchool"
+              onChange={(e) =>
+                handleHighSchoolChange(
+                  Array.from(e.target.selectedOptions, (option) => option.value)
+                )
+              }
+              multiple
+              required
+            >
+              {highSchoolOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

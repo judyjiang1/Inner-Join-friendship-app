@@ -22,7 +22,7 @@ function Dialog() {
             </h5>
             <button
               type="button"
-              className="close"
+              className="close modal-btn"
               data-dismiss="modal"
               aria-label="Close"
               onClick={(evt) => {

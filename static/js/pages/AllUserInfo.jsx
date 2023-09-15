@@ -92,7 +92,10 @@ function AllUserInfo({ updateLoginStatus }) {
       setDialogTitle("Warning");
       setDialogInfo(<div>Please fill out all the required fields.</div>);
       setDialogButtons(
-        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+        <button
+          className="btn btn-primary"
+          onClick={(evt) => setDialogShown("")}
+        >
           Got it
         </button>
       );
@@ -102,7 +105,10 @@ function AllUserInfo({ updateLoginStatus }) {
       setDialogTitle("Warning");
       setDialogInfo(<div>Please enter a valid ZIP code.</div>);
       setDialogButtons(
-        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+        <button
+          className="btn btn-primary"
+          onClick={(evt) => setDialogShown("")}
+        >
           Got it
         </button>
       );
@@ -121,7 +127,10 @@ function AllUserInfo({ updateLoginStatus }) {
         </div>
       );
       setDialogButtons(
-        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+        <button
+          className="btn btn-primary"
+          onClick={(evt) => setDialogShown("")}
+        >
           Got it
         </button>
       );
@@ -160,12 +169,14 @@ function AllUserInfo({ updateLoginStatus }) {
         setButtons: setDialogButtons,
       }}
     >
-      <div className="container">
-        <GeneralInfo onChange={handleChange} />
-        <CategoryInfo onChange={handleChange} />
-        <button className="btn btn-primary" onClick={handleSubmit}>
-          Submit
-        </button>
+      <div className="row">
+        <GeneralInfo className="col" onChange={handleChange} />
+        <CategoryInfo className="col" onChange={handleChange} />
+        <div className="info-submit-btn">
+          <button className="info-btn" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
         {/* {isLoading && <p>Matching...</p>} */}
       </div>
       <Dialog></Dialog>

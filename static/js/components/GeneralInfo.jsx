@@ -108,9 +108,9 @@ const GeneralInfo = ({ onChange }) => {
   };
 
   return (
-    <div>
-      <h2>General Information</h2>
-      <div dir="form-group">
+    <div className="info-content">
+      <h2 className="text">General Information</h2>
+      <div className="form-group">
         <label htmlFor="gender" className="form-label">
           Gender: <span className="text-danger">*</span>
         </label>
@@ -138,6 +138,7 @@ const GeneralInfo = ({ onChange }) => {
           className="form-control"
           id="zipCode"
           name="zipCode"
+          placeholder="99999"
           onChange={handleChange}
           required
         />

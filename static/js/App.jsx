@@ -81,7 +81,7 @@ function App() {
           </div>
         </Route>
         <Route path="/enter-user-info/" exact>
-          <div className="App">
+          <div className="Info">
             <AllUserInfo updateLoginStatus={updateLoginStatus} />
           </div>
         </Route>

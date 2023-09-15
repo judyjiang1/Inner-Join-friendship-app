@@ -7,7 +7,7 @@ function Field(props) {
     if (updateValue) updateValue(evt.target.value.trim());
   };
   return (
-    <div className="field">
+    <div className="register-field">
       <input
         type={type}
         placeholder={label}
@@ -21,17 +21,17 @@ function Field(props) {
   );
 }
 
-const cultureDropdown = ({ options }) => {
-  return (
-    <select>
-      <option value="" disabled selected>
-        Select your cultural background{" "}
-      </option>
-      {options.map((option, index) => (
-        <option key={index} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-};
+// const cultureDropdown = ({ options }) => {
+//   return (
+//     <select>
+//       <option value="" disabled selected>
+//         Select your cultural background{" "}
+//       </option>
+//       {options.map((option, index) => (
+//         <option key={index} value={option}>
+//           {option}
+//         </option>
+//       ))}
+//     </select>
+//   );
+// };

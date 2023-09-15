@@ -64,7 +64,7 @@ function Register({ loggedIn }) {
   };
 
   return (
-    <div className="content">
+    <div className="register-content">
       <h2 className="text">Create a new account</h2>
 
       <form onSubmit={handleRegister}>
@@ -108,37 +108,9 @@ function Register({ loggedIn }) {
           autoComplete={"off"}
           updateValue={(val) => setPassword(val)}
         />
-        {/* gender
-        <label for="gender">Gender:</label>
-        <select name="gender" id="gender" required>
-          <option value="" disabled selected>
-            Select your gender
-          </option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="transgender">Transgender</option>
-          <option value="non-binary">Non-binary</option>
-          <option value="not-say">Prefer not to respond</option>
-        </select>
-        {/* Cultural Background */}
-        {/* <Field
-          type={"age"}
-          name={"age"}
-          label={"Age"}
-          required={true}
-          autoComplete={"off"}
-          updateValue={(val) => setAge(val)}
-        />
-        <Field
-          type={"zipcode"}
-          name={"zipcode"}
-          label={"zip code"}
-          required={true}
-          autoComplete={"off"}
-          updateValue={(val) => setZipcode(val)}
-        /> */}
-        <div>
-          <button type="submit" className="home_button">
+
+        <div className="btn-margin">
+          <button type="submit" className="general-button">
             Sign up
           </button>
           {registerError && (
@@ -146,16 +118,19 @@ function Register({ loggedIn }) {
           )}
         </div>
 
-        <div>
-          <button className="home_button" onClick={(evt) => history.push("/")}>
+        <div className="home-btn-margin">
+          <button
+            className="general-button"
+            onClick={(evt) => history.push("/")}
+          >
             Back to Home
           </button>
         </div>
-        <p className="more">
+        <p className="acct-txt">
           Already have an account?
           <Link to={"/login/"}>
             <div>
-              <button className="home_button">Login</button>
+              <button className="general-button">Login</button>
             </div>
           </Link>
         </p>

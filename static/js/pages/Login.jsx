@@ -11,32 +11,14 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Login({ loggedIn, fname, updateLoginStatus }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Login({ loggedIn, updateLoginStatus }) {
   const [loginError, setLoginError] = useState(false);
-  // const { setLoginStatus } = props;
+
   const history = useHistory();
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
 
-  // useEffect(() => {
-  //   // Check if the user is already logged in when the component mounts
-  //   if (loggedIn) {
-  //     // Show an alert
-  //     alert("Already logged in! Redirecting you to My Groups page.");
-  //     // Redirect to another page immediately (e.g., home page)
-  //     history.push("/my-groups");
-  //   }
-  // }, [loggedIn, history]);
-
-  // if (loggedIn) {
-  //   alert("Already logged in! Redirecting to your account.");
-  //   history.push("/my-groups");
-  //   // return null; // Render nothing if already logged in and redirected
-  // }
-
   useEffect(() => {
-    // Check if the user is already logged in when the component mounts
     if (loggedIn) {
       // alert("Already logged in! Redirecting to your account.");
       history.push("/my-groups");
@@ -45,9 +27,7 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
 
   const handleLogin = (evt) => {
     evt.preventDefault();
-
     const loginData = new FormData(evt.target);
-
     const credentials = {
       email: loginData.get("email"),
       password: loginData.get("password"),
@@ -75,10 +55,10 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
   };
 
   return (
-    <div className="auth-form-container content">
+    <div className="login-content">
       <div>
         <h1 className="text">User Login</h1>
-        <form className="login-form" onSubmit={handleLogin}>
+        <form onSubmit={handleLogin}>
           <div className="email-field">
             <label htmlFor="email" className="label-text row">
               Email:
@@ -116,8 +96,8 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
             </div>
           </div>
           <div>
-            <div className="login-btn">
-              <button type="submit" className="login_button">
+            <div className="login-btn-div">
+              <button type="submit" className="login-button">
                 Log in
               </button>
               {loginError && (
@@ -127,20 +107,20 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
                 </p>
               )}{" "}
             </div>
-            <div className="home-btn">
+            <div className="home-btn-div">
               <button
-                className="home_button"
+                className="home-button"
                 onClick={(evt) => history.push("/")}
               >
                 Back to Home
               </button>
             </div>
           </div>
-          <p className="no-acct">
+          <p className="no-acct-txt">
             Don't have an account?
-            <Link to="/register" className="sign_up">
+            <Link to="/register" className="sign-up">
               <div>
-                <button className="home_button">Sign Up</button>
+                <button className="home-button">Sign Up</button>
               </div>
             </Link>
           </p>

@@ -1,4 +1,4 @@
-/* Global */
+/**************************************** Global *************************************/
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +9,6 @@
 body {
   background-image: url("/static/img/landing_background.jpg");
   background-size: cover;
-  /* background-size: 100% 100%; */
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center bottom;
@@ -17,13 +16,6 @@ body {
   /* height: 200vh; */
   overflow-x: hidden;
   overflow-y: auto;
-  /* color: white; */
-}
-
-#root {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 .App {
@@ -35,26 +27,7 @@ body {
   /* color: white; */
 }
 
-.container {
-  display: flex;
-  /* place-items: center; */
-  text-align: center;
-
-  justify-content: center; /* center horizontally */
-  align-items: center; /* center vertically */
-
-  width: 100%;
-  min-height: 50vh;
-  /* height: 80vh; */
-  /* flex-wrap: nowrap; */
-}
-
-.auth-form-container {
-  display: flex;
-  flex-direction: column;
-}
-
-/*** landing main info ***/
+/******************************** landing main info ****************************************/
 .landing-intro {
   height: 33.33vh; /* Set the row height to one-third of the viewport height */
   display: flex;
@@ -154,19 +127,11 @@ body {
   font-size: 14px;
 }
 
-/******** Login *********/
-/* .login_bg {
-  background-color: white;
-} */
+/***************************************** Login Page *****************************************/
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.content {
+.login-content {
   text-align: center;
-  width: 360px;
+  width: 380px;
   border-radius: 10px;
   padding: 40px 30px;
   margin-top: 100px;
@@ -175,21 +140,14 @@ body {
   /* flex-direction: column; */
 }
 
-/* .content1 {
-  display: grid;
-  place-items: center;
-  text-align: center;
-  background-size: cover;
-} */
-
-.content .text {
-  font-size: 25px;
+.login-content .text {
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
 }
 
-/* .content .field {
+/* .login-content .field {
   height: 50px;
   width: 100%;
   display: flex;
@@ -204,7 +162,6 @@ body {
   outline: none;
   border: none;
   color: #e0d2d2;
-
   border-radius: 8px;
   background: rgba(19, 18, 18, 0);
   backdrop-filter: blur(20px);
@@ -220,13 +177,14 @@ body {
 }
 
 .field span {
+  padding-top: 9px;
   position: absolute;
   width: 50px;
   line-height: 50px;
   color: #ffffff;
 }
 
-.login_button {
+.login-button {
   white-space: nowrap;
   margin: 10px, 25px, 25px, 25px;
   width: 100%;
@@ -242,7 +200,12 @@ body {
   border-radius: 8px;
 }
 
-.home_button {
+.login-btn-div {
+  padding-bottom: 15px;
+  padding-top: 10px;
+}
+
+.home-button {
   white-space: nowrap;
   margin: 25px, 25px, 25px, 25px;
   width: 100%;
@@ -258,24 +221,19 @@ body {
   border-radius: 8px;
 }
 
-.no-acct {
+.home-btn-div {
+  padding-bottom: 20px;
+}
+
+.no-acct-txt {
   /* color: white; */
   margin: 25px;
   color: rgb(238, 226, 226);
 }
 
-.sign_up {
+.sign-up {
   margin: 10px;
 }
-/* .field .row {
-  display: flex;
-  align-items: center;
-} */
-
-/* label {
-  display: block;
-  margin-bottom: 5px;
-} */
 
 label {
   font-size: 16px;
@@ -293,23 +251,117 @@ input {
   border-radius: 10px;
 }
 
-.home-btn {
-  padding-bottom: 20px;
+/************************************ Register Page *************************************/
+.register-content {
+  text-align: center;
+  width: 380px;
+  border-radius: 10px;
+  padding: 40px 30px;
+  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.178);
+  backdrop-filter: blur(20px);
 }
 
-.login-btn {
-  padding-bottom: 20px;
+.register-content .text {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color: rgb(247, 233, 233);
+}
+
+.register-field input {
+  height: 100%;
+  width: 100%;
+  padding-left: 20px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  color: #e0d2d2;
+  border-radius: 8px;
+  background: rgba(19, 18, 18, 0);
+  backdrop-filter: blur(20px);
+}
+
+.register-field input::placeholder {
+  color: #e0d2d2a6;
+}
+
+.general-button {
+  white-space: nowrap;
+  margin: 25px, 25px, 25px, 25px;
+  width: 100%;
+  height: 50px;
+  color: rgb(238, 226, 226);
+  font-size: 18px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.btn-margin {
+  padding-top: 25px;
+}
+
+.home-btn-margin {
   padding-top: 10px;
 }
 
-/* .label-text {
-  text-align: left;
-  margin-bottom: 0px;
-  padding-left: 15px;
-} */
+.acct-txt {
+  padding-top: 25px;
+  color: white;
+}
 
-/* .email-field {
-  display: flex;
-  justify-content: left;
-} */
-/******** Register *********/
+/********************************** Select Category Page ********************************/
+.category-content {
+  text-align: center;
+  width: 460px;
+  border-radius: 10px;
+  padding: 40px 30px;
+  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.178);
+  backdrop-filter: blur(20px);
+}
+
+.category-content .text {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color: rgb(247, 233, 233);
+}
+
+.category-submit-btn {
+  white-space: nowrap;
+  margin: 25px, 25px, 25px, 25px;
+  width: 100%;
+  height: 50px;
+  color: rgb(238, 226, 226);
+  font-size: 18px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.submit-btn-margin {
+  padding-top: 25px;
+}
+
+.category-form {
+  text-align: center; /* Align text to the left */
+}
+
+.category-item {
+  margin-bottom: 10px; /* Add space between categories */
+}
+
+.category-text {
+  margin-left: 10px; /* Add space between checkbox and text */
+  font-size: 18px;
+}

@@ -80,13 +80,13 @@ function SelectCategory(props) {
   };
 
   return (
-    <div>
-      <h2>
+    <div className="category-content">
+      <h2 className="text">
         Please select at least one category you would like to be matched with!
       </h2>
-      <form>
+      <form className="category-form">
         {categories.map((category) => (
-          <div key={category}>
+          <div className="category-item" key={category}>
             <label>
               <input
                 type="checkbox"
@@ -94,12 +94,16 @@ function SelectCategory(props) {
                 checked={selectedCategories.includes(category)}
                 onChange={handleCheckboxChange}
               />
-              {category}
+              <span className="category-text">{category}</span>
             </label>
           </div>
         ))}
       </form>
-      <button onClick={handleSubmit}>Submit</button>
+      <div className="submit-btn-margin">
+        <button className="category-submit-btn" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
     </div>
   );
 }

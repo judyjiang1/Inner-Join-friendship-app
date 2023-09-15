@@ -7,33 +7,42 @@
     <!-- socket io
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script> -->
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    
-    <link rel="stylesheet"
-        href="../static/css/style1.css">
-        
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel=”stylesheet”
+    href=”https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css”> -->
+    <link rel="stylesheet" href="../static/css/style1.css" />
+    <link
+      rel="stylesheet"
+      href="/static/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-select/5.7.4/react-select.cjs.default.min.js" integrity="sha512-cbtrH4RSIRWL21Chiq6XQg0YK9tWn7Ex0RljsW6dfn5YC5xuOt77NZQvo6g6NIurwcer0OlONQvMXV/lGzc6dA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <link rel="stylesheet" href="/static/choices.js/styles/choices.css">
+    <link rel="stylesheet" href="/static/choices.js/styles/choices.css" />
     <script src="/static/choices.js/scripts/choices.js"></script>
-
+    <style>
+      @import url(‘https://fonts.googleapis.com/css2?family=Poppins&display=swap’);
+    </style>
   </head>
   <body>
     {% for msg in get_flashed_messages() %}
-      <p class="flash-msg">
-        {{ msg }}
-      </p>
-    {% endfor %}
-    {% block body %}{% endblock %}
-    {% block js %}{% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <p class="flash-msg">{{ msg }}</p>
+    {% endfor %} {% block body %}{% endblock %} {% block js %}{% endblock %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
-
-
 
 <!-- <div id="root"></div>
 <script type="text/jsx" src="/static/js/components/Landing.jsx"></script> -->

@@ -59,27 +59,28 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
   // }, []);
 
   return (
-    <div className="bg">
+    <div>
+      {/* Logo and Website Name */}
+
       <div className="row">
-        {/* Logo and Website Name */}
-        <div className="col-md-6">
-          <div className="cover-header">
-            {/* <div className="logo img">
+        {/* <div className="logo img">
               <img src="/static/img/app logo.png" alt="Logo" />
             </div> */}
-            <Link to="/">
-              <img
-                src="/static/img/app logo.png"
-                alt="App Logo"
-                style={{ width: "300px" }}
-              />
-            </Link>
-            {/* <div className="web-name">
+        <div className="col-1">
+          <Link to="/">
+            <img
+              src="/static/img/app logo.png"
+              alt="App Logo"
+              style={{ width: "300px" }}
+            />
+          </Link>
+        </div>
+        {/* <div className="web-name">
               <h1>InnerJoin</h1>
             </div> */}
-          </div>
-        </div>
-        <div>
+        <div className="col-10"></div>
+
+        <div className="col-1">
           {loggedIn ? (
             <>
               <a>Welcome, {fname} </a>{" "}
@@ -89,23 +90,23 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
             </>
           ) : null}
         </div>
-
-        <div className="flex-container">
+      </div>
+      <div className="container">
+        <div className="container">
           {/* Description */}
-          <div>
-            <div className="cover-content">
-              <h2 className="cover-p1">
-                "An innovative way of making new friends."
-              </h2>
 
-              <p className="cover-p2">
-                Discover people who have crossed paths or share commonalities
-                with you and start building <span> lifelong </span> friendship.
-              </p>
-            </div>
+          <div className="container">
+            <h2>An innovative way of making new friends.</h2>
 
-            {/* Buttons */}
-            <div className="cover-buttons">
+            <p className="row">
+              Discover people who have crossed paths or share commonalities with
+              you and start building <span> lifelong </span> friendship.
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="row">
+            <div className="col">
               <Link to="/login" className="btn btn-primary mx-2">
                 Login
               </Link>
@@ -125,14 +126,15 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
                 {isOpen ? "Hide Instructions" : "View Instructions"}
               </button>
             </div>
-            <div>
-              <InstructionBox isOpen={isOpen} />
-            </div>
+          </div>
+
+          <div>
+            <InstructionBox isOpen={isOpen} />
           </div>
         </div>
-        <div>
-          <CopyrightFooter />
-        </div>
+      </div>
+      <div>
+        <CopyrightFooter />
       </div>
     </div>
   );

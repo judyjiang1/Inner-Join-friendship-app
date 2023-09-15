@@ -54,7 +54,7 @@ function App() {
           </div>
         </Route>
         <Route path="/login/" exact>
-          <div>
+          <div className="App">
             <Login
               loggedIn={loggedIn}
               fname={fname}
@@ -63,7 +63,7 @@ function App() {
           </div>
         </Route>
         <Route path="/register/" exact>
-          <div>
+          <div className="App">
             <Register
               loggedIn={loggedIn}
               updateLoginStatus={updateLoginStatus}
@@ -71,17 +71,17 @@ function App() {
           </div>
         </Route>
         <Route path="/register-success/" exact>
-          <div>
+          <div className="App">
             <RegisterSuccess></RegisterSuccess>
           </div>
         </Route>
         <Route path="/select-categories/" exact>
-          <div>
+          <div className="App">
             <SelectCategory></SelectCategory>
           </div>
         </Route>
         <Route path="/enter-user-info/" exact>
-          <div>
+          <div className="App">
             <AllUserInfo updateLoginStatus={updateLoginStatus} />
           </div>
         </Route>

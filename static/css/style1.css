@@ -49,6 +49,11 @@ body {
   /* flex-wrap: nowrap; */
 }
 
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
 /*** landing main info ***/
 .landing-intro {
   height: 33.33vh; /* Set the row height to one-third of the viewport height */
@@ -154,9 +159,14 @@ body {
   background-color: white;
 } */
 
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .content {
   text-align: center;
-  width: 350px;
+  width: 360px;
   border-radius: 10px;
   padding: 40px 30px;
   margin-top: 100px;
@@ -179,12 +189,13 @@ body {
   color: rgb(247, 233, 233);
 }
 
-.content .field {
+/* .content .field {
   height: 50px;
   width: 100%;
   display: flex;
   position: relative;
-}
+} */
+
 .field input {
   height: 100%;
   width: 100%;
@@ -202,9 +213,12 @@ body {
 .field input::placeholder {
   color: #e0d2d2a6;
 }
+
 .field:nth-child(2) {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin-bottom: 20px;
 }
+
 .field span {
   position: absolute;
   width: 50px;
@@ -214,7 +228,7 @@ body {
 
 .login_button {
   white-space: nowrap;
-  margin: 25px;
+  margin: 10px, 25px, 25px, 25px;
   width: 100%;
   height: 50px;
   color: rgb(238, 226, 226);
@@ -230,7 +244,7 @@ body {
 
 .home_button {
   white-space: nowrap;
-  margin: 25px;
+  margin: 25px, 25px, 25px, 25px;
   width: 100%;
   height: 50px;
   color: rgb(238, 226, 226);
@@ -244,19 +258,19 @@ body {
   border-radius: 8px;
 }
 
-.no_acct {
+.no-acct {
   /* color: white; */
-  margin: 25 px;
+  margin: 25px;
   color: rgb(238, 226, 226);
 }
 
 .sign_up {
   margin: 10px;
 }
-.field .row {
+/* .field .row {
   display: flex;
   align-items: center;
-}
+} */
 
 /* label {
   display: block;
@@ -264,8 +278,12 @@ body {
 } */
 
 label {
+  font-size: 16px;
+  font-weight: 600;
+  /* margin-bottom: 35px; */
+  color: rgb(247, 233, 233);
   text-align: left;
-  padding: 0.25rem 0;
+  padding-left: 15px;
 }
 
 input {
@@ -274,4 +292,24 @@ input {
   border: none;
   border-radius: 10px;
 }
+
+.home-btn {
+  padding-bottom: 20px;
+}
+
+.login-btn {
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+/* .label-text {
+  text-align: left;
+  margin-bottom: 0px;
+  padding-left: 15px;
+} */
+
+/* .email-field {
+  display: flex;
+  justify-content: left;
+} */
 /******** Register *********/

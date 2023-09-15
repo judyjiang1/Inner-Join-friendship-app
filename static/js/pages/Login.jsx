@@ -75,62 +75,68 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
   };
 
   return (
-    <div className="container content">
+    <div className="auth-form-container content">
       <div>
         <h1 className="text">User Login</h1>
-        <form onSubmit={handleLogin}>
-          <div className="field">
-            {/* <div>
-              <label htmlFor="email">Email:</label>
-            </div> */}
-            <span className="fa fa-user"></span>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              required={true}
-              autoComplete="off"
-              value={email}
-              onChange={(evt) => setEmail(evt.target.value.trim())}
-            />{" "}
+        <form className="login-form" onSubmit={handleLogin}>
+          <div className="email-field">
+            <label htmlFor="email" className="label-text row">
+              Email:
+            </label>
+            <div className="field">
+              <span className="fa fa-user"></span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required={true}
+                autoComplete="off"
+                value={email}
+                onChange={(evt) => setEmail(evt.target.value.trim())}
+              />{" "}
+            </div>
           </div>
-          <div className="field">
-            {/* <label htmlFor="password" className="row">
+          <div>
+            <label htmlFor="password" className="row">
               Password:
-            </label> */}
-
-            <span className="fa fa-lock"></span>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="************"
-              required={true}
-              autoComplete="off"
-              value={password}
-              onChange={(evt) => setPassword(evt.target.value.trim())}
-            />
+            </label>
+            <div className="field">
+              <span className="fa fa-lock"></span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="************"
+                required={true}
+                autoComplete="off"
+                value={password}
+                onChange={(evt) => setPassword(evt.target.value.trim())}
+              />
+            </div>
           </div>
-          <div className="row">
-            <button type="submit" className="col login_button">
-              Log in
-            </button>
-            {loginError && (
-              <p>
-                The email or password you entered was incorrect. Please try
-                again.
-              </p>
-            )}
-
-            <button
-              className=" col home_button"
-              onClick={(evt) => history.push("/")}
-            >
-              Home Page
-            </button>
+          <div>
+            <div className="login-btn">
+              <button type="submit" className="login_button">
+                Log in
+              </button>
+              {loginError && (
+                <p>
+                  The email or password you entered was incorrect. Please try
+                  again.
+                </p>
+              )}{" "}
+            </div>
+            <div className="home-btn">
+              <button
+                className="home_button"
+                onClick={(evt) => history.push("/")}
+              >
+                Back to Home
+              </button>
+            </div>
           </div>
-          <p className="no_acct">
+          <p className="no-acct">
             Don't have an account?
             <Link to="/register" className="sign_up">
               Sign Up

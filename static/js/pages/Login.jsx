@@ -139,7 +139,9 @@ function Login({ loggedIn, fname, updateLoginStatus }) {
           <p className="no-acct">
             Don't have an account?
             <Link to="/register" className="sign_up">
-              Sign Up
+              <div>
+                <button className="home_button">Sign Up</button>
+              </div>
             </Link>
           </p>
         </form>

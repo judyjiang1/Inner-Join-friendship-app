@@ -64,8 +64,8 @@ function Register({ loggedIn }) {
   };
 
   return (
-    <div>
-      <h2>Create a new account</h2>
+    <div className="content">
+      <h2 className="text">Create a new account</h2>
 
       <form onSubmit={handleRegister}>
         <Field
@@ -137,15 +137,27 @@ function Register({ loggedIn }) {
           autoComplete={"off"}
           updateValue={(val) => setZipcode(val)}
         /> */}
+        <div>
+          <button type="submit" className="home_button">
+            Sign up
+          </button>
+          {registerError && (
+            <p>Account already exists. Please log in or use another email.</p>
+          )}
+        </div>
 
-        <button type="submit">Sign up</button>
-        {registerError && (
-          <p>Account already exists. Please log in or use another email.</p>
-        )}
-        <button onClick={(evt) => history.push("/")}>Back to Home</button>
+        <div>
+          <button className="home_button" onClick={(evt) => history.push("/")}>
+            Back to Home
+          </button>
+        </div>
         <p className="more">
           Already have an account?
-          <Link to={"/login/"}> Login</Link>
+          <Link to={"/login/"}>
+            <div>
+              <button className="home_button">Login</button>
+            </div>
+          </Link>
         </p>
       </form>
     </div>

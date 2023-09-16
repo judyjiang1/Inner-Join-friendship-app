@@ -327,6 +327,51 @@ input {
   color: white;
 }
 
+/* Register success */
+.acct-created {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  /* padding: 40px 30px; */
+  /* margin-top: 100px; */
+
+  background: rgba(255, 255, 255, 0.178);
+  /* backdrop-filter: blur(20px); */
+  margin-bottom: 25px;
+}
+
+.acct-created-content {
+  text-align: center;
+  width: 460px;
+  border-radius: 10px;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.178);
+  backdrop-filter: blur(20px);
+}
+
+.acct-created .text {
+  font-size: 25px;
+  font-weight: 600;
+  color: rgb(247, 233, 233);
+  padding-top: 10px;
+}
+
+.congrat-msg {
+  color: rgb(247, 233, 233);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.enter-info-msg {
+  color: rgb(247, 233, 233);
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
 /********************************** Select Category Page ********************************/
 .category-content {
   text-align: center;
@@ -467,4 +512,17 @@ input {
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+/************************************ My Group Page *************************************/
+.group-content {
+  text-align: left;
+  width: 80%;
+  border-radius: 10px;
+  padding: 40px 30px;
+  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.178);
+  backdrop-filter: blur(20px);
+  margin: 20px;
+  align-items: center;
 }

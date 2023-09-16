@@ -15,23 +15,23 @@ function RegisterSuccess(props) {
   document.title = "Your Account Created";
   const history = useHistory();
   return (
-    <div className="container register-content">
+    <div className="acct-created-content">
       <div className="flexBox">
-        <div className="card border-success">
-          <div className="card-header bg-success text-white">
-            <h4 className="text-center">Your Account Created</h4>
+        <div>
+          <div className="acct-created">
+            <h4 className="text">Your Account Created!</h4>
           </div>
-          <div className="card-body">
-            <div className="text-success">
+          <div>
+            <div className="congrat-msg">
               Congratulations, your account has been successfully created!
             </div>
-            <div>
+            <div className="enter-info-msg">
               Please enter your information to optimize the matching process!{" "}
             </div>
           </div>
-          <div className="card-footer text-center">
+          <div>
             <button
-              className="btn btn-success"
+              className="btn btn-primary"
               onClick={(evt) => {
                 history.push("/select-categories/");
               }}

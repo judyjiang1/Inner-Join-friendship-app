@@ -79,8 +79,10 @@ function MyGroups({ updateLoginStatus }) {
   return (
     <div>
       <NavBar updateLoginStatus={updateLoginStatus} />
-      <h1>My Groups</h1>
-      <div className="col-12 col-md-9 d-flex flex-wrap">{groupCards}</div>
+      <div className="group-content">
+        <h1>My Groups</h1>
+        <div className="col-12 col-md-9 d-flex flex-wrap">{groupCards}</div>
+      </div>
     </div>
   );
 }

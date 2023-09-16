@@ -87,7 +87,7 @@ function App() {
         </Route>
         <Route path="/my-groups/" exact>
           <div>
-            <MyGroups updateLoginStatus={updateLoginStatus} />
+            <MyGroups className="Info" updateLoginStatus={updateLoginStatus} />
           </div>
         </Route>
         <Route exact path="/" component={MyGroups} />

@@ -118,7 +118,7 @@ function AllUserInfo({ updateLoginStatus }) {
       setDialogTitle("Warning");
       setDialogInfo(
         <div>
-          Please make selections.
+          Please make selection(s) for each category.
           {/* <ul>
             <li>Hobby & Interests</li>
             <li>Cultural Background</li>

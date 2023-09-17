@@ -1,8 +1,15 @@
 """Data models for inner-join friendship app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, timezone
 
 db = SQLAlchemy()
+
+def get_utc_timestamp():
+    """
+    return timestamp at this very moment, integer, micro second, 1/1000 of one second
+    """
+    return int(datetime.now(tz=timezone.utc).timestamp() * 1000)
 
 
 class User(db.Model):
@@ -169,14 +176,27 @@ class UserGroup(db.Model):
         return f"<UserGroup user_group_id={self.user_group_id}>"
 
 
-class Message(db.Model):
-    
-    __tablename__ = "message"
+class ChatRoom(db.Model):
+    __tablename__ = 'chat_room'
 
-    content_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey("groups.group_id"), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    content = db.Column(db.String)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    group_name = db.Column(db.String, nullable=False)
+    category_name = db.Column(db.String, nullable=False)
+
+    @classmethod
+    def check_or_join_chatroom(cls, room_id, user_id):
+        """
+        makesure a user joining a chatroom
+        """
+        # check user exists
+        user_obj: User = User.query.filter(User.user_id == user_id).first()
+        if user_obj is None:
+            return {}
+        
+        return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email)
+
+
+
 
 
 

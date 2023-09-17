@@ -36,8 +36,6 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
     
-    
-    
     @classmethod
     def create(cls, username, email, password, fname, lname, gender=None, age=None, ethnicity=None, occupation=None, zipcode=0):
        """Create and return a new user."""
@@ -131,9 +129,6 @@ class Group(db.Model):
     def __repr__(self):
         return f"<Group group_id={self.group_id}>"
     
-
-    
-    
     @classmethod
     def create(cls, group_name, matched_at=None, active_status=None, user_defined=False):
         """Create and return a new group."""
@@ -186,7 +181,7 @@ class ChatRoom(db.Model):
     @classmethod
     def check_or_join_chatroom(cls, room_id, user_id):
         """
-        makesure a user joining a chatroom
+        make sure a user is joining a chatroom
         """
         # check user exists
         user_obj: User = User.query.filter(User.user_id == user_id).first()
@@ -194,6 +189,21 @@ class ChatRoom(db.Model):
             return {}
         
         return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email)
+
+
+class RoomMember(db.Model):
+    __tablename__ = 'chat_room_member'
+
+    ONLINE_THRESHOLD = 3  # after 3 minutes user will be presumed offline
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+
+    room_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+
+    last_seen = db.Column(db.Integer, default=get_utc_timestamp)
+    joined_at = db.Column(db.Integer, default=get_utc_timestamp)
+    is_online = db.Column(db.Boolean, default=True, server_default='1')
 
 
 

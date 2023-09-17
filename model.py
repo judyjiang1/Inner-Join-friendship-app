@@ -183,13 +183,27 @@ class ChatRoom(db.Model):
         """
         make sure a user is joining a chatroom
         """
-        # check user exists
+        # check if user exists
         user_obj: User = User.query.filter(User.user_id == user_id).first()
         if user_obj is None:
             return {}
-        
-        return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email)
+        # check if room exists
+        if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
+            return {}
+        obj: RoomMember = RoomMember.query.filter(RoomMember.room_id == room_id).filter(
+            RoomMember.user_id == user_id).first()
+        if obj is None:
+            obj = RoomMember()
+            obj.room_id = room_id
+            obj.user_id = user_id
 
+        obj.is_online = True
+        obj.last_seen = get_utc_timestamp()
+        db.session.add(obj)
+        db.session.commit()
+        return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
+                    joined_at=obj.joined_at, last_seen=obj.last_seen, is_online=obj.is_online)
+    
 
 class RoomMember(db.Model):
     __tablename__ = 'chat_room_member'

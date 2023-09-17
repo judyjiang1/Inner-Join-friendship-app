@@ -206,6 +206,17 @@ class RoomMember(db.Model):
     is_online = db.Column(db.Boolean, default=True, server_default='1')
 
 
+class Message(db.Model):
+    __tablename__ = 'chat_room_message'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+
+    room_id = db.Column(db.Integer, nullable=False)
+    sender_id = db.Column(db.Integer, nullable=False)
+    content = db.Column(db.String, nullable=False)
+    created_at = db.Column(db.Integer, default=get_utc_timestamp)
+
+
 
 
 

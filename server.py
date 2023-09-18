@@ -109,16 +109,14 @@ def register_user():
 
 
 @app.route("/api/select-categories", methods=["POST"])
+@protected_api
 def select_category():
     """Get user category selections and save to database."""
-    
-    if 'email' in session:
-        email = session['email']
     
     data = request.get_json()
     selections = data.get('selectedCategories', [])
     
-    user = crud.get_user_by_email(email)
+    user = g.user
 
     for category in selections:
         selected_category = crud.get_category_by_name(category.lower())

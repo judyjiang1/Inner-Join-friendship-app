@@ -34,3 +34,5 @@ def login_check(f):
 
     return wrapper
 
+
+from . import events

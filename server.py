@@ -242,6 +242,7 @@ def get_user_groups_participants():
     return jsonify(group_users)
 
 
+
 @app.route("/api/get-user-groups", methods=["POST"])
 @protected_api
 def get_user_groups():
@@ -250,7 +251,6 @@ def get_user_groups():
     user_groups = user.groups
     user_id = user.user_id
     
-   
     # this will show groups and its images 
     groups_formed = []
     for group in user_groups:
@@ -342,9 +342,9 @@ def get_user():
 
     user_obj = crud.get_user_by_email(email)
     user_fname = user_obj.fname
-    
 
     return jsonify(user_fname)
+
 
 
 @app.route('/check_login', methods=['GET'])
@@ -360,6 +360,74 @@ def check_login():
 
 
 
+@app.route('/api/open-chatroom', methods=['post'])
+@protected_api
+def user_open_chatroom():
+    """
+    user opens a chatroom, creates it if it doesn't exist, and ensures they join it.
+    """
+
+    user_obj: User = g.user
+
+    data = request.get_json()
+    group_name = data.get('group_name')
+    category_name = data.get('category_name')
+    action = data.get('action')
+
+    room_obj: ChatRoom = ChatRoom.query.filter(ChatRoom.group_name == group_name).filter(
+        ChatRoom.category_name == category_name).first()
+    if room_obj is None:
+        room_obj = ChatRoom()
+        room_obj.group_name = group_name
+        room_obj.category_name = category_name
+        db.session.add(room_obj)
+        db.session.commit()
+
+    # if this chatroom members' count smaller than 1
+    if db.session.query(RoomMember.id).join(ChatRoom, RoomMember.room_id == ChatRoom.id).filter(
+            ChatRoom.id == room_obj.id).count() < 1:
+        # discover members
+        ChatRoom.discover_group_members(room_id=room_obj.id)
+
+    RoomMember.ensure_membership(room_id=room_obj.id, user_id=user_obj.user_id)
+
+    if action is None:
+        return jsonify(success=1)
+
+    online_members, offline_members = RoomMember.batch_check_members_status(room_id=room_obj.id)
+
+    members = []
+    for (user_id, fname, lname, email, joined_at, last_seen, last_speak) in db.session.query(User.user_id, User.fname,
+                                                                                             User.lname,
+                                                                                             User.email,
+                                                                                             RoomMember.joined_at,
+                                                                                             RoomMember.last_seen,
+                                                                                             RoomMember.last_speak).join(
+        RoomMember, RoomMember.user_id == User.user_id).filter(RoomMember.room_id == room_obj.id).order_by(
+        RoomMember.joined_at.desc()).all():
+        is_online = True if user_id in online_members else False
+        members.append(
+            dict(user_id=user_id, fname=fname, lname=lname, email=email, joined_at=joined_at, last_seen=last_seen,
+                 last_speak=last_speak,
+                 is_online=is_online))
+
+    messages = []
+    for (message_id, room_id, content, created_at,
+         sender_id, sender_fname, sender_lname, sender_email) in db.session.query(Message.id,
+                                                                                  Message.room_id,
+                                                                                  Message.content,
+                                                                                  Message.created_at,
+                                                                                  User.user_id,
+                                                                                  User.fname,
+                                                                                  User.lname,
+                                                                                  User.email, ).filter(
+        Message.room_id == room_obj.id).join(
+        User, User.user_id == Message.sender_id).order_by(Message.created_at.asc()).limit(1024).all():
+        messages.append(dict(message_id=message_id, room_id=room_id, content=content, created_at=created_at,
+                             sender_id=sender_id, sender_fname=sender_fname, sender_lname=sender_lname,
+                             sender_email=sender_email))
+    return jsonify(success=1, messages=messages, members=members,
+                   room=dict(id=room_obj.id, group_name=room_obj.group_name, category_name=room_obj.category_name))
 
 
 

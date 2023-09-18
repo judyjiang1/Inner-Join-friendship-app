@@ -1,20 +1,47 @@
 """Server for inner-join friendship app."""
 
 import os
-from flask import Flask, render_template, request, flash, session, redirect, jsonify, abort, g
-from model import (connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup, GroupTag, ChatRoom, RoomMember,
-                   Message, get_utc_timestamp)
+from flask import Flask, render_template, request, flash, session, redirect, jsonify, abort
+from model import connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup,GroupTag
 import crud
 from jinja2 import StrictUndefined
 from sqlalchemy import func
+# from flask_socketio import SocketIO, emit
+
 
 
 app = Flask(__name__)
-app.secret_key = "dev"
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
 
+# socketio = SocketIO(app)
+
+# users = {}
+
+# @socketio.on("connect")
+# def handle_connect():
+#     print("Client connected!")
+
+# @socketio.on("user_join")
+# def handle_user_join(username):
+#     print(f"User {username} joined!")
+#     users[username] = request.sid
+
+# @socketio.on("new_message")
+# def handle_new_message(message):
+#     print(f"New message: {message}")
+#     username = None 
+#     for user in users:
+#         if users[user] == request.sid:
+#             username = user
+#     emit("chat", {"message": message, "username": username}, broadcast=True)
 
 
+# @app.route('/chat')
+# def chatpage():
+#     """View homepage."""
+    
+#     return render_template("index.html")
 
 
 @app.route('/')
@@ -32,26 +59,27 @@ def route(sub_path):
 def process_login():
     """Process user login."""
 
-    data = request.json
-    email = data.get("email")
-    password = data.get("password")
-
-    user_obj = crud.get_user_by_email(email)
-
-    if not user_obj or user_obj.password != password:
-        return jsonify({'success': False}), 401
+    if 'email' in session:
+        return redirect('/my-groups')
+    
     else:
-        # Log in user by storing the user's email in session
-        # session["email"] = user_obj.email
 
-        # way much better this way, make sure cookie small
-        session['user_id'] = user_obj.user_id
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
 
-        flash(f"Welcome back, {user_obj.email}!")
-
-        return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
-                   lname=user_obj.lname,
-                   email=user_obj.email)), 200
+        user = crud.get_user_by_email(email)
+        
+        if not user or user.password != password:
+            return jsonify({'success': False}), 401
+        else:
+            session["user_id"] = user.user_id
+            session["fname"] = user.fname
+            session["lname"] = user.lname
+            session["username"] = user.username
+            session["email"] = user.email
+            # flash(f"Welcome back, {user.email}!")
+            return jsonify({'success': True}), 200
 
 
 ##############
@@ -85,7 +113,6 @@ def register_user():
 
 
 @app.route("/api/select-categories", methods=["POST"])
-@protected_api
 def select_category():
     """Get user category selections and save to database."""
     
@@ -111,7 +138,6 @@ def select_category():
 
 
 @app.route("/api/get-user-tags", methods=["POST"])
-@protected_api
 def get_user_categories():
 
 
@@ -127,7 +153,6 @@ def get_user_categories():
 
 
 @app.route("/api/submit-user-info", methods=["POST"])
-@protected_api
 def submit_user_info():
     if 'email' in session:
         email = session['email']
@@ -182,7 +207,6 @@ def submit_user_info():
 
 
 @app.route("/api/get-user-groups_participants", methods=["POST"])
-@protected_api
 def get_user_groups_participants():
 
     if 'email' in session:
@@ -366,13 +390,6 @@ def logout():
 #     # user_tags = User.category_tags(user_id=1)
 
 #     return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
-
-
-
-
-
-
-
 
 
 

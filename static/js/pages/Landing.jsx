@@ -14,8 +14,42 @@ const {
 function Landing({ loggedIn, fname, updateLoginStatus }) {
   document.title = "Welcome";
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const toggleOnOFF = () => {
     setIsOpen(!isOpen);
+  };
+  const handleExploreApp = (evt) => {
+    evt.preventDefault();
+
+    const email = "rbrakespear1@wisc.edu";
+    const password = "rA0!MvPv<1s";
+
+    fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          updateLoginStatus(true);
+          history.push("/my-groups");
+        } else {
+          setLoginError(true);
+          setEmail("");
+          setPassword("");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
   };
   // const [user, setUser] = useState(null);
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -116,7 +150,7 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
               <Link to="/demo" className="btn btn-primary mx-2">
                 Explore the App
               </Link>
-
+              <button onClick={handleExploreApp}>Explore the App</button>
               <button
                 onClick={toggleOnOFF}
                 className={`btn ${

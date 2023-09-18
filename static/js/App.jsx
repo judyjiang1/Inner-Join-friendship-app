@@ -196,4 +196,7 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+checkAuthStatus().then((res) => {
+  console.log(res);
+  ReactDOM.render(<App />, document.querySelector("#root"));
+});

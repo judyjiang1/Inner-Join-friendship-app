@@ -11,43 +11,33 @@ from flask_migrate import Migrate
 from events import socketio
 from functools import wraps
 
-
-
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
 connect_to_db(app)
-Migrate(app, db)
+# Migrate(app, db)
+# register flask socket-IO
 socketio.init_app(app)
 
-# socketio = SocketIO(app)
 
-# users = {}
+def protected_api(f):
+    """Protect backend api."""
 
-# @socketio.on("connect")
-# def handle_connect():
-#     print("Client connected!")
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        user_id = session.get('user_id')
+        if user_id:
+            user_obj: User = User.query.filter(User.user_id == user_id).first()
+            
+            if user_obj is None:
+                return jsonify(success=0, msg='protected'), 401
 
-# @socketio.on("user_join")
-# def handle_user_join(username):
-#     print(f"User {username} joined!")
-#     users[username] = request.sid
+            g.user = user_obj
+            return f(*args, **kwargs)
 
-# @socketio.on("new_message")
-# def handle_new_message(message):
-#     print(f"New message: {message}")
-#     username = None 
-#     for user in users:
-#         if users[user] == request.sid:
-#             username = user
-#     emit("chat", {"message": message, "username": username}, broadcast=True)
+        return jsonify(success=0, msg='protected'), 401
 
-
-# @app.route('/chat')
-# def chatpage():
-#     """View homepage."""
-    
-#     return render_template("index.html")
+    return wrapper
 
 
 @app.route('/')

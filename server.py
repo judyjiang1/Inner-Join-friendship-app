@@ -108,6 +108,16 @@ def register_user():
 
 
 
+@app.route('/api/user/echo')
+@protected_api
+def get_user_info():
+    user_obj: User = g.user
+    return jsonify(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
+                   lname=user_obj.lname,
+                   email=user_obj.email)
+
+
+
 @app.route("/api/select-categories", methods=["POST"])
 @protected_api
 def select_category():
@@ -357,25 +367,8 @@ def logout():
     return jsonify({ "status": "success" })
    
 
-# @app.route('/<path>')
-# def route(path):
-
-#     return render_template('homepage.html')
 
 
-
-
-# @app.route("/users")
-# def all_users():
-#     """View all users."""
-
-#     users = User.all_users()
-#     tags = Category_tag.all_category_tags()
-#     groups = Group.all_groups()
-#     user_groups = crud.get_user_groups(user_id=1)
-#     # user_tags = User.category_tags(user_id=1)
-
-#     return render_template("all_users.html", users=users, tags=tags, groups=groups,user_groups=user_groups)
 
 
 

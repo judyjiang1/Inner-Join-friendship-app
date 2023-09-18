@@ -179,30 +179,82 @@ class ChatRoom(db.Model):
     category_name = db.Column(db.String, nullable=False)
 
     @classmethod
-    def check_or_join_chatroom(cls, room_id, user_id):
-        """
-        make sure a user is joining a chatroom
-        """
-        # check if user exists
-        user_obj: User = User.query.filter(User.user_id == user_id).first()
-        if user_obj is None:
-            return {}
-        # check if room exists
-        if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
-            return {}
-        obj: RoomMember = RoomMember.query.filter(RoomMember.room_id == room_id).filter(
-            RoomMember.user_id == user_id).first()
-        if obj is None:
-            obj = RoomMember()
-            obj.room_id = room_id
-            obj.user_id = user_id
+    def find_chatroom_by_id(cls, room_id):
+        room_obj: cls = cls.query.filter(cls.id == room_id).first()
+        return room_obj
 
-        obj.is_online = True
-        obj.last_seen = get_utc_timestamp()
-        db.session.add(obj)
-        db.session.commit()
-        return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
-                    joined_at=obj.joined_at, last_seen=obj.last_seen, is_online=obj.is_online)
+    @classmethod
+    def discover_group_members(cls, room_id):
+        """
+        discover members of a group
+        """
+        res = []
+        room_obj: cls = cls.find_chatroom_by_id(room_id=room_id)
+        if room_obj is None:
+            return res
+
+        category_obj: Category_tag = Category_tag.query.filter(
+            Category_tag.category_tag_name == room_obj.category_name).first()
+        if category_obj is None:
+            return res
+
+        group_obj: Group = Group.query.join(GroupTag, GroupTag.group_id == Group.group_id).filter(
+            Group.group_name == room_obj.group_name).filter(
+            GroupTag.category_tag_id == category_obj.category_tag_id).first()
+        if group_obj is None:
+            return res
+
+        for user_id, in db.session.query(User.user_id) \
+                .join(UserGroup, UserGroup.user_id == User.user_id) \
+                .filter(UserGroup.group_id == group_obj.group_id) \
+                .all():
+            res.append(user_id)
+
+        existing_members = []
+        for user_id, in db.session.query(RoomMember.user_id).filter(RoomMember.room_id == room_obj.id).all():
+            existing_members.append(user_id)
+
+        to_add_members = [i for i in res if i not in existing_members]
+
+        now = get_utc_timestamp()
+        for i in to_add_members:
+            member_obj = RoomMember()
+            member_obj.room_id = room_obj.id
+            member_obj.user_id = i
+            member_obj.last_seen = -1
+            member_obj.joined_at = now
+            member_obj.is_online = False
+
+            db.session.add(member_obj)
+            db.session.commit()
+
+        return res
+
+    # @classmethod
+    # def check_or_join_chatroom(cls, room_id, user_id):
+    #     """
+    #     make sure a user is joining a chatroom
+    #     """
+    #     # check if user exists
+    #     user_obj: User = User.query.filter(User.user_id == user_id).first()
+    #     if user_obj is None:
+    #         return {}
+    #     # check if room exists
+    #     if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
+    #         return {}
+    #     obj: RoomMember = RoomMember.query.filter(RoomMember.room_id == room_id).filter(
+    #         RoomMember.user_id == user_id).first()
+    #     if obj is None:
+    #         obj = RoomMember()
+    #         obj.room_id = room_id
+    #         obj.user_id = user_id
+
+    #     obj.is_online = True
+    #     obj.last_seen = get_utc_timestamp()
+    #     db.session.add(obj)
+    #     db.session.commit()
+    #     return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
+    #                 joined_at=obj.joined_at, last_seen=obj.last_seen, is_online=obj.is_online)
     
 
 class RoomMember(db.Model):

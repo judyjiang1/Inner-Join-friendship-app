@@ -230,47 +230,118 @@ class ChatRoom(db.Model):
 
         return res
 
-    # @classmethod
-    # def check_or_join_chatroom(cls, room_id, user_id):
-    #     """
-    #     make sure a user is joining a chatroom
-    #     """
-    #     # check if user exists
-    #     user_obj: User = User.query.filter(User.user_id == user_id).first()
-    #     if user_obj is None:
-    #         return {}
-    #     # check if room exists
-    #     if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
-    #         return {}
-    #     obj: RoomMember = RoomMember.query.filter(RoomMember.room_id == room_id).filter(
-    #         RoomMember.user_id == user_id).first()
-    #     if obj is None:
-    #         obj = RoomMember()
-    #         obj.room_id = room_id
-    #         obj.user_id = user_id
-
-    #     obj.is_online = True
-    #     obj.last_seen = get_utc_timestamp()
-    #     db.session.add(obj)
-    #     db.session.commit()
-    #     return dict(user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
-    #                 joined_at=obj.joined_at, last_seen=obj.last_seen, is_online=obj.is_online)
-    
 
 class RoomMember(db.Model):
     __tablename__ = 'chat_room_member'
 
-    ONLINE_THRESHOLD = 3  # after 3 minutes user will be presumed offline
+    ONLINE_THRESHOLD = 1  # after 1 minutes user will be presumed offline
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
     room_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
 
+    last_speak = db.Column(db.Integer, default=-1, server_default='-1')
     last_seen = db.Column(db.Integer, default=get_utc_timestamp)
     joined_at = db.Column(db.Integer, default=get_utc_timestamp)
     is_online = db.Column(db.Boolean, default=True, server_default='1')
 
+    @classmethod
+    def batch_check_members_status(cls, room_id):
+        """
+        last seen in 3 minutes, user is presumed online
+        """
+        online_members = []
+        offline_members = []
+        to_mark_offline = []
+        now = get_utc_timestamp()
+        threshold = cls.ONLINE_THRESHOLD * 60 * 1000
+        for user_id, last_seen, is_online in db.session.query(cls.user_id, cls.last_seen, cls.is_online).filter(
+                cls.room_id == room_id).all():
+            flag = now - last_seen < threshold
+            if is_online:
+                if flag:
+                    online_members.append(user_id)
+                else:
+                    offline_members.append(user_id)
+                    to_mark_offline.append(user_id)
+            else:
+                offline_members.append(user_id)
+
+        if len(to_mark_offline) > 0:
+            cls.batch_mark_members_status(room_id=room_id, member_id_arr=to_mark_offline, status=False)
+
+        return online_members, offline_members
+
+    @classmethod
+    def batch_mark_members_status(cls, room_id, member_id_arr, status):
+        """
+        mark members offline / online
+        """
+        db.session.query(cls).filter(cls.room_id == room_id).filter(cls.user_id.in_(member_id_arr)).update(
+            dict(is_online=status))
+        db.session.commit()
+
+    @classmethod
+    def update_online_status(cls, room_id, member_id, status):
+        """
+        update online status of a member
+        """
+        db.session.query(cls).filter(cls.room_id == room_id).filter(cls.user_id == member_id).update(
+            dict(is_online=status))
+        db.session.commit()
+
+    @classmethod
+    def update_last_seen(cls, room_id, member_id):
+        """
+        update last_seen value for a member
+        """
+        db.session.query(cls).filter(cls.room_id == room_id).filter(cls.user_id == member_id).update(
+            dict(is_online=True, last_seen=get_utc_timestamp()))
+        db.session.commit()
+
+    @classmethod
+    def update_last_speak(cls, room_id, member_id):
+        """
+        update last_speak value for a member
+        """
+        now = get_utc_timestamp()
+        db.session.query(cls).filter(cls.room_id == room_id).filter(cls.user_id == member_id).update(
+            dict(is_online=True, last_seen=now, last_speak=now))
+        db.session.commit()
+        return now
+
+    @classmethod
+    def ensure_membership(cls, room_id, user_id):
+        """
+        make sure user membership exist
+        """
+        # check if user exists
+        user_obj: User = User.query.filter(User.user_id == user_id).first()
+        if user_obj is None:
+            return {}
+        # check if room exists
+        if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
+            return {}
+
+        member_ship: cls = cls.query.filter(RoomMember.room_id == room_id).filter(
+            cls.user_id == user_id).first()
+        if member_ship is None:
+            member_ship = cls()
+            member_ship.user_id = user_id
+            member_ship.room_id = room_id
+
+        # update user online status
+        member_ship.last_seen = get_utc_timestamp()
+        member_ship.is_online = True
+
+        db.session.add(member_ship)
+        db.session.commit()
+
+        return dict(
+            user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
+            joined_at=member_ship.joined_at, last_seen=member_ship.last_seen, lask_speak=member_ship.last_speak,
+            is_online=member_ship.is_online)
 
 class Message(db.Model):
     __tablename__ = 'chat_room_message'
@@ -281,10 +352,6 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, nullable=False)
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.Integer, default=get_utc_timestamp)
-
-
-
-
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///friends", echo=True):

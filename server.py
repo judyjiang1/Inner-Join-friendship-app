@@ -146,9 +146,7 @@ def get_user_categories():
 @app.route("/api/submit-user-info", methods=["POST"])
 @protected_api
 def submit_user_info():
-    if 'email' in session:
-        email = session['email']
-    user = crud.get_user_by_email(email)
+    user = g.user
     user_id = user.user_id 
 
     data = request.json
@@ -158,21 +156,13 @@ def submit_user_info():
     birthDay = data.get('birthDay')
     birthYear = data.get('birthYear')
     ethnicity = data.get('ethnicity')
-    # occupation = data.get('occupation')
+    occupation = data.get('occupation')
 
     formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
 
-    crud.update_user_info(user_id, gender, formatted_date, ethnicity,zip_code)
+    crud.update_user_info(user_id, gender, formatted_date, ethnicity,zip_code,occupation)
 
-    # combined_list = []
-    # combined_list.extend(data.get('hobbies', []))
-    # combined_list.extend(data.get('culturalBackground', []))
-    # combined_list.extend(data.get('supportGroups', []))
-    # combined_list.extend(data.get('work', []))
-    # combined_list.extend(data.get('college', []))
-    # combined_list.extend(data.get('highSchool', []))
-    # print(combined_list)
-
+    
     combined_list = []
 
     for element in ['hobbies', 'culturalBackground', 'supportGroups', 'work', 'college', 'highSchool']:
@@ -199,11 +189,10 @@ def submit_user_info():
 
 
 @app.route("/api/get-user-groups_participants", methods=["POST"])
+@protected_api
 def get_user_groups_participants():
 
-    if 'email' in session:
-        email = session['email']
-    user = crud.get_user_by_email(email)
+    user = g.user
     user_groups = user.groups
     user_id = user.user_id
     
@@ -244,11 +233,10 @@ def get_user_groups_participants():
 
 
 @app.route("/api/get-user-groups", methods=["POST"])
+@protected_api
 def get_user_groups():
 
-    if 'email' in session:
-        email = session['email']
-    user = crud.get_user_by_email(email)
+    user = g.user
     user_groups = user.groups
     user_id = user.user_id
     
@@ -277,14 +265,15 @@ def get_user_groups():
         tag_img_dict['imgURL'] = tag.img_url
         groups[group_obj.group_name] = tag_img_dict
     
-  
-        
     return jsonify(groups)
 
+
+
 @app.route('/api/store-group-in-session/<group_name>', methods=['POST'])
+@protected_api
 def store_group_in_session(group_name):
     try:
-        # Store the group name in the session
+        # Store group name in the session
         session['group_name'] = group_name
         return jsonify({'message': 'Group information stored in session'})
     except Exception as e:
@@ -293,12 +282,14 @@ def store_group_in_session(group_name):
     
 
 @app.route('/api/my-groups/<group_name>')
+@protected_api
 def my_group(group_name):
     return jsonify({'group_name': group_name})
 
 
 
 @app.route('/api/get-group-members', methods=["POST", "GET"])
+@protected_api
 def get_group_members():
 
     if 'email' in session:
@@ -332,6 +323,7 @@ def get_group_members():
 
 
 @app.route('/api/get-user')
+@protected_api
 def get_user():
     if 'email' in session:
         email = session['email']
@@ -346,6 +338,7 @@ def get_user():
 
 
 @app.route('/check_login', methods=['GET'])
+@protected_api
 def check_login():
     if 'email' in session:
         email = session['email']
@@ -358,6 +351,7 @@ def check_login():
 
 
 @app.route('/api/logout')
+@protected_api
 def logout():
     session.clear()
     return jsonify({ "status": "success" })

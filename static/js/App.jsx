@@ -13,9 +13,59 @@ const {
   useRouteError,
 } = ReactRouterDOM;
 
-// let isLogin = true;
-// const AuthContext = createContext();
+const _userInfo = { user_id: 0, fname: 0, lname: "", email: "", username: "" };
+let _isLogin = false;
 
+const AuthContext = createContext();
+
+function PrivateRoute({ children, ...rest }) {
+  const { loginStatus } = useContext(AuthContext);
+  console.log(loginStatus);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return loginStatus ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        );
+      }}
+    />
+  );
+}
+
+function PublicRoute({ children, ...rest }) {
+  const { loginStatus } = useContext(AuthContext);
+  const history = useHistory();
+
+  console.log(loginStatus);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        if (!loginStatus) {
+          return children;
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Already logged in. You will be redirected.",
+            timer: 2500,
+          }).then((r) => {
+            history.push("/my-groups/");
+          });
+        }
+      }}
+    />
+  );
+}
+
+/****************************************************************************/
 function App() {
   // const [loginStatus, setLoginStatus] = useState(isLogin);
   // useEffect(() => {
@@ -103,21 +153,3 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.querySelector("#root"));
-
-// function App() {
-//   return (
-//     <>
-//       <Routes>
-//         <Route path="/login" element={<Login />} />
-//         <Route path="/register" element={<Register />} />
-//       </Routes>
-//     </>
-//   );
-// }
-
-// ReactDOM.render(
-//   <BrowserRouter>
-//     <App />
-//   </BrowserRouter>,
-//   document.querySelector("#root")
-// );

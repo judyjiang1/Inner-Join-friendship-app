@@ -81,33 +81,30 @@ def process_login():
         
 
 
-##############
 @app.route("/api/register", methods=["POST"])
 def register_user():
     """Create a new user."""
 
-    data = request.get_json()
+    data = request.json
     fname = data.get("fname")
     lname = data.get("lname")
     username = data.get("username")
     email = data.get("email")
     password = data.get("password")
-    
-    user = crud.get_user_by_email(email)
-    if user:
-        return jsonify({'success': False}), 400
-    else:
-        session["fname"] = fname
-        session["lname"] = lname
-        session["username"] = username
-        session["email"] = email
-        # session["password"] = password
-        user = User.create(username=username, email=email, password=password,fname=fname,lname=lname)
-        db.session.add(user)
-        db.session.commit()
-        
-        return jsonify({'success': True}), 200
 
+    user_obj = crud.get_user_by_email(email)
+    if user_obj:
+        return jsonify({'success': False}), 401
+    else:
+        user_obj = User.create(username=username, email=email, password=password, fname=fname, lname=lname)
+        db.session.add(user_obj)
+        db.session.commit()
+
+        session['user_id'] = user_obj.user_id
+
+        return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
+                            lname=user_obj.lname,
+                            email=user_obj.email)), 200
 
 
 

@@ -65,90 +65,134 @@ function PublicRoute({ children, ...rest }) {
   );
 }
 
+async function checkAuthStatus() {
+  return authCheck()
+    .then((res) => {
+      if (res.success) {
+        _isLogin = true;
+        _userInfo.user_id = res.user_id;
+        _userInfo.username = res.username;
+        _userInfo.fname = res.fname;
+        _userInfo.lname = res.lname;
+        _userInfo.email = res.email;
+        return { info: _userInfo, status: _isLogin };
+      } else {
+        _isLogin = false;
+        _userInfo.user_id = 0;
+        _userInfo.username = "";
+        _userInfo.fname = "";
+        _userInfo.lname = "";
+        _userInfo.email = "";
+        return { info: _userInfo, status: _isLogin };
+      }
+    })
+    .catch((err) => {
+      _isLogin = false;
+      _userInfo.user_id = 0;
+      _userInfo.username = "";
+      _userInfo.fname = "";
+      _userInfo.lname = "";
+      _userInfo.email = "";
+      return { info: _userInfo, status: _isLogin };
+    });
+}
+
 /****************************************************************************/
 function App() {
-  // const [loginStatus, setLoginStatus] = useState(isLogin);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [fname, setFname] = useState(null);
+
+  const [loginStatus, setLoginStatus] = useState(_isLogin);
+  const [userInfo, setUserInfo] = useState(_userInfo);
+
   // useEffect(() => {
-  //   console.log(loginStatus);
-  // }, [loginStatus]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [fname, setFname] = useState(null);
+  //   // Check if the user is logged in when the component mounts
+  //   fetch("/check_login")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.loggedIn) {
+  //         setLoggedIn(true);
+  //         setFname(data.userfname);
+  //       }
+  //     })
+  //     .catch((error) => console.error("Error checking login status", error));
+  // }, []);
 
-  useEffect(() => {
-    // Check if the user is logged in when the component mounts
-    fetch("/check_login")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.loggedIn) {
-          setLoggedIn(true);
-          setFname(data.userfname);
-        }
-      })
-      .catch((error) => console.error("Error checking login status", error));
-  }, []);
-
-  const updateLoginStatus = (status) => {
-    setLoggedIn(status);
-  };
+  // const updateLoginStatus = (status) => {
+  //   setLoggedIn(status);
+  // };
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact>
-          <div>
-            <Landing
-              loggedIn={loggedIn}
-              fname={fname}
-              updateLoginStatus={updateLoginStatus}
-            />
-          </div>
-        </Route>
-        <Route path="/login/" exact>
-          <div className="App">
-            <Login
-              loggedIn={loggedIn}
-              fname={fname}
-              updateLoginStatus={updateLoginStatus}
-            />
-          </div>
-        </Route>
-        <Route path="/register/" exact>
-          <div className="App">
-            <Register
-              loggedIn={loggedIn}
-              updateLoginStatus={updateLoginStatus}
-            />
-          </div>
-        </Route>
-        <Route path="/register-success/" exact>
-          <div className="App">
-            <RegisterSuccess></RegisterSuccess>
-          </div>
-        </Route>
-        <Route path="/select-categories/" exact>
-          <div className="App">
-            <SelectCategory></SelectCategory>
-          </div>
-        </Route>
-        <Route path="/enter-user-info/" exact>
-          <div className="Info">
-            <AllUserInfo updateLoginStatus={updateLoginStatus} />
-          </div>
-        </Route>
-        <Route path="/my-groups/" exact>
-          <div>
-            <MyGroups className="Info" updateLoginStatus={updateLoginStatus} />
-          </div>
-        </Route>
-        <Route exact path="/" component={MyGroups} />
-        <Route path="/my-groups/:groupName" component={GroupDetail} />
-        <Route path={"*"}>
-          <div className="container">
-            <PageNotFound></PageNotFound>
-          </div>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <AuthContext.Provider
+      value={{ loginStatus, setLoginStatus, userInfo, setUserInfo }}
+    >
+      <BrowserRouter>
+        <Switch>
+          <PublicRoute path="/" exact>
+            <div>
+              <Landing
+              // loggedIn={loggedIn}
+              // fname={fname}
+              // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PublicRoute>
+          <PublicRoute path="/login/" exact>
+            <div className="App">
+              <Login
+              // loggedIn={loggedIn}
+              // fname={fname}
+              // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PublicRoute>
+          <PublicRoute path="/register/" exact>
+            <div className="App">
+              <Register
+              // loggedIn={loggedIn}
+              // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PublicRoute>
+          <PrivateRoute path="/register-success/" exact>
+            <div className="App">
+              <RegisterSuccess></RegisterSuccess>
+            </div>
+          </PrivateRoute>
+          <PrivateRoute path="/select-categories/" exact>
+            <div className="App">
+              <SelectCategory></SelectCategory>
+            </div>
+          </PrivateRoute>
+          <PrivateRoute path="/enter-user-info/" exact>
+            <div className="Info">
+              <AllUserInfo // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PrivateRoute>
+          <PrivateRoute path="/my-groups/" exact>
+            <div>
+              <MyGroups
+                className="Info"
+                // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PrivateRoute>
+          {/* <Route exact path="/" component={MyGroups} /> */}
+          <PrivateRoute
+            path="/my-groups/:categoryName/:groupName"
+            // component={GroupDetail}
+          >
+            <GroupDetail></GroupDetail>
+          </PrivateRoute>
+          <Route path={"*"}>
+            <div className="container">
+              <PageNotFound></PageNotFound>
+            </div>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 

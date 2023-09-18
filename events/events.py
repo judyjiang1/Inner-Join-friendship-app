@@ -46,12 +46,14 @@ def text(message):
 
     m = Message()
     m.room_id = room_obj.id
+    m.content = content
     m.sender_id = user_obj.user_id
     db.session.add(m)
     db.session.commit()
     RoomMember.update_last_speak(room_id=room_obj.id, member_id=user_obj.user_id)
     print(
         f'Text [{room_obj.id}-{room_obj.category_name}-{room_obj.group_name}], {user_obj.user_id}-{user_obj.fname}-{user_obj.lname}')
+    print(content)
     emit(
         'message',
         {
@@ -60,6 +62,7 @@ def text(message):
             'msg': dict(
                 message_id=m.id,
                 room_id=m.room_id,
+                content=content,
                 created_at=get_utc_timestamp(),
                 sender_id=user_obj.user_id,
                 sender_fname=user_obj.fname,

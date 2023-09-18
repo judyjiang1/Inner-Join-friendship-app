@@ -24,6 +24,11 @@ const {
 function SelectCategory(props) {
   document.title = "Select category";
 
+  const [dialogShown, setDialogShown] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogInfo, setDialogInfo] = useState(null);
+  const [dialogButtons, setDialogButtons] = useState(null);
+
   const history = useHistory();
 
   const categories = [
@@ -80,31 +85,45 @@ function SelectCategory(props) {
   };
 
   return (
-    <div className="category-content">
-      <h2 className="text">
-        Please select at least one category you would like to be matched with!
-      </h2>
-      <form className="category-form">
-        {categories.map((category) => (
-          <div className="category-item" key={category}>
-            <label>
-              <input
-                type="checkbox"
-                value={category}
-                checked={selectedCategories.includes(category)}
-                onChange={handleCheckboxChange}
-              />
-              <span className="category-text">{category}</span>
-            </label>
+    <DialogContext.Provider
+      value={{
+        show: dialogShown,
+        setShow: setDialogShown,
+        title: dialogTitle,
+        setTitle: setDialogTitle,
+        info: dialogInfo,
+        setInfo: setDialogInfo,
+        buttons: dialogButtons,
+        setButtons: setDialogButtons,
+      }}
+    >
+      <div className="category-content">
+        <h2 className="text">
+          Please select at least one category you would like to be matched with!
+        </h2>
+        <form className="category-form">
+          {categories.map((category) => (
+            <div className="category-item" key={category}>
+              <label>
+                <input
+                  type="checkbox"
+                  value={category}
+                  checked={selectedCategories.includes(category)}
+                  onChange={handleCheckboxChange}
+                />
+                <span className="category-text">{category}</span>
+              </label>
+            </div>
+          ))}
+          <div className="submit-btn-margin">
+            <button className="category-submit-btn" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
-        ))}
-      </form>
-      <div className="submit-btn-margin">
-        <button className="category-submit-btn" onClick={handleSubmit}>
-          Submit
-        </button>
+        </form>
+        <Dialog></Dialog>
       </div>
-    </div>
+    </DialogContext.Provider>
   );
 }
 

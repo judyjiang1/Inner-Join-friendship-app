@@ -11,7 +11,10 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Register({ loggedIn }) {
+function Register() {
+  const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
+    useContext(AuthContext);
+
   document.title = "User Registration";
   const [registerError, setRegisterError] = useState(false);
   let history = useHistory();
@@ -23,7 +26,7 @@ function Register({ loggedIn }) {
 
   useEffect(() => {
     // Check if the user is already logged in when the component mounts
-    if (loggedIn) {
+    if (loginStatus === true) {
       alert(
         "Already logged in! Redirecting to your account. Please log out if this is not your account."
       );

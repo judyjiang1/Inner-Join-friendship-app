@@ -50,15 +50,11 @@ function PublicRoute({ children, ...rest }) {
       {...rest}
       render={({ location }) => {
         if (!loginStatus) {
+          // User is not logged in, render the children
           return children;
         } else {
-          Swal.fire({
-            icon: "warning",
-            title: "Already logged in. You will be redirected.",
-            timer: 2500,
-          }).then((r) => {
-            history.push("/my-groups/");
-          });
+          // User is already logged in, return null (do nothing)
+          return children;
         }
       }}
     />

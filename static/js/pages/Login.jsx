@@ -11,7 +11,9 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Login({ loggedIn, updateLoginStatus }) {
+function Login() {
+  const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
+    useContext(AuthContext);
   const [loginError, setLoginError] = useState(false);
 
   const history = useHistory();
@@ -19,11 +21,11 @@ function Login({ loggedIn, updateLoginStatus }) {
   const [password, setPassword] = useState(" ");
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loginStatus === true) {
       // alert("Already logged in! Redirecting to your account.");
       history.push("/my-groups");
     }
-  }, [loggedIn, history]);
+  }, [loginStatus, history]);
 
   const handleLogin = (evt) => {
     evt.preventDefault();
@@ -41,7 +43,7 @@ function Login({ loggedIn, updateLoginStatus }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          updateLoginStatus(true);
+          setLoginStatus(true);
           history.push("/my-groups");
         } else {
           setLoginError(true);

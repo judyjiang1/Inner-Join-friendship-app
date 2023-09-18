@@ -360,15 +360,22 @@ def check_login():
 
 
 
-@app.route('/api/logout')
-@protected_api
+
+
+
+@app.route('/api/user/logout')
 def logout():
+    # mark user as offline in all chat rooms
+    user_id = session.get('user_id')
+    if user_id:
+        print('Logout')
+        db.session.query(RoomMember).filter(RoomMember.user_id == user_id).update(dict(
+            is_online=False,
+            last_seen=get_utc_timestamp(),
+        ))
+        db.session.commit()
     session.clear()
-    return jsonify({ "status": "success" })
-   
-
-
-
+    return jsonify(success=1)  
 
 
 

@@ -20,6 +20,7 @@ connect_to_db(app)
 socketio.init_app(app)
 
 
+
 def protected_api(f):
     """Protect backend api."""
 
@@ -29,15 +30,19 @@ def protected_api(f):
         if user_id:
             user_obj: User = User.query.filter(User.user_id == user_id).first()
             
+            # deleted user 
             if user_obj is None:
                 return jsonify(success=0, msg='protected'), 401
 
+            # cache user obj with g
             g.user = user_obj
             return f(*args, **kwargs)
 
+        # block unAuthorized visit and protect backend api
         return jsonify(success=0, msg='protected'), 401
 
     return wrapper
+
 
 
 @app.route('/')
@@ -46,36 +51,34 @@ def homepage():
     return render_template("homepage.html")
 
 
+
 @app.route('/<path:sub_path>')
 def route(sub_path):
     return render_template('homepage.html')
+
 
 
 @app.route("/api/login", methods=["POST"])
 def process_login():
     """Process user login."""
 
-    if 'email' in session:
-        return redirect('/my-groups')
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    user_obj = crud.get_user_by_email(email)
+
+    if not user_obj or user_obj.password != password:
+        return jsonify({'success': False}), 401
     
     else:
+         session['user_id'] = user_obj.user_id
+        # flash(f"Welcome back, {user_obj.email}!")
 
-        data = request.get_json()
-        email = data.get("email")
-        password = data.get("password")
-
-        user = crud.get_user_by_email(email)
+    return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
+                            lname=user_obj.lname,
+                            email=user_obj.email)), 200
         
-        if not user or user.password != password:
-            return jsonify({'success': False}), 401
-        else:
-            session["user_id"] = user.user_id
-            session["fname"] = user.fname
-            session["lname"] = user.lname
-            session["username"] = user.username
-            session["email"] = user.email
-            # flash(f"Welcome back, {user.email}!")
-            return jsonify({'success': True}), 200
 
 
 ##############

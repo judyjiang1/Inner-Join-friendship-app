@@ -1,18 +1,24 @@
 """Server for inner-join friendship app."""
 
 import os
-from flask import Flask, render_template, request, flash, session, redirect, jsonify, abort
-from model import connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup,GroupTag
+from flask import Flask, render_template, request, flash, session, redirect, jsonify, abort, g
+from model import (connect_to_db, db, User, Category_tag, Group, UserTag, UserGroup, GroupTag, ChatRoom, RoomMember,
+                   Message, get_utc_timestamp)
 import crud
 from jinja2 import StrictUndefined
 from sqlalchemy import func
-# from flask_socketio import SocketIO, emit
+from flask_migrate import Migrate
+from events import socketio
+from functools import wraps
 
 
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
+connect_to_db(app)
+Migrate(app, db)
+socketio.init_app(app)
 
 # socketio = SocketIO(app)
 
@@ -394,6 +400,5 @@ def logout():
 
 
 if __name__ == "__main__":
-    connect_to_db(app)
     app.run(host="0.0.0.0", port=3002, debug=True)
     # socketio.run(app, host='0.0.0.0', port=3001, debug=True)

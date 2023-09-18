@@ -126,18 +126,14 @@ def select_category():
         db.session.commit()
 
     # print(selections)
-
     return jsonify({'message': 'Selections saved successfully'})
 
 
 
 @app.route("/api/get-user-tags", methods=["POST"])
+@protected_api
 def get_user_categories():
-
-
-    if 'email' in session:
-        email = session['email']
-    user = crud.get_user_by_email(email)
+    user = g.user
     user_tags = user.category_tags
     user_tag_names = []
     for tag in user_tags:
@@ -146,7 +142,9 @@ def get_user_categories():
     return jsonify(user_tag_names)
 
 
+
 @app.route("/api/submit-user-info", methods=["POST"])
+@protected_api
 def submit_user_info():
     if 'email' in session:
         email = session['email']

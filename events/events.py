@@ -70,3 +70,27 @@ def text(message):
                 sender_email=user_obj.email)
         },
         room=room_obj.id)
+
+
+@socketio.on('left', namespace='/chat/')
+@login_check
+def left():
+    """Sent by clients when they leave a room.
+    A status message is broadcast to all people in the room."""
+    room_obj: ChatRoom = g.room
+    room_id = g.room.id
+    user_obj: User = g.user
+
+    leave_room(room_id)
+    RoomMember.update_online_status(room_id=room_id, member_id=user_obj.user_id, status=False)
+    
+    emit(
+        'status',
+        {
+            'code': 2,
+            'kind': 'on-left',
+            'msg': f'{g.user.username} left room',
+            'user_id': user_obj.user_id
+        },
+        room=room_id
+    )

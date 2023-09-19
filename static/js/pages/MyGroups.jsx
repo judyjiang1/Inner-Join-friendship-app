@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function MyGroups({ updateLoginStatus }) {
+function MyGroups() {
   const history = useHistory();
   const [groupsWithPeople, setGroupsWithPeople] = useState([]);
 
@@ -38,9 +38,13 @@ function MyGroups({ updateLoginStatus }) {
     fetchData();
   }, []);
 
-  function joinMyGroup(groupName) {
-    fetch(`/api/store-group-in-session/${groupName}`, {
+  function joinMyGroup(groupName, categoryName) {
+    fetch(`/api/open-chatroom`, {
       method: "POST",
+      body: JSON.stringify({
+        group_name: groupName,
+        category_name: categoryName,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,8 +52,8 @@ function MyGroups({ updateLoginStatus }) {
       .then((response) => {
         if (response.ok) {
           // Group information successfully stored in the session
-          // Now, navigate to the GroupDetail page
-          history.push(`/my-groups/${groupName}`);
+          // Then navigate to the GroupDetail page
+          history.push(`/my-groups/${categoryName}/${groupName}`);
         } else {
           // Handle errors if needed
           console.error("Error storing group information in session");
@@ -65,24 +69,23 @@ function MyGroups({ updateLoginStatus }) {
   for (const groupName of Object.keys(groupsWithPeople)) {
     const group = groupsWithPeople[groupName];
     const groupCard = (
-      <GroupCard
-        key={groupName}
-        categoryName={group.categoryName}
-        groupName={groupName}
-        imgUrl={group.imgURL}
-        handleImageClick={() => joinMyGroup(groupName)}
-      />
+      <div className="col-md-4" key={groupName}>
+        <GroupCard
+          key={groupName + "_card"}
+          categoryName={group.categoryName}
+          groupName={groupName}
+          imgUrl={group.imgURL}
+          handleImageClick={() => joinMyGroup(groupName, group.categoryName)}
+        />
+      </div>
     );
     groupCards.push(groupCard);
   }
 
   return (
-    <div>
-      <NavBar updateLoginStatus={updateLoginStatus} />
-      <div className="group-content">
-        <h1>My Groups</h1>
-        <div className="col-12 col-md-9 d-flex flex-wrap">{groupCards}</div>
-      </div>
+    <div className="container" style={{ backGroundColor: "red" }}>
+      <h1 className="text-center">My Groups</h1>
+      <div className="row">{groupCards}</div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ function GroupCard(props) {
   const { categoryName, groupName, imgUrl, handleImageClick } = props;
 
   return (
-    <div className="card melon-card" onClick={handleImageClick}>
+    <div className="card" onClick={handleImageClick} style={{ width: "100%" }}>
       <div>
         <img src={imgUrl} className="card-img-top" alt="" />
       </div>

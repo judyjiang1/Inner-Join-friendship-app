@@ -289,84 +289,84 @@ def get_user_groups():
 
 
 
-@app.route('/api/store-group-in-session/<group_name>', methods=['POST'])
-@protected_api
-def store_group_in_session(group_name):
-    try:
-        # Store group name in the session
-        session['group_name'] = group_name
-        return jsonify({'message': 'Group information stored in session'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# @app.route('/api/store-group-in-session/<group_name>', methods=['POST'])
+# @protected_api
+# def store_group_in_session(group_name):
+#     try:
+#         # Store group name in the session
+#         session['group_name'] = group_name
+#         return jsonify({'message': 'Group information stored in session'})
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
     
     
 
-@app.route('/api/my-groups/<group_name>')
-@protected_api
-def my_group(group_name):
-    return jsonify({'group_name': group_name})
+# @app.route('/api/my-groups/<group_name>')
+# @protected_api
+# def my_group(group_name):
+#     return jsonify({'group_name': group_name})
 
 
 
-@app.route('/api/get-group-members', methods=["POST", "GET"])
-@protected_api
-def get_group_members():
+# @app.route('/api/get-group-members', methods=["POST", "GET"])
+# @protected_api
+# def get_group_members():
 
-    if 'email' in session:
-        email = session['email']
-    else:
-        return jsonify({'error': 'Email not found in session'}), 400
+#     if 'email' in session:
+#         email = session['email']
+#     else:
+#         return jsonify({'error': 'Email not found in session'}), 400
 
-    user = crud.get_user_by_email(email)
+#     user = crud.get_user_by_email(email)
    
         
-    if 'group_name' in session:
-        group_name = session['group_name']
-    else:
-        return jsonify({'error': 'Group name not found in session'}), 400
+#     if 'group_name' in session:
+#         group_name = session['group_name']
+#     else:
+#         return jsonify({'error': 'Group name not found in session'}), 400
 
 
-    group_obj = crud.get_group_by_name(group_name)
-    group_id = group_obj.group_id
-    users_in_group = crud.get_users_in_group(group_id)
+#     group_obj = crud.get_group_by_name(group_name)
+#     group_id = group_obj.group_id
+#     users_in_group = crud.get_users_in_group(group_id)
     
-    users_in_group = (
-    db.session.query(User)
-    .join(UserGroup, User.user_id == UserGroup.user_id)
-    .filter(UserGroup.group_id == group_id).all()) 
+#     users_in_group = (
+#     db.session.query(User)
+#     .join(UserGroup, User.user_id == UserGroup.user_id)
+#     .filter(UserGroup.group_id == group_id).all()) 
 
-    user_full_names = {}
-    for user in users_in_group:
-        user_full_names[user.user_id] = user.fname + ' ' + user.lname
+#     user_full_names = {}
+#     for user in users_in_group:
+#         user_full_names[user.user_id] = user.fname + ' ' + user.lname
     
-    return jsonify(user_full_names)
+#     return jsonify(user_full_names)
 
 
-@app.route('/api/get-user')
-@protected_api
-def get_user():
-    if 'email' in session:
-        email = session['email']
-    else:
-        return jsonify({'message': 'User not logged in'}), 401
+# @app.route('/api/get-user')
+# @protected_api
+# def get_user():
+#     if 'email' in session:
+#         email = session['email']
+#     else:
+#         return jsonify({'message': 'User not logged in'}), 401
 
-    user_obj = crud.get_user_by_email(email)
-    user_fname = user_obj.fname
+#     user_obj = crud.get_user_by_email(email)
+#     user_fname = user_obj.fname
 
-    return jsonify(user_fname)
+#     return jsonify(user_fname)
 
 
 
-@app.route('/check_login', methods=['GET'])
-@protected_api
-def check_login():
-    if 'email' in session:
-        email = session['email']
-        user_obj = crud.get_user_by_email(email)
-        user_fname = user_obj.fname
-        return jsonify({'loggedIn': True, 'userfname': user_fname})
-    else:
-        return jsonify({'loggedIn': False})
+# @app.route('/check_login', methods=['GET'])
+# @protected_api
+# def check_login():
+#     if 'email' in session:
+#         email = session['email']
+#         user_obj = crud.get_user_by_email(email)
+#         user_fname = user_obj.fname
+#         return jsonify({'loggedIn': True, 'userfname': user_fname})
+#     else:
+#         return jsonify({'loggedIn': False})
 
 
 

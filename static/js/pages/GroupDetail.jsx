@@ -1,4 +1,5 @@
-const { useContext, createContext, useState, useEffect, useRef } = React;
+const { useContext, createContext, useState, useEffect, useRef, useMemo } =
+  React;
 const {
   Route,
   Switch,
@@ -12,21 +13,7 @@ const {
   useParams,
 } = ReactRouterDOM;
 
-function GroupDetail() {
-  const { groupName } = useParams();
-  function capitalizeTitleCase(str) {
-    return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
-  }
-
-  return (
-    <div>
-      <NavBar></NavBar>
-      <h1>{capitalizeTitleCase(groupName)}</h1>
-      <GroupMember />
-      {/* <ChatBox /> */}
-    </div>
-  );
-}
-
-// const groupDetailContainer = document.getElementById("group-member");
-// ReactDOM.render(<GroupDetail />, groupDetailContainer);
+let socket = null;
+const formatTime = (ts) => {
+  return moment(ts).format("YYYY-MM-DD hh:mm:ss");
+};

@@ -44,24 +44,31 @@ const NavBar = ({ updateLoginStatus }) => {
   //     });
   // };
 
-  const handleLogout = () => {
-    fetch("/api/user/logout", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          // setUser(null);
-          // updateLoginStatus(false);
-          setLoginStatus(false);
-          setUserInfo(null);
-          history.push("/");
-        }
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
-  };
+  // const handleLogout = () => {
+  //   fetch("/api/user/logout", {
+  //     method: "GET",
+  //     credentials: "include",
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         // setUser(null);
+  //         // updateLoginStatus(false);
+  //         setLoginStatus(false);
+  //         setUserInfo(null);
+  //         history.push("/");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Logout error:", error);
+  //     });
+  // };
+
+  function performLogout() {
+    logoutUser().then((res) => {
+      setLoginStatus(false);
+      history.replace("/");
+    });
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -86,7 +93,7 @@ const NavBar = ({ updateLoginStatus }) => {
             </Link>
           </li>
           <li>
-            <a href="#" onClick={handleLogout}>
+            <a href="#" onClick={performLogout}>
               Logout
             </a>
           </li>

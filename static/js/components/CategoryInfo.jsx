@@ -160,7 +160,7 @@ const CategoryInfo = ({ onChange }) => {
   const [hobby, setHobby] = useState([]);
   const [culture, setCulture] = useState([]);
   const [support, setSupport] = useState([]);
-  const [work, settWork] = useState([]);
+  const [work, setWork] = useState([]);
   const [college, setCollege] = useState([]);
   const [highSchool, setHighSchool] = useState([]);
 
@@ -175,22 +175,22 @@ const CategoryInfo = ({ onChange }) => {
   };
 
   const handleSupportChange = (selectedOptions) => {
-    setCulture(selectedOptions);
+    setSupport(selectedOptions);
     onChange("supportGroups", selectedOptions);
   };
 
   const handleWorkChange = (selectedOptions) => {
-    setCulture(selectedOptions);
+    setWork(selectedOptions);
     onChange("work", selectedOptions);
   };
 
   const handleCollegeChange = (selectedOptions) => {
-    setCulture(selectedOptions);
+    setCollege(selectedOptions);
     onChange("college", selectedOptions);
   };
 
   const handleHighSchoolChange = (selectedOptions) => {
-    setCulture(selectedOptions);
+    setHighSchool(selectedOptions);
     onChange("highSchool", selectedOptions);
   };
 

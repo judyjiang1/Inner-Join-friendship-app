@@ -20,9 +20,13 @@ function Login() {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
 
+  const hasFetchBeenCalledRef = useRef(false);
+
   useEffect(() => {
-    if (loginStatus === true) {
-      // alert("Already logged in! Redirecting to your account.");
+    if (!hasFetchBeenCalledRef.current && loginStatus === true) {
+      alert(
+        "Already logged in! Redirecting to your account. Please log out if this is not your account."
+      );
       history.push("/my-groups");
     }
   }, [loginStatus, history]);
@@ -46,6 +50,7 @@ function Login() {
           setEmail("");
           setPassword("");
           setLoginStatus(true);
+          hasFetchBeenCalledRef.current = true;
           setUserInfo((prev) => {
             prev.user_id = data.user_id;
             prev.username = data.username;
@@ -131,9 +136,7 @@ function Login() {
           <p className="no-acct-txt">
             Don't have an account?
             <Link to="/register" className="sign-up">
-              <div>
-                <button className="home-button">Sign Up</button>
-              </div>
+              <button className="home-button">Sign Up</button>
             </Link>
           </p>
         </form>

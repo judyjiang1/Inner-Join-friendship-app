@@ -162,8 +162,7 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/enter-user-info/" exact>
             <div className="Info">
-              <AllUserInfo // updateLoginStatus={updateLoginStatus}
-              />
+              <AllUserInfo></AllUserInfo>
             </div>
           </PrivateRoute>
           <PrivateRoute path="/my-groups/" exact>

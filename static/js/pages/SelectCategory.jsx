@@ -24,11 +24,6 @@ const {
 function SelectCategory(props) {
   document.title = "Select category";
 
-  const [dialogShown, setDialogShown] = useState("");
-  const [dialogTitle, setDialogTitle] = useState("");
-  const [dialogInfo, setDialogInfo] = useState(null);
-  const [dialogButtons, setDialogButtons] = useState(null);
-
   const history = useHistory();
 
   const categories = [
@@ -85,58 +80,30 @@ function SelectCategory(props) {
   };
 
   return (
-    <DialogContext.Provider
-      value={{
-        show: dialogShown,
-        setShow: setDialogShown,
-        title: dialogTitle,
-        setTitle: setDialogTitle,
-        info: dialogInfo,
-        setInfo: setDialogInfo,
-        buttons: dialogButtons,
-        setButtons: setDialogButtons,
-      }}
-    >
-      <div className="category-content">
-        <h2 className="text">
-          Please select at least one category you would like to be matched with!
-        </h2>
-        <form className="category-form">
-          {categories.map((category) => (
-            <div className="category-item" key={category}>
-              <label>
-                <input
-                  type="checkbox"
-                  value={category}
-                  checked={selectedCategories.includes(category)}
-                  onChange={handleCheckboxChange}
-                />
-                <span className="category-text">{category}</span>
-              </label>
-            </div>
-          ))}
-          <div className="submit-btn-margin">
-            <button className="category-submit-btn" onClick={handleSubmit}>
-              Submit
-            </button>
+    <div className="category-content">
+      <h2 className="text">
+        Please select at least one category you would like to be matched with!
+      </h2>
+      <form className="category-form">
+        {categories.map((category) => (
+          <div className="category-item" key={category}>
+            <label>
+              <input
+                type="checkbox"
+                value={category}
+                checked={selectedCategories.includes(category)}
+                onChange={handleCheckboxChange}
+              />
+              <span className="category-text">{category}</span>
+            </label>
           </div>
-        </form>
-        <Dialog></Dialog>
+        ))}
+      </form>
+      <div className="submit-btn-margin">
+        <button className="category-submit-btn" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
-    </DialogContext.Provider>
+    </div>
   );
 }
-
-// // Create a dictionary to map selected categories to numbers 1-6
-// const mapping = {};
-// selectedCategories.forEach((category, index) => {
-//   mapping[category] = index + 1;
-// });
-// setCategoryMapping(mapping);
-
-// // Here you can seed the user input into the database
-// // For now, let's just print the mapping
-// console.log("Category Mapping:", mapping);
-
-// // Redirect to the next page
-// history.push("/enter-user-info/");

@@ -146,7 +146,7 @@ function AllUserInfo({ updateLoginStatus }) {
         });
 
         if (response.ok) {
-          updateLoginStatus(true);
+          // updateLoginStatus(true);
           history.push("/my-groups");
         }
       } catch (error) {

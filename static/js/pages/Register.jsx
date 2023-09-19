@@ -24,9 +24,10 @@ function Register() {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
 
+  const hasFetchBeenCalledRef = useRef(false);
+
   useEffect(() => {
-    // Check if the user is already logged in when the component mounts
-    if (loginStatus === true) {
+    if (!hasFetchBeenCalledRef.current && loginStatus === true) {
       alert(
         "Already logged in! Redirecting to your account. Please log out if this is not your account."
       );
@@ -55,6 +56,7 @@ function Register() {
       .then((data) => {
         if (data.success) {
           setLoginStatus(true);
+          hasFetchBeenCalledRef.current = true;
           setUserInfo((prev) => {
             prev.user_id = data.user_id;
             prev.username = data.username;
@@ -141,9 +143,7 @@ function Register() {
         <p className="acct-txt">
           Already have an account?
           <Link to={"/login/"}>
-            <div>
-              <button className="general-button">Login</button>
-            </div>
+            <button className="general-button">Login</button>
           </Link>
         </p>
       </form>

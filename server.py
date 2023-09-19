@@ -126,6 +126,12 @@ def select_category():
     data = request.get_json()
     selections = data.get('selectedCategories', [])
     
+    # if 'user_id' in session:
+    #     user_id = session['user_id']
+
+    # user = crud.get_user_by_id(user_id)
+
+
     user = g.user
 
     for category in selections:
@@ -156,6 +162,10 @@ def get_user_categories():
 @app.route("/api/submit-user-info", methods=["POST"])
 @protected_api
 def submit_user_info():
+    # if 'user_id' in session:
+    #     user_id = session['user_id']
+
+    # user = crud.get_user_by_id(user_id)
     user = g.user
     user_id = user.user_id 
 
@@ -434,14 +444,14 @@ def user_open_chatroom():
 @app.route('/api/user/logout')
 def logout():
     # mark user as offline in all chat rooms
-    user_id = session.get('user_id')
-    if user_id:
-        print('Logout')
-        db.session.query(RoomMember).filter(RoomMember.user_id == user_id).update(dict(
-            is_online=False,
-            last_seen=get_utc_timestamp(),
-        ))
-        db.session.commit()
+    # user_id = session.get('user_id')
+    # if user_id:
+    #     print('Logout')
+    #     db.session.query(RoomMember).filter(RoomMember.user_id == user_id).update(dict(
+    #         is_online=False,
+    #         last_seen=get_utc_timestamp(),
+    #     ))
+    #     db.session.commit()
     session.clear()
     return jsonify(success=1)  
 

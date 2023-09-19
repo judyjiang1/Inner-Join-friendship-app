@@ -12,6 +12,9 @@ const {
 } = ReactRouterDOM;
 
 function Landing({ loggedIn, fname, updateLoginStatus }) {
+  const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
+    useContext(AuthContext);
+
   document.title = "Welcome";
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -31,15 +34,20 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          updateLoginStatus(true);
+          setEmail("");
+          setPassword("");
+          setLoginStatus(true);
+          setUserInfo((prev) => {
+            prev.user_id = data.user_id;
+            prev.username = data.username;
+            prev.fname = data.fname;
+            prev.lname = data.lname;
+            prev.email = data.email;
+            return prev;
+          });
           history.push("/my-groups");
         } else {
           setLoginError(true);

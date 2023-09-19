@@ -43,7 +43,17 @@ function Login() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          setEmail("");
+          setPassword("");
           setLoginStatus(true);
+          setUserInfo((prev) => {
+            prev.user_id = data.user_id;
+            prev.username = data.username;
+            prev.fname = data.fname;
+            prev.lname = data.lname;
+            prev.email = data.email;
+            return prev;
+          });
           history.push("/my-groups");
         } else {
           setLoginError(true);

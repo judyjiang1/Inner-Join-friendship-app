@@ -32,7 +32,7 @@ function Register() {
       );
       history.push("/my-groups");
     }
-  }, [loggedIn, history]);
+  }, [loginStatus, history]);
 
   const handleRegister = (evt) => {
     evt.preventDefault();
@@ -54,6 +54,15 @@ function Register() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          setLoginStatus(true);
+          setUserInfo((prev) => {
+            prev.user_id = data.user_id;
+            prev.username = data.username;
+            prev.fname = data.fname;
+            prev.lname = data.lname;
+            prev.email = data.email;
+            return prev;
+          });
           history.push("/register-success");
         } else {
           setRegisterError(true);

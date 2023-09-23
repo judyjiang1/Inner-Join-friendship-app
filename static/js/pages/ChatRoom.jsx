@@ -410,6 +410,16 @@ function ChatRoom() {
     setShowPopup(false);
   };
 
+  const [showMapPopup, setShowMapPopup] = useState(false);
+
+  const toggleMapPopup = () => {
+    setShowMapPopup(!showMapPopup);
+  };
+
+  const handleCloseMapPopup = () => {
+    setShowMapPopup(false);
+  };
+
   return (
     <>
       <NavBar setLoginStatus={setLoginStatus} />
@@ -444,6 +454,30 @@ function ChatRoom() {
               <GroupMemberTable
                 groupName={groupName}
                 handleClosePopup={handleClosePopup}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="text-center">
+        <button
+          onClick={toggleMapPopup}
+          className="btn btn-primary mx-2"
+          style={{ paddingBottom: 10 }}
+        >
+          Show Group Map
+        </button>
+
+        {showMapPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <span className="close" onClick={handleCloseMapPopup}>
+                &times;
+              </span>
+              <GroupMap
+                groupName={groupName}
+                handleCloseMapPopup={handleCloseMapPopup}
               />
             </div>
           </div>

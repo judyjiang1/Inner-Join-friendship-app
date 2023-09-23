@@ -75,7 +75,7 @@ function Landing() {
           <img
             src="/static/img/app logo.png"
             alt="App Logo"
-            style={{ width: "250px" }}
+            style={{ width: "200px" }}
           />
         </Link>
         <div className="navbar-nav ms-auto">
@@ -115,19 +115,20 @@ function Landing() {
         </div>
       </nav>
 
-      <div className="container">
-        <div className="container">
+      <div className="landing-intro">
+        <div className="center container">
           {/* Description */}
-
-          <div className="container">
-            <h2>An innovative way of making new friends.</h2>
-
-            <p className="row">
+          <div>
+            <h2 className="landing-text" style={{ marginTop: 150 }}>
+              An innovative way of making new friends.
+            </h2>
+          </div>
+          <div>
+            <h5 className="landing-text" style={{ fontStyle: "bold" }}>
               Discover people who have crossed paths or share commonalities with
               you and start building <span> lifelong </span> friendship.
-            </p>
+            </h5>
           </div>
-
           {/* Buttons */}
           <div className="row">
             <div className="col">
@@ -140,20 +141,19 @@ function Landing() {
               {/* <Link to="/demo" className="btn btn-primary mx-2">
                 Explore the App
               </Link> */}
-              <div>
-                {loginStatus === true ? (
-                  <button className="btn btn-primary mx-2" disabled>
-                    Explore the App
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-primary mx-2"
-                    onClick={handleExploreApp}
-                  >
-                    Explore the App
-                  </button>
-                )}
-              </div>
+
+              {loginStatus === true ? (
+                <button className="btn btn-secondary mx-2" disabled>
+                  Explore the App
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary mx-2"
+                  onClick={handleExploreApp}
+                >
+                  Explore the App
+                </button>
+              )}
 
               <button
                 onClick={toggleOnOFF}
@@ -177,10 +177,3 @@ function Landing() {
     </div>
   );
 }
-
-// ReactDOM.render(
-//   <BrowserRouter>
-//     <Landing />
-//   </BrowserRouter>,
-//   document.querySelector("#root")
-// );

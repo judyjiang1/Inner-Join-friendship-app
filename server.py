@@ -456,6 +456,45 @@ def logout():
     return jsonify(success=1)  
 
 
+@app.route("/api/get-group-members", methods=["POST"])
+@protected_api
+def get_group_members():
+    
+
+    data = request.get_json()
+    group_name = data.get('group_name')
+    # category_name = data.get('category_name')
+
+    group_obj = crud.get_group_by_name(group_name)
+    group_id = group_obj.group_id
+    print(group_id)
+    users_in_group = (
+        db.session.query(User)
+        .join(UserGroup, User.user_id == UserGroup.user_id)
+        .filter(UserGroup.group_id == group_id)
+    .all())
+
+    lst = []
+    
+    for user in users_in_group:
+        dict = {}
+        dict["user_id"] = user.user_id
+        dict["username"] = user.username
+        dict["fname"] = user.fname
+        dict["lname"] = user.lname
+        dict["gender"] = user.gender
+        dict["age"] = user.age
+        dict["ethnicity"] = user.ethnicity
+        dict["occupation"] = user.occupation
+        dict["zipcode"] = user.zipcode 
+        lst.append(dict)
+    print(lst)
+
+    if not lst:
+       return jsonify({'error fetching data'}), 401
+    else:
+
+        return jsonify(lst)
 
 
 

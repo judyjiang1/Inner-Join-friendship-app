@@ -2,6 +2,12 @@
 body %}
 <div id="root" class="container-fluid"></div>
 {% endblock %} {% block js %}
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiR37lEkGV4RlVWIBUfRi4S-ZDA8Lx_-Y&libraries=places&callback=initMap"
+  type="text/javascript"
+></script>
 <script src="/static/js/utils/utils.js"></script>
 <script
   src="/static/js/components/RegisterFormField.jsx"
@@ -22,6 +28,7 @@ body %}
   src="/static/js/components/GroupMemberTable.jsx"
   type="text/jsx"
 ></script>
+<script src="/static/js/components/GroupMap.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Landing.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Login.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Register.jsx" type="text/jsx"></script>

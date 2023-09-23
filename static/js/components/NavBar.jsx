@@ -91,6 +91,11 @@ const NavBar = () => {
   //     });
   // };
 
+  const handleLinkClick = () => {
+    // Reload the page
+    window.location.reload();
+  };
+
   function performLogout() {
     logoutUser().then((res) => {
       setLoginStatus(false);
@@ -128,13 +133,13 @@ const NavBar = () => {
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             {Object.keys(groups).map((groupName, index) => (
               <li key={index}>
-                <Link
+                <a
                   className="dropdown-item"
-                  to={`/my-groups/${groups[groupName].categoryName}/${groupName}`}
+                  href={`/my-groups/${groups[groupName].categoryName}/${groupName}`}
                 >
                   {/* {groups[groupName].categoryName} -  */}
                   {groupName}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

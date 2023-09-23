@@ -20,8 +20,18 @@ def calculate_age(birthdate):
 
 if __name__ == "__main__":
     from server import app
-    os.system("dropdb friends")
-    os.system("createdb friends")
+    # os.system("dropdb friends")
+    # os.system("createdb friends")
+
+    db_file_path = 'client.db'
+
+    # drop the database file if it exists
+    if os.path.exists(db_file_path):
+        os.remove(db_file_path)
+        print(f'Database at {db_file_path} has been removed.')
+    else:
+        print(f'Database at {db_file_path} does not exist.')
+
 
     with app.app_context():
         model.connect_to_db(server.app)

@@ -374,7 +374,7 @@ def get_user_groups():
 @protected_api
 def user_open_chatroom():
     """
-    user opens a chatroom, creates it if it doesn't exist, and ensures they join it.
+    user open a chatroom, create it if not exists, and make sure user joins it
     """
 
     user_obj: User = g.user
@@ -393,10 +393,9 @@ def user_open_chatroom():
         db.session.add(room_obj)
         db.session.commit()
 
-    # if this chatroom members' count smaller than 1
+    # if this chatroom members' count smaller than 2, then find group members
     if db.session.query(RoomMember.id).join(ChatRoom, RoomMember.room_id == ChatRoom.id).filter(
-            ChatRoom.id == room_obj.id).count() < 1:
-        # discover members
+            ChatRoom.id == room_obj.id).count() < 2:
         ChatRoom.discover_group_members(room_id=room_obj.id)
 
     RoomMember.ensure_membership(room_id=room_obj.id, user_id=user_obj.user_id)
@@ -444,19 +443,20 @@ def user_open_chatroom():
 @app.route('/api/user/logout')
 def logout():
     # mark user as offline in all chat rooms
-    # user_id = session.get('user_id')
-    # if user_id:
-    #     print('Logout')
-    #     db.session.query(RoomMember).filter(RoomMember.user_id == user_id).update(dict(
-    #         is_online=False,
-    #         last_seen=get_utc_timestamp(),
-    #     ))
-    #     db.session.commit()
+    user_id = session.get('user_id')
+    if user_id:
+        print('Logout')
+        db.session.query(RoomMember).filter(RoomMember.user_id == user_id).update(dict(
+            is_online=False,
+            last_seen=get_utc_timestamp(),
+        ))
+        db.session.commit()
     session.clear()
     return jsonify(success=1)  
 
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3002, debug=True)
+    # app.run(host="0.0.0.0", port=3002, debug=True)
     # socketio.run(app, host='0.0.0.0', port=3001, debug=True)
+    socketio.run(app, host='0.0.0.0', port=3001, debug=True, allow_unsafe_werkzeug=True)

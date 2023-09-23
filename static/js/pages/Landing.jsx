@@ -11,7 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-function Landing({ loggedIn, fname, updateLoginStatus }) {
+function Landing() {
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
 
@@ -59,80 +59,62 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
         console.error("An error occurred:", error);
       });
   };
-  // const [user, setUser] = useState(null);
-  // const [loggedIn, setLoggedIn] = useState(false);
 
-  // useEffect(() => {
-  //   let isMounted = true;
-
-  //   const getUser = async () => {
-  //     try {
-  //       const response = await fetch("/api/get-user", {
-  //         method: "GET",
-  //         credentials: "include",
-  //       });
-
-  //       if (!isMounted) {
-  //         return;
-  //       }
-
-  //       if (response.status === 401) {
-  //         // Handle the "User not logged in" scenario quietly
-  //         setUser(null); // Set the user to null or perform any other necessary actions
-  //       } else if (response.ok) {
-  //         const userData = await response.json();
-  //         setUser(userData);
-  //         setLoggedIn(true);
-  //       } else {
-  //         throw new Error("Request failed");
-  //       }
-  //     } catch (error) {
-  //       // Handle other errors here
-  //       console.error(error);
-  //       setUser(null);
-  //     }
-  //   };
-
-  //   getUser();
-
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
+  function performLogout() {
+    logoutUser().then((res) => {
+      setLoginStatus(false);
+      history.replace("/");
+    });
+  }
 
   return (
     <div>
       {/* Logo and Website Name */}
-
-      <div className="row">
-        {/* <div className="logo img">
-              <img src="/static/img/app logo.png" alt="Logo" />
-            </div> */}
-        <div className="col-1">
-          <Link to="/">
-            <img
-              src="/static/img/app logo.png"
-              alt="App Logo"
-              style={{ width: "300px" }}
-            />
-          </Link>
-        </div>
-        {/* <div className="web-name">
-              <h1>InnerJoin</h1>
-            </div> */}
-        <div className="col-10"></div>
-
-        <div className="col-1">
-          {loggedIn ? (
+      <nav className="navbar navbar-expand-lg navbar-dark bg-black">
+        <Link to="/">
+          <img
+            src="/static/img/app logo.png"
+            alt="App Logo"
+            style={{ width: "250px" }}
+          />
+        </Link>
+        <div className="navbar-nav ms-auto">
+          {loginStatus === true ? (
             <>
-              <a>Welcome, {fname} </a>{" "}
-              <Link className="navbar-brand" to="/my-groups">
-                My Account
-              </Link>
+              <span className="nav-item">
+                <a
+                  className="nav-link text-white"
+                  style={{ marginRight: "10px" }}
+                >
+                  Welcome, {userInfo.fname}
+                </a>
+              </span>
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-white"
+                  style={{ marginRight: "10px" }}
+                  to="/my-groups"
+                >
+                  My Groups
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link text-white"
+                  style={{ marginRight: "10px" }}
+                  href="#"
+                  onClick={performLogout}
+                >
+                  Logout
+                </a>
+              </li>
             </>
-          ) : null}
+          ) : (
+            <></>
+          )}
         </div>
-      </div>
+      </nav>
+
       <div className="container">
         <div className="container">
           {/* Description */}
@@ -155,10 +137,24 @@ function Landing({ loggedIn, fname, updateLoginStatus }) {
               <Link to="/register" className="btn btn-primary mx-2">
                 Register
               </Link>
-              <Link to="/demo" className="btn btn-primary mx-2">
+              {/* <Link to="/demo" className="btn btn-primary mx-2">
                 Explore the App
-              </Link>
-              <button onClick={handleExploreApp}>Explore the App</button>
+              </Link> */}
+              <div>
+                {loginStatus === true ? (
+                  <button className="btn btn-primary mx-2" disabled>
+                    Explore the App
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary mx-2"
+                    onClick={handleExploreApp}
+                  >
+                    Explore the App
+                  </button>
+                )}
+              </div>
+
               <button
                 onClick={toggleOnOFF}
                 className={`btn ${

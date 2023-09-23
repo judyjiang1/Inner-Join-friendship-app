@@ -53,7 +53,6 @@ function PublicRoute({ children, ...rest }) {
           // User is not logged in, render the children
           return children;
         } else {
-          // User is already logged in, return null (do nothing)
           return children;
         }
       }}
@@ -178,7 +177,7 @@ function App() {
             path="/my-groups/:categoryName/:groupName"
             // component={GroupDetail}
           >
-            <GroupDetail></GroupDetail>
+            <ChatRoom></ChatRoom>
           </PrivateRoute>
           <Route path={"*"}>
             <div className="container">

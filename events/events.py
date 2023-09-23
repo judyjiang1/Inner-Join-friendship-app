@@ -12,9 +12,9 @@ from datetime import datetime, timezone
 
 @socketio.on('joined', namespace='/chat/')
 @login_check
-def joined():
+def joined(message):
     """Sent by clients when they enter a room.
-    A status message is broadcasted to all people in the room."""
+    A status message is broadcast to all people in the room."""
 
     room_obj: ChatRoom = g.room
     user_obj: User = g.user
@@ -74,7 +74,7 @@ def text(message):
 
 @socketio.on('left', namespace='/chat/')
 @login_check
-def left():
+def left(message):
     """Sent by clients when they leave a room.
     A status message is broadcast to all people in the room."""
     room_obj: ChatRoom = g.room
@@ -83,7 +83,8 @@ def left():
 
     leave_room(room_id)
     RoomMember.update_online_status(room_id=room_id, member_id=user_obj.user_id, status=False)
-    
+    print(
+        f'Left [{room_obj.id}-{room_obj.category_name}-{room_obj.group_name}], {user_obj.user_id}-{user_obj.fname}-{user_obj.lname}')
     emit(
         'status',
         {
@@ -93,4 +94,35 @@ def left():
             'user_id': user_obj.user_id
         },
         room=room_id
+    )
+
+
+@socketio.on('ping', namespace='/chat/')
+@login_check
+def ping(message):
+    """
+    user send ping to query members' online status.
+    :param message:
+    :return:
+    """
+
+    room_obj: ChatRoom = g.room
+    user_obj: User = g.user
+
+    RoomMember.update_last_seen(room_id=room_obj.id, member_id=user_obj.user_id)
+
+    online_members, offline_members = RoomMember.batch_check_members_status(room_id=room_obj.id)
+
+    # print(
+    #     f'Ping [{room_obj.id}-{room_obj.category_name}-{room_obj.group_name}], {user_obj.user_id}-{user_obj.fname}-{user_obj.lname}')
+
+    emit(
+        'status',
+        {
+            'code': 4,
+            'kind': 'on-ping',
+            'room': room_obj.id,
+            'online_members': online_members,
+            'offline_members': offline_members
+        },
     )

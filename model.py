@@ -354,7 +354,14 @@ class Message(db.Model):
     created_at = db.Column(db.Integer, default=get_utc_timestamp)
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///friends", echo=True):
+def connect_to_db(
+        flask_app,
+        # using sqlite
+        db_uri="sqlite:///client.db",
+        # using postgresql
+        # db_uri = "postgresql:///friends",
+        echo=False
+):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

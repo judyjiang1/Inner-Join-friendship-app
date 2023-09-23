@@ -19,6 +19,7 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+  const [passwordError, setPasswordError] = useState("");
 
   const hasFetchBeenCalledRef = useRef(false);
 
@@ -118,7 +119,7 @@ function Login() {
                 Log in
               </button>
               {loginError && (
-                <p>
+                <p style={{ color: "#B22222", marginTop: 20 }}>
                   The email or password you entered was incorrect. Please try
                   again.
                 </p>

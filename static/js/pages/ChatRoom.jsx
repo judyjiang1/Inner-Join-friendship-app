@@ -400,9 +400,20 @@ function ChatRoom() {
     }
   }
 
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <NavBar setLoginStatus={setLoginStatus} />
+
       <h1 className="text-center">
         {groupName}
         <button
@@ -414,6 +425,31 @@ function ChatRoom() {
           Leave chat
         </button>
       </h1>
+
+      <div className="text-center">
+        <button
+          onClick={togglePopup}
+          className="btn btn-primary mx-2"
+          style={{ paddingBottom: 10 }}
+        >
+          Show Group Member Info
+        </button>
+
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <span className="close" onClick={handleClosePopup}>
+                &times;
+              </span>
+              <GroupMemberTable
+                groupName={groupName}
+                handleClosePopup={handleClosePopup}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
       <p className="text-center">{categoryName}</p>
       <div className="chatRoot">
         <div className="chatArea">

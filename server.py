@@ -92,8 +92,9 @@ def register_user():
     email = data.get("email")
     password = data.get("password")
 
-    user_obj = crud.get_user_by_email(email)
-    if user_obj:
+    email_exists = crud.get_user_by_email(email)
+    username_exists = crud.get_user_by_username(username)
+    if username_exists or email_exists:
         return jsonify({'success': False}), 401
     else:
         user_obj = User.create(username=username, email=email, password=password, fname=fname, lname=lname)

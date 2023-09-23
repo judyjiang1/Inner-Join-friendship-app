@@ -15,6 +15,10 @@ def get_user_by_email(email):
     """Return a user by email."""
     return User.query.filter(User.email == email).first()
 
+def get_user_by_username(username):
+    """Return a user by email."""
+    return User.query.filter(User.username == username).first()
+
 def all_users():
     """Return all users."""
     return User.query.all()
@@ -87,11 +91,7 @@ def get_user_groups(user_id):
     return user.groups
 
 def get_users_in_group(group_id):
-    db.session.query(User)\
-    .join(UserGroup, UserGroup.user_id == User.user_id)\
-    .filter(UserGroup.group_id == group_id)\
-    .all()
-
+     db.session.query(User).join(UserGroup, User.user_id == UserGroup.user_id).filter(UserGroup.group_id == group_id).all()
 
 # def groups_with_ppl(group_id):
 #     groups=db.session.query(Group.group_name).join(UserGroup, Group.group_id == group_id).group_by(Group.group_id).having(func.count(UserGroup.user_id) > 1).all()

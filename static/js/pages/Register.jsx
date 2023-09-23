@@ -128,7 +128,10 @@ function Register() {
             Sign up
           </button>
           {registerError && (
-            <p>Account already exists. Please log in or use another email.</p>
+            <p style={{ color: "#B22222", marginTop: 20 }}>
+              Account with this username or email already exists. Please log in
+              or use another username or email.
+            </p>
           )}
         </div>
 

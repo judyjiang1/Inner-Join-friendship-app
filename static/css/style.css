@@ -900,3 +900,16 @@ input {
   justify-content: center;
   align-items: center;
 }
+
+/***********/
+
+.user-table-container {
+  max-width: 1100px; /* Set a maximum width for the table container */
+  margin: 0 auto; /* Center the table container */
+  padding: 20px;
+}
+
+.table-wrapper {
+  max-height: 600px; /* Set a maximum height for the table */
+  overflow-y: auto; /* Enable vertical scrolling for the table */
+}

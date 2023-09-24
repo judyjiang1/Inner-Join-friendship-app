@@ -50,6 +50,13 @@ function AllUserInfo({ updateLoginStatus }) {
     return zipCodePattern.test(zipCode);
   };
 
+  const isValidBirthday = (month, day, year) => {
+    const yearPattern = /^(?:19[8-9]\d{1})|(?:20(?:(?:0[0-9])|(?:0[0-5])))$/;
+    var isBirthYearValid = yearPattern.test(year);
+
+    return isBirthYearValid;
+  };
+
   const isRequiredFieldsEmpty = () => {
     const requiredFields = [
       "gender",
@@ -109,6 +116,22 @@ function AllUserInfo({ updateLoginStatus }) {
           className="btn btn-primary"
           onClick={(evt) => setDialogShown("")}
         >
+          Got it
+        </button>
+      );
+      setDialogShown("show");
+    } else if (
+      !isValidBirthday(
+        formData.birthMonth,
+        formData.birthDay,
+        formData.birthYear
+      )
+    ) {
+      //alert("Please enter a valid Birthday.");
+      setDialogTitle("Warning");
+      setDialogInfo(<div>Please enter a valid birth year.</div>);
+      setDialogButtons(
+        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
           Got it
         </button>
       );

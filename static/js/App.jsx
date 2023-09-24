@@ -167,16 +167,16 @@ function App() {
           <PrivateRoute path="/my-super-match/" exact>
             <div>
               <SuperMatch
-                className="Info"
-                // updateLoginStatus={updateLoginStatus}
+
+              // updateLoginStatus={updateLoginStatus}
               />
             </div>
           </PrivateRoute>
           <PrivateRoute path="/my-groups/" exact>
             <div>
               <MyGroups
-                className="Info"
-                // updateLoginStatus={updateLoginStatus}
+
+              // updateLoginStatus={updateLoginStatus}
               />
             </div>
           </PrivateRoute>

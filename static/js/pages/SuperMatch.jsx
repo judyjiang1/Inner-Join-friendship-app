@@ -10,9 +10,17 @@ function SuperMatch() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching user data:", error));
+      .then((response) => {
+        if (response.status == 204) {
+          return [];
+        } else {
+          response.json();
+        }
+      })
+      .then((data) => {
+        setUsers(data);
+      });
+    // .catch((error) => console.error("Error fetching user data:", error));
   }, []);
 
   const handleSort = () => {
@@ -46,6 +54,68 @@ function SuperMatch() {
     setUsers(sortedUsers);
     setnumGroupGortOrder(numGroupGortOrder === "asc" ? "desc" : "asc");
   };
+
+  if (!Array.isArray(users) || users.length === 0) {
+    return (
+      <>
+        <NavBar />
+        <div className="container">
+          <div className="super-match-content">
+            <div className="super-match-table-container">
+              <h2 style={{ marginBottom: 20, fontWeight: "bold" }}>
+                My Super Match
+              </h2>
+              <p style={{ fontSize: "18px", fontWeight: "bold" }}>
+                These are users who share at least 2 same groups as you. Reach
+                out to them in the group chat!{" "}
+              </p>
+              <div className="super-match-wrapper">
+                <table>
+                  <thead className="super-match-header">
+                    <tr>
+                      <th>#</th>
+                      {/* <th>User_ID</th> */}
+                      <th>Username</th>
+                      <th
+                        onClick={handleSort}
+                        style={{ cursor: "pointer", width: "300px" }}
+                      >
+                        First Name {sortOrder === "asc" ? "▲" : "▼"}
+                      </th>
+                      <th>Last Name</th>
+                      <th>Gender</th>
+                      <th>Age</th>
+                      <th>Ethnicity</th>
+                      <th>Occupation</th>
+                      <th>Zip Code</th>
+                      <th style={{ width: "800px" }}>Groups</th>
+                      <th
+                        onClick={handleNumSameGroupSort}
+                        style={{
+                          cursor: "pointer",
+                          width: "500px",
+                          paddingRight: "25px",
+                        }}
+                      >
+                        No. of Same Groups{" "}
+                        {numGroupGortOrder === "asc" ? "▲" : "▼"}
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td colSpan="3">You have no super match users.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

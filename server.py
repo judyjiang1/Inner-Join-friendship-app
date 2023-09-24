@@ -542,9 +542,8 @@ def get_super_match():
                 super_match_user_list.append(super_match_user_dict)
 
     if not super_match_user_list:
-       return jsonify({'no super match users found'}), 401
+       return jsonify({'no super match users found'}), 204
     else:
-
         return jsonify(super_match_user_list)
 
 

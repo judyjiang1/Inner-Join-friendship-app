@@ -782,6 +782,7 @@ input {
   color: #bd2130;
   border: none;
   border-radius: 0 8px 8px 0;
+  margin-top: 8px;
 }
 
 .chatRoot > .chatArea > .chatBox > .history {
@@ -867,12 +868,9 @@ input {
   border: 1px outset #fff;
 }
 
-/*.chatSendBtn {*/
-/*    display: flex;*/
-/*    align-items: flex-end;*/
-/*    align-content: center;*/
-/*    justify-content: center;*/
-/*}*/
+/* .chat-send-btn {
+  padding-top: 10px;
+} */
 
 .onlineCount {
   font-size: 14px;

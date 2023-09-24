@@ -510,6 +510,7 @@ function ChatRoom() {
                     setNewContent(evt.target.value);
                   }}
                 />
+
                 <button type="submit">
                   <i className="fa-regular fa-paper-plane"></i>
                 </button>

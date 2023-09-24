@@ -107,10 +107,16 @@ const GroupMap = ({ groupName, handleCloseMapPopup }) => {
   }, [users]);
 
   return (
-    <div>
-      <button onClick={handleCloseMapPopup} className="btn btn-primary mx-2">
-        Close Map
-      </button>
+    <div className="container">
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <button
+          onClick={handleCloseMapPopup}
+          className="btn btn-primary mx-2"
+          style={{ marginBottom: 20 }}
+        >
+          Close Map
+        </button>
+      </div>
       <div id="map" style={{ width: "800px", height: "600px" }}></div>
     </div>
   );

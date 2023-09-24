@@ -34,11 +34,16 @@ const GroupMemberTable = ({ groupName, handleClosePopup }) => {
   };
 
   return (
-    <div className="user-table-container">
+    <div className="user-table-container container">
       <h3>Group Member Information</h3>
-      <button onClick={handleClosePopup} className="btn btn-primary mx-2">
-        Close Table
-      </button>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <button
+          onClick={handleClosePopup}
+          className="btn btn-primary mx-2 close-table-btn"
+        >
+          Close Table
+        </button>
+      </div>
       <div className="table-wrapper">
         <table>
           <thead>

@@ -449,9 +449,9 @@ function ChatRoom() {
             {showPopup && (
               <div className="popup">
                 <div className="popup-content">
-                  <span className="close" onClick={handleClosePopup}>
+                  {/* <span className="close" onClick={handleClosePopup}>
                     &times;
-                  </span>
+                  </span> */}
                   <GroupMemberTable
                     groupName={groupName}
                     handleClosePopup={handleClosePopup}
@@ -471,9 +471,9 @@ function ChatRoom() {
             {showMapPopup && (
               <div className="popup">
                 <div className="popup-content">
-                  <span className="close" onClick={handleCloseMapPopup}>
+                  {/* <span className="close" onClick={handleCloseMapPopup}>
                     &times;
-                  </span>
+                  </span> */}
                   <GroupMap
                     groupName={groupName}
                     handleCloseMapPopup={handleCloseMapPopup}

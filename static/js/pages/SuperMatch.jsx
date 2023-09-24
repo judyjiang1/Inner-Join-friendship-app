@@ -53,7 +53,9 @@ function SuperMatch() {
       <div className="container">
         <div className="super-match-content">
           <div className="super-match-table-container">
-            <h2 style={{ marginBottom: 20 }}>My Super Match</h2>
+            <h2 style={{ marginBottom: 20, fontWeight: "bold" }}>
+              My Super Match
+            </h2>
             <p style={{ fontSize: "18px", fontWeight: "bold" }}>
               These are users who share at least 2 same groups as you. Reach out
               to them in the group chat!{" "}

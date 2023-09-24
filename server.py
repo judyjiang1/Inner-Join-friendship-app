@@ -511,7 +511,8 @@ def get_super_match():
     all_user_obj = crud.all_users()
     all_users = []
     for user in all_user_obj:
-        all_users.append(user)
+        if user.user_id != current_user.user_id:
+            all_users.append(user)
 
     
     super_match_user_list = []

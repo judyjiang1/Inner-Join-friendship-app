@@ -37,6 +37,11 @@ body {
   /* color: white; */
 }
 
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 /******************************** landing main info ****************************************/
 /* .landing-div {
   flex: 1;
@@ -879,14 +884,14 @@ input {
 }
 
 .chatRoom-category-text {
-  font-size: 20 px;
+  /* font-size: 20 px; */
   font-weight: 600;
   color: rgb(247, 233, 233);
   text-transform: capitalize;
-  margin: 60px 25px 25px 25px;
+  margin: 40px 25px 25px 25px;
 }
 .chatRoom-group-text {
-  font-size: 14 px;
+  /* font-size: 14 px; */
   font-weight: 600;
   color: rgb(247, 233, 233);
   text-transform: capitalize;

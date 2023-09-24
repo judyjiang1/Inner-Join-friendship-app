@@ -117,7 +117,6 @@ function MyGroups() {
           style={{
             textAlign: "center",
             color: "white",
-            fontSize: 55,
             fontWeight: 600,
             marginTop: 25,
             paddingTop: 30,

@@ -424,67 +424,67 @@ function ChatRoom() {
     <>
       <NavBar setLoginStatus={setLoginStatus} />
 
-      <h1 className="text-center">
-        {groupName}
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => {
-            endChat();
-          }}
-        >
-          Leave chat
-        </button>
-      </h1>
+      <h2 className="chatRoom-category-text">{categoryName}</h2>
+      <h3 className="chatRoom-group-text">{groupName} Group</h3>
+      <div className="containerfluid">
+        <div className="row">
+          <div className="col chatRoom-btn">
+            <button
+              className="btn btn-primary mx-2"
+              onClick={() => {
+                endChat();
+              }}
+            >
+              Leave chat
+            </button>
 
-      <div className="text-center">
-        <button
-          onClick={togglePopup}
-          className="btn btn-primary mx-2"
-          style={{ paddingBottom: 10 }}
-        >
-          Show Group Member Info
-        </button>
+            <button
+              onClick={togglePopup}
+              className="btn btn-primary mx-2"
+              style={{ paddingBottom: 10 }}
+            >
+              Show Group Member Info
+            </button>
 
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <span className="close" onClick={handleClosePopup}>
-                &times;
-              </span>
-              <GroupMemberTable
-                groupName={groupName}
-                handleClosePopup={handleClosePopup}
-              />
-            </div>
+            {showPopup && (
+              <div className="popup">
+                <div className="popup-content">
+                  <span className="close" onClick={handleClosePopup}>
+                    &times;
+                  </span>
+                  <GroupMemberTable
+                    groupName={groupName}
+                    handleClosePopup={handleClosePopup}
+                  />
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={toggleMapPopup}
+              className="btn btn-primary mx-2"
+              style={{ paddingBottom: 10 }}
+            >
+              Show Group Map
+            </button>
+
+            {showMapPopup && (
+              <div className="popup">
+                <div className="popup-content">
+                  <span className="close" onClick={handleCloseMapPopup}>
+                    &times;
+                  </span>
+                  <GroupMap
+                    groupName={groupName}
+                    handleCloseMapPopup={handleCloseMapPopup}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
-      <div className="text-center">
-        <button
-          onClick={toggleMapPopup}
-          className="btn btn-primary mx-2"
-          style={{ paddingBottom: 10 }}
-        >
-          Show Group Map
-        </button>
-
-        {showMapPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <span className="close" onClick={handleCloseMapPopup}>
-                &times;
-              </span>
-              <GroupMap
-                groupName={groupName}
-                handleCloseMapPopup={handleCloseMapPopup}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      <p className="text-center">{categoryName}</p>
       <div className="chatRoot">
         <div className="chatArea">
           <div className="groupMembers">

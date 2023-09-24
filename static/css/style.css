@@ -893,12 +893,12 @@ input {
   color: rgb(247, 233, 233);
   text-transform: capitalize;
   margin-left: 25px;
+  margin-bottom: 25px;
 }
 
-.leave-btn {
+.chatRoom-btn {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 /***********/

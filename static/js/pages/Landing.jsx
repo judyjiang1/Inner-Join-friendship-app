@@ -89,6 +89,15 @@ function Landing() {
                   Welcome, {userInfo.fname}
                 </a>
               </span>
+              <span className="nav-item">
+                <a
+                  className="nav-link text-white"
+                  style={{ marginRight: "10px" }}
+                  href="/my-super-match"
+                >
+                  My Super Match
+                </a>
+              </span>
               <li className="nav-item">
                 <Link
                   className="nav-link text-white"

@@ -172,7 +172,7 @@ def submit_user_info():
 
     data = request.json
     gender = data.get('gender')
-    zipcode = data.get('zipcode')
+    zipcode = data.get('zipCode')
     birthMonth = data.get('birthMonth')
     birthDay = data.get('birthDay')
     birthYear = data.get('birthYear')

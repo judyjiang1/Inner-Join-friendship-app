@@ -118,6 +118,15 @@ const NavBar = () => {
             Welcome, {userInfo.fname}
           </a>
         </span>
+        <span className="nav-item">
+          <a
+            className="nav-link text-white"
+            style={{ marginRight: "10px" }}
+            href="/my-super-match"
+          >
+            My Super Match
+          </a>
+        </span>
         <span className="nav-item dropdown">
           <Link
             className="nav-link dropdown-toggle text-white"

@@ -172,7 +172,7 @@ def submit_user_info():
 
     data = request.json
     gender = data.get('gender')
-    zip_code = data.get('zipcode')
+    zipcode = data.get('zipcode')
     birthMonth = data.get('birthMonth')
     birthDay = data.get('birthDay')
     birthYear = data.get('birthYear')
@@ -181,7 +181,7 @@ def submit_user_info():
 
     formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
 
-    crud.update_user_info(user_id, gender, formatted_date, ethnicity,zip_code,occupation)
+    crud.update_user_info(user_id, gender, formatted_date, ethnicity, zipcode, occupation)
 
     
     combined_list = []

@@ -1,25 +1,5 @@
 [
   {
-    "id": 0,
-    "first_name": "Test",
-    "last_name": "Test",
-    "email": "test@test.com",
-    "username": "test_user",
-    "password": "1234",
-    "gender": "Female",
-    "phone_number": "847-818-8636",
-    "birthdate": "4/7/1963",
-    "ethnicity": "Hispanic or Latino",
-    "occupation": "Web Designer",
-    "zip_code": "27601",
-    "hobbies & interests": ["Sports & Fitness", "Gardening"],
-    "cultural background": "Latin American",
-    "support groups": ["Personal Development", "Stress & Anxiety"],
-    "current or past workplace(s)": "Morgan Stanley",
-    "current or past college(s) attended": "University of Wisconsin - Madison",
-    "current or past high school(s) attended": "Buffalo Seminary School"
-  },
-  {
     "id": 1,
     "first_name": "Jo-anne",
     "last_name": "Gumly",

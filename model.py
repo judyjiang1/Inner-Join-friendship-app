@@ -42,9 +42,18 @@ class User(db.Model):
        return cls(username=username, email=email, password=password, fname=fname, lname=lname, gender=gender, age=age, 
                   ethnicity=ethnicity, occupation=occupation, zipcode=zipcode)
 
-    # @classmethod
-    # def get_by_id(cls, user_id):
-    #     return cls.query.get(user_id)
+    @classmethod
+    def update_user_info(cls, user_id, new_email, new_username, new_fname, new_lname, new_gender, new_age, new_ethnicity, new_occupation, new_zipcode):
+        user = cls.query.get(user_id)
+        user.username = new_username
+        user.email = new_email
+        user.fname = new_fname
+        user.lname = new_lname
+        user.gender = new_gender
+        user.age = new_age
+        user.ethnicity = new_ethnicity
+        user.occupation = new_occupation
+        user.zipcode = new_zipcode
 
     # @classmethod
     # def get_by_email(cls, email):
@@ -106,9 +115,13 @@ class UserTag(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     category_tag_id = db.Column(db.Integer, db.ForeignKey("category_tags.category_tag_id"), nullable=False)
 
-
+    
+    
     def __repr__(self):
         return f"<UserTag user_id={self.user_id}>"
+    
+
+  
 
 
 

@@ -98,6 +98,10 @@ def get_users_in_group(group_id):
 #     return groups
 
 
+def clear_user_tags(user_id):
+    user_tags = UserTag.query.get(user_id)
+    user_tags.category_tags = ''
+    return
 
 
 

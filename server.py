@@ -497,6 +497,57 @@ def get_group_members():
         return jsonify(lst)
 
 
+@app.route("/api/get-super-match", methods=["POST"])
+@protected_api
+def get_super_match():
+
+    # groups current_user is in 
+    current_user = g.user
+    current_user_groups = []
+    for group in current_user.groups:
+        current_user_groups.append(group.group_name)
+
+    # all users
+    all_user_obj = crud.all_users()
+    all_users = []
+    for user in all_user_obj:
+        all_users.append(user)
+
+    
+    super_match_user_list = []
+    super_match_user_dict = {}
+    for user in all_users:
+        if user.user_id != current_user.user_id:
+            count = 0
+            groups = []
+            for group in user.groups:
+                groups.append(group.group_name)
+
+            for group in groups:
+                if group in current_user_groups:
+                    count += 1 
+            if count >= 2: 
+                super_match_user_dict = {}
+                super_match_user_dict["user_id"] = user.user_id
+                super_match_user_dict["username"] = user.username
+                super_match_user_dict["fname"] = user.fname
+                super_match_user_dict["lname"] = user.lname
+                super_match_user_dict["gender"] = user.gender
+                super_match_user_dict["age"] = user.age
+                super_match_user_dict["ethnicity"] = user.ethnicity
+                super_match_user_dict["occupation"] = user.occupation
+                super_match_user_dict["zipcode"] = user.zipcode
+                super_match_user_dict["groups"] = groups 
+                super_match_user_dict["count"] = count
+                super_match_user_list.append(super_match_user_dict)
+
+    if not super_match_user_list:
+       return jsonify({'no super match users found'}), 401
+    else:
+
+        return jsonify(super_match_user_list)
+
+
 
 
 

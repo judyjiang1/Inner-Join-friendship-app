@@ -164,6 +164,14 @@ function App() {
               <AllUserInfo></AllUserInfo>
             </div>
           </PrivateRoute>
+          <PrivateRoute path="/my-super-match/" exact>
+            <div>
+              <SuperMatch
+                className="Info"
+                // updateLoginStatus={updateLoginStatus}
+              />
+            </div>
+          </PrivateRoute>
           <PrivateRoute path="/my-groups/" exact>
             <div>
               <MyGroups

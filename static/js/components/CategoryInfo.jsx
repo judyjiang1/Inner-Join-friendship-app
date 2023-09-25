@@ -465,7 +465,7 @@ const highSchoolOptions = [
   "Oakwood Friends School",
   "Orme School",
   "Phillips Academy ",
-  " Phillips Exeter Academy",
+  "Phillips Exeter Academy",
   "Saint Andrew's School",
   "San Domenico School",
   "Southwestern Academy",

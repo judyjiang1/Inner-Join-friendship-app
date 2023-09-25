@@ -12,7 +12,7 @@ const {
 } = ReactRouterDOM;
 
 const messages = [
-  'Click "Explore the App" to log in as a demo user and test the application (make sure you are not already logged in, otherwise this feature will be disabled)',
+  'Click "Explore the App" to log in as a demo user and explore the application (if you are already logged in, make sure to logout to enable this feature)',
   "Create a new account 👤",
   "Enter your information and select preferences 🧑‍💻 👩‍💻 ",
   'Groups will be created according to your preferences. Navigate to "My Groups" page to view your groups or navigate to "My Super Match" page to view your super match users!',

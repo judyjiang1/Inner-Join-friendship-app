@@ -16,9 +16,11 @@ function Login() {
     useContext(AuthContext);
   const [loginError, setLoginError] = useState(false);
 
+  document.title = "User Login";
+
   const history = useHistory();
-  const [email, setEmail] = useState(" ");
-  const [password, setPassword] = useState(" ");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const hasFetchBeenCalledRef = useRef(false);
@@ -105,7 +107,7 @@ function Login() {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="************"
+                placeholder="Enter your password"
                 required={true}
                 autoComplete="off"
                 value={password}
@@ -142,7 +144,7 @@ function Login() {
           </div>
           <p className="no-acct-txt">
             Don't have an account?
-            <Link to="/register" className="sign-up">
+            <Link to="/register">
               <button className="home-button">Sign Up</button>
             </Link>
           </p>

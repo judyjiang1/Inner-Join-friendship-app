@@ -130,12 +130,15 @@ function Landing() {
         <div className="center container">
           {/* Description */}
           <div>
-            <h2 className="landing-text" style={{ marginTop: 150 }}>
+            <h2
+              className="landing-text"
+              style={{ marginTop: 150, fontWeight: "bold" }}
+            >
               An innovative way of making new friends.
             </h2>
           </div>
           <div>
-            <h5 className="landing-text" style={{ fontStyle: "bold" }}>
+            <h5 className="landing-text" style={{ fontWeight: "bold" }}>
               Discover people who have crossed paths or share commonalities with
               you and start building <span> lifelong </span> friendship.
             </h5>

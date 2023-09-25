@@ -20,25 +20,26 @@ socketio.init_app(app)
 bcrypt = Bcrypt(app)
 
 
-def protected_api(f):
+def protected_api(func):
     """Protect backend api."""
 
-    @wraps(f)
+    @wraps(func)
     def wrapper(*args, **kwargs):
         user_id = session.get('user_id')
         if user_id:
             user_obj: User = User.query.filter(User.user_id == user_id).first()
             
-            # deleted user 
             if user_obj is None:
-                return jsonify(success=0, msg='protected'), 401
+                return jsonify(success=0, msg='invalid user'), 401
 
-            # cache user obj with g
-            g.user = user_obj
-            return f(*args, **kwargs)
-
-        # block unAuthorized visit and protect backend api
-        return jsonify(success=0, msg='protected'), 401
+            else:
+                # cache user obj with g
+                g.user = user_obj
+        else:
+            # block unAuthorized visit and protect backend api
+            return jsonify(success=0, msg='login required'), 401     
+        
+        return func(*args, **kwargs)
 
     return wrapper
 
@@ -111,6 +112,7 @@ def register_user():
 @app.route('/api/user/echo')
 @protected_api
 def get_user_info():
+    """Echo current user."""
     user_obj: User = g.user
     return jsonify(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
                    lname=user_obj.lname,
@@ -141,6 +143,7 @@ def select_category():
 @app.route("/api/get-user-tags", methods=["POST"])
 @protected_api
 def get_user_categories():
+    """Get current user's category tags."""
     user = g.user
     user_tags = user.category_tags
     user_tag_names = []
@@ -154,6 +157,7 @@ def get_user_categories():
 @app.route("/api/submit-user-info", methods=["POST"])
 @protected_api
 def submit_user_info():
+    """Save user info to database."""
     
     user = g.user
     user_id = user.user_id 
@@ -170,7 +174,6 @@ def submit_user_info():
     formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
 
     crud.update_user_info(user_id, gender, formatted_date, ethnicity, zipcode, occupation)
-
     
     combined_list = []
 
@@ -183,9 +186,7 @@ def submit_user_info():
 
     for item in combined_list:
         item = item.capitalize()
-        print(item)
         group = Group.query.filter_by(group_name=item).first()
-        print(group)
         if group:
             group_id = group.group_id
             user_group = UserGroup(user_id=user_id, group_id=group_id)
@@ -200,6 +201,7 @@ def submit_user_info():
 @app.route("/api/get-user-groups", methods=["POST"])
 @protected_api
 def get_user_groups():
+    """Get current user's groups."""
 
     user = g.user
     user_groups = user.groups
@@ -305,6 +307,7 @@ def user_open_chatroom():
 
 @app.route('/api/user/logout')
 def logout():
+    """Log out current user."""
     # mark user as offline in all chat rooms
     user_id = session.get('user_id')
     if user_id:
@@ -322,6 +325,7 @@ def logout():
 @app.route("/api/get-group-members", methods=["POST"])
 @protected_api
 def get_group_members():
+    """Get all the group members of a group."""
     
     data = request.get_json()
     group_name = data.get('group_name')
@@ -361,6 +365,7 @@ def get_group_members():
 @app.route("/api/get-super-match", methods=["POST"])
 @protected_api
 def get_super_match():
+    """Get all the users who share at least 2 common groups with the current user."""
 
     # groups current_user is in 
     current_user = g.user

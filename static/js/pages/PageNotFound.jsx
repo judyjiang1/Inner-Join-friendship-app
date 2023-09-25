@@ -23,9 +23,10 @@ function PageNotFound() {
           margin: 20,
           fontSize: "16px",
           fontWeight: "bold",
+          textAlign: "center",
         }}
       >
-        This page doesn't exist. Please return to home page.
+        This page doesn't exist. Please double check or return to home page.
       </div>
       <button className="btn btn-primary" onClick={(evt) => history.push("/")}>
         Back to Home

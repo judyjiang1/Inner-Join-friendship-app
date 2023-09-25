@@ -11,8 +11,7 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-//////////////////////////
-function AllUserInfo({ updateLoginStatus }) {
+function AllUserInfo() {
   const [dialogShown, setDialogShown] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogInfo, setDialogInfo] = useState(null);
@@ -35,7 +34,6 @@ function AllUserInfo({ updateLoginStatus }) {
     college: [],
     highSchool: [],
   });
-  // const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (name, value) => {
     setFormData((prevData) => ({
@@ -81,21 +79,13 @@ function AllUserInfo({ updateLoginStatus }) {
       "highSchool",
     ];
 
-    // const formKeys = Object.keys(formData);
-    // return fieldsToCheck.some(
-    //   (field) => formKeys.includes(field) && formData[field].length === 0
-    // );
-
     return fieldsToCheck.some((field) => formData[field].length > 0);
   };
 
   const handleSubmit = async (e) => {
-    // setIsLoading(true);
     e.preventDefault();
 
-    // Check if the "Gender" field is filled out
     if (isRequiredFieldsEmpty()) {
-      // alert("Please fill out all the required fields.");
       setDialogTitle("Warning");
       setDialogInfo(<div>Please fill out all the required fields.</div>);
       setDialogButtons(
@@ -108,7 +98,6 @@ function AllUserInfo({ updateLoginStatus }) {
       );
       setDialogShown("show");
     } else if (!isValidUSZipCode(formData.zipCode)) {
-      // alert("Please enter a valid ZIP code.");
       setDialogTitle("Warning");
       setDialogInfo(<div>Please enter a valid ZIP code.</div>);
       setDialogButtons(
@@ -127,7 +116,6 @@ function AllUserInfo({ updateLoginStatus }) {
         formData.birthYear
       )
     ) {
-      //alert("Please enter a valid Birthday.");
       setDialogTitle("Warning");
       setDialogInfo(<div>Please enter a valid birth year.</div>);
       setDialogButtons(
@@ -137,18 +125,8 @@ function AllUserInfo({ updateLoginStatus }) {
       );
       setDialogShown("show");
     } else if (!isAtLeastOneFieldFilled()) {
-      // alert("Please fill out at least one of the fields.");
       setDialogTitle("Warning");
-      setDialogInfo(
-        <div>
-          Please make selection(s) for each category.
-          {/* <ul>
-            <li>Hobby & Interests</li>
-            <li>Cultural Background</li>
-            <li>Support Groups</li>
-          </ul> */}
-        </div>
-      );
+      setDialogInfo(<div>Please make selection(s) for each category.</div>);
       setDialogButtons(
         <button
           className="btn btn-primary"
@@ -169,14 +147,12 @@ function AllUserInfo({ updateLoginStatus }) {
         });
 
         if (response.ok) {
-          // updateLoginStatus(true);
           history.push("/my-groups");
         }
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     }
-    // setIsLoading(false);
   };
 
   return (
@@ -200,7 +176,6 @@ function AllUserInfo({ updateLoginStatus }) {
             Submit
           </button>
         </div>
-        {/* {isLoading && <p>Matching...</p>} */}
       </div>
       <Dialog></Dialog>
     </DialogContext.Provider>

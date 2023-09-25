@@ -71,7 +71,6 @@ function Landing() {
 
   return (
     <div>
-      {/* Logo and Website Name */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-black">
         <Link to="/">
           <img
@@ -128,7 +127,6 @@ function Landing() {
 
       <div className="landing-intro">
         <div className="center container">
-          {/* Description */}
           <div>
             <h2
               className="landing-text"
@@ -152,9 +150,6 @@ function Landing() {
               <Link to="/register" className="btn btn-primary mx-2">
                 Register
               </Link>
-              {/* <Link to="/demo" className="btn btn-primary mx-2">
-                Explore the App
-              </Link> */}
 
               {loginStatus === true ? (
                 <button className="btn btn-secondary mx-2" disabled>

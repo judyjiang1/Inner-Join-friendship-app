@@ -153,11 +153,3 @@ function Login() {
     </div>
   );
 }
-
-// ReactDOM.render(
-//   <BrowserRouter>
-//     <Login />,
-//   </BrowserRouter>,
-
-//   document.querySelector("#root")
-// );

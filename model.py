@@ -55,16 +55,8 @@ class User(db.Model):
         user.occupation = new_occupation
         user.zipcode = new_zipcode
 
-    # @classmethod
-    # def get_by_email(cls, email):
-    #     return cls.query.filter(User.email == email).first()
-
-    # @classmethod
-    # def all_users(cls):
-    #     return cls.query.all()
+   
     
-
-
 class Category_tag(db.Model):
     """A category tag for group matching."""
 
@@ -94,16 +86,7 @@ class Category_tag(db.Model):
     def create(cls, img_url, category_tag_name):
         """Create and return a new category tag."""
         return cls(img_url=img_url, category_tag_name=category_tag_name)
-    
-    # @classmethod
-    # def get_by_id(cls, category_tag_id):
-    #     return cls.query.get(category_tag_id)
-
-    # @classmethod
-    # def all_category_tags(cls):
-    #     return cls.query.all()
-
-    
+        
 
 
 class UserTag(db.Model):
@@ -115,14 +98,9 @@ class UserTag(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     category_tag_id = db.Column(db.Integer, db.ForeignKey("category_tags.category_tag_id"), nullable=False)
 
-    
-    
     def __repr__(self):
         return f"<UserTag user_id={self.user_id}>"
     
-
-  
-
 
 
 class Group(db.Model):
@@ -147,15 +125,7 @@ class Group(db.Model):
         """Create and return a new group."""
         return cls(group_name=group_name, matched_at=matched_at, active_status=active_status, user_defined=user_defined)
     
-    # @classmethod
-    # def get_by_id(cls, group_id):
-    #     return cls.query.get(group_id)
-
-    # @classmethod
-    # def all_groups(cls):
-    #     return cls.query.all()
-    
-
+  
     
 class GroupTag(db.Model):
     """An association table for connecting groups and tags. It shows tags a specific group has."""
@@ -182,6 +152,7 @@ class UserGroup(db.Model):
 
     def __repr__(self):
         return f"<UserGroup user_group_id={self.user_group_id}>"
+
 
 
 class ChatRoom(db.Model):
@@ -242,6 +213,7 @@ class ChatRoom(db.Model):
             db.session.commit()
 
         return res
+
 
 
 class RoomMember(db.Model):
@@ -356,6 +328,8 @@ class RoomMember(db.Model):
             joined_at=member_ship.joined_at, last_seen=member_ship.last_seen, lask_speak=member_ship.last_speak,
             is_online=member_ship.is_online)
 
+
+
 class Message(db.Model):
     __tablename__ = 'chat_room_message'
 
@@ -365,6 +339,7 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, nullable=False)
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.Integer, default=get_utc_timestamp)
+
 
 
 def connect_to_db(

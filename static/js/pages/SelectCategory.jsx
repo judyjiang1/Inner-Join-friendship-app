@@ -1,5 +1,5 @@
 const { useContext, createContext, useState, useEffect, useRef } = React;
-// const { MultiSelect } = ReactMultiSelectComponent;
+
 const {
   Route,
   Switch,
@@ -11,15 +11,6 @@ const {
   useHistory,
   withRouter,
 } = ReactRouterDOM;
-
-// category_mapping = {
-//   hobby: 1,
-//   cultural_background: 2,
-//   support: 3,
-//   company: 4,
-//   college: 5,
-//   high_school: 6,
-// };
 
 function SelectCategory(props) {
   document.title = "Select category";

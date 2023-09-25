@@ -21,7 +21,6 @@ const messages = [
 
 function InstructionBox({ isOpen }) {
   const [step, setStep] = useState(1);
-  // const [isOpen, setIsOpen] = useState(false);
 
   function handlePrevious() {
     if (step > 1) setStep((s) => s - 1);
@@ -33,21 +32,8 @@ function InstructionBox({ isOpen }) {
     }
   }
 
-  // const toggleOnOFF = () => {
-  //   setIsOpen(!isOpen);
-  // };
-
   return (
     <div>
-      {/* <div className="container">
-        <button
-          className="instruction_btn"
-          onClick={() => setIsOpen((is) => !is)}
-        >
-          View Instructions
-        </button>
-      </div> */}
-
       {isOpen && (
         <div className="steps">
           <div className="numbers">

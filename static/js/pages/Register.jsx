@@ -153,10 +153,3 @@ function Register() {
     </div>
   );
 }
-
-// ReactDOM.render(
-//   <BrowserRouter>
-//     <Register />
-//   </BrowserRouter>,
-//   document.querySelector("#root")
-// );

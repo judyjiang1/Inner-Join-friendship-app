@@ -50,7 +50,6 @@ function PublicRoute({ children, ...rest }) {
       {...rest}
       render={({ location }) => {
         if (!loginStatus) {
-          // User is not logged in, render the children
           return children;
         } else {
           return children;
@@ -92,30 +91,9 @@ async function checkAuthStatus() {
     });
 }
 
-/****************************************************************************/
 function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-  // const [fname, setFname] = useState(null);
-
   const [loginStatus, setLoginStatus] = useState(_isLogin);
   const [userInfo, setUserInfo] = useState(_userInfo);
-
-  // useEffect(() => {
-  //   // Check if the user is logged in when the component mounts
-  //   fetch("/check_login")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.loggedIn) {
-  //         setLoggedIn(true);
-  //         setFname(data.userfname);
-  //       }
-  //     })
-  //     .catch((error) => console.error("Error checking login status", error));
-  // }, []);
-
-  // const updateLoginStatus = (status) => {
-  //   setLoggedIn(status);
-  // };
 
   return (
     <AuthContext.Provider
@@ -125,28 +103,17 @@ function App() {
         <Switch>
           <PublicRoute path="/" exact>
             <div>
-              <Landing
-              // loggedIn={loggedIn}
-              // fname={fname}
-              // updateLoginStatus={updateLoginStatus}
-              />
+              <Landing />
             </div>
           </PublicRoute>
           <PublicRoute path="/login/" exact>
             <div className="App">
-              <Login
-              // loggedIn={loggedIn}
-              // fname={fname}
-              // updateLoginStatus={updateLoginStatus}
-              />
+              <Login />
             </div>
           </PublicRoute>
           <PublicRoute path="/register/" exact>
             <div className="App">
-              <Register
-              // loggedIn={loggedIn}
-              // updateLoginStatus={updateLoginStatus}
-              />
+              <Register />
             </div>
           </PublicRoute>
           <PrivateRoute path="/register-success/" exact>
@@ -166,29 +133,19 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/my-super-match/" exact>
             <div>
-              <SuperMatch
-
-              // updateLoginStatus={updateLoginStatus}
-              />
+              <SuperMatch />
             </div>
           </PrivateRoute>
           <PrivateRoute path="/my-groups/" exact>
             <div>
-              <MyGroups
-
-              // updateLoginStatus={updateLoginStatus}
-              />
+              <MyGroups />
             </div>
           </PrivateRoute>
-          {/* <Route exact path="/" component={MyGroups} /> */}
-          <PrivateRoute
-            path="/my-groups/:categoryName/:groupName"
-            // component={GroupDetail}
-          >
+          <PrivateRoute path="/my-groups/:categoryName/:groupName">
             <ChatRoom></ChatRoom>
           </PrivateRoute>
           <Route path={"*"}>
-            <div className="container">
+            <div className="App">
               <PageNotFound></PageNotFound>
             </div>
           </Route>

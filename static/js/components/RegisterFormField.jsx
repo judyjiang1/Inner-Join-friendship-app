@@ -20,18 +20,3 @@ function Field(props) {
     </div>
   );
 }
-
-// const cultureDropdown = ({ options }) => {
-//   return (
-//     <select>
-//       <option value="" disabled selected>
-//         Select your cultural background{" "}
-//       </option>
-//       {options.map((option, index) => (
-//         <option key={index} value={option}>
-//           {option}
-//         </option>
-//       ))}
-//     </select>
-//   );
-// };

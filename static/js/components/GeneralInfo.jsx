@@ -1,24 +1,3 @@
-// const { useContext, createContext, useState, useEffect, useRef } = React;
-// const {
-//   Route,
-//   Switch,
-//   useLocation,
-//   BrowserRouter,
-//   HashRouter,
-//   Redirect,
-//   Link,
-//   useHistory,
-//   withRouter,
-// } = ReactRouterDOM;
-
-// import {
-//   genderOptions,
-//   months,
-//   years,
-//   ethnicityOptions,
-//   occupationOptions,
-// } from "./form_data";
-
 const genderOptions = ["Male", "Female", "Other"];
 
 const months = [
@@ -35,20 +14,6 @@ const months = [
   "November",
   "December",
 ];
-
-const days = Array.from({ length: 31 }, (_, i) => i + 1);
-
-const currentYear = new Date().getFullYear();
-const youngestAge = 18;
-const oldestAge = 65;
-
-const youngestYear = currentYear - youngestAge;
-const oldestYear = currentYear - oldestAge;
-
-const years = Array.from(
-  { length: oldestAge - youngestAge + 1 },
-  (_, i) => oldestYear + i
-);
 
 const ethnicityOptions = [
   "Asian",
@@ -97,14 +62,6 @@ const GeneralInfo = ({ onChange }) => {
     onChange("birthMonth", months[d.getMonth()]);
     onChange("birthDay", d.getDate());
     onChange("birthYear", d.getFullYear());
-
-    // console.log(
-    //   name,
-    //   value,
-    //   months[d.getMonth()],
-    //   d.getDate(),
-    //   d.getFullYear()
-    // );
   };
 
   return (
@@ -143,33 +100,7 @@ const GeneralInfo = ({ onChange }) => {
           required
         />
       </div>
-      {/* <div>
-        <label>Birthday:</label>
-        <select name="birthMonth" onChange={handleChange}>
-          <option value="">Select Month</option>
-          {months.map((month, index) => (
-            <option key={index} value={month}>
-              {month}
-            </option>
-          ))}
-        </select>
-        <select name="birthDay" onChange={handleChange} required>
-          <option value="">Select Day</option>
-          {days.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </select>
-        <select name="birthYear" onChange={handleChange} required>
-          <option value="">Select Year</option>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div> */}
+
       <div className="form-group">
         <label className="form-label" htmlFor="birthday">
           Birthday: <span className="text-danger">*</span>

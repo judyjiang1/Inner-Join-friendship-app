@@ -65,11 +65,8 @@ function MyGroups() {
     })
       .then((response) => {
         if (response.ok) {
-          // Group information successfully stored in the session
-          // Then navigate to the ChatRoom page
           history.push(`/my-groups/${categoryName}/${groupName}`);
         } else {
-          // Handle errors if needed
           console.error("Error storing group information in session");
         }
       })
@@ -155,100 +152,3 @@ function MyGroups() {
     </>
   );
 }
-
-// function MyGroups() {
-//   const history = useHistory();
-//   const [groupsWithPeople, setGroupsWithPeople] = useState([]);
-
-//   // const [myGroups, joinMyGroup] = props;
-
-//   useEffect(() => {
-//     document.title = "My Groups";
-
-//     async function fetchData() {
-//       try {
-//         const response = await fetch("/api/get-user-groups", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         });
-//         const data = await response.json();
-
-//         // Sort groups by category name and then by group name
-//         const sortedGroups = Object.keys(data)
-//           .sort((a, b) => {
-//             const categoryComparison = data[a].categoryName.localeCompare(
-//               data[b].categoryName
-//             );
-//             if (categoryComparison !== 0) return categoryComparison;
-//             return a.localeCompare(b);
-//           })
-//           .reduce((acc, key) => {
-//             acc[key] = data[key];
-//             return acc;
-//           }, {});
-
-//         setGroupsWithPeople(sortedGroups);
-//       } catch (error) {
-//         console.error("Error fetching user groups names:", error);
-//       }
-//     }
-
-//     fetchData();
-//   }, []);
-
-//   function joinMyGroup(groupName, categoryName) {
-//     fetch(`/api/open-chatroom`, {
-//       method: "POST",
-//       body: JSON.stringify({
-//         group_name: groupName,
-//         category_name: categoryName,
-//       }),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((response) => {
-//         if (response.ok) {
-//           // Group information successfully stored in the session
-//           // Then navigate to the ChatRoom page
-//           history.push(`/my-groups/${categoryName}/${groupName}`);
-//         } else {
-//           // Handle errors if needed
-//           console.error("Error storing group information in session");
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Error storing group information:", error);
-//       });
-//   }
-
-//   const groupCards = [];
-
-//   for (const groupName of Object.keys(groupsWithPeople)) {
-//     const group = groupsWithPeople[groupName];
-//     const groupCard = (
-//       <div className="col-md-4 text-to-title-case" key={groupName}>
-//         <GroupCard
-//           key={groupName + "_card"}
-//           categoryName={group.categoryName}
-//           groupName={groupName}
-//           imgUrl={group.imgURL}
-//           handleImageClick={() => joinMyGroup(groupName, group.categoryName)}
-//         />
-//       </div>
-//     );
-//     groupCards.push(groupCard);
-//   }
-
-//   return (
-//     <>
-//       <NavBar></NavBar>
-//       <div className="container" style={{ backGroundColor: "red" }}>
-//         <h1 className="text-center">My Groups</h1>
-//         <div className="row">{groupCards}</div>
-//       </div>
-//     </>
-//   );
-// }

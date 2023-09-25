@@ -308,9 +308,6 @@ function ChatRoom() {
     });
   }
 
-  // let memberEleArr = members.map(m => (
-  //     <RoomMember {...m} current_user_id={userInfo.user_id} key={`${activeRoom.id}-${m.user_id}`}/>))
-
   const memberEleArr = useMemo(
     () =>
       sortMembers(members).map((m) => {
@@ -471,9 +468,6 @@ function ChatRoom() {
             {showMapPopup && (
               <div className="popup">
                 <div className="popup-content">
-                  {/* <span className="close" onClick={handleCloseMapPopup}>
-                    &times;
-                  </span> */}
                   <GroupMap
                     groupName={groupName}
                     handleCloseMapPopup={handleCloseMapPopup}

@@ -42,9 +42,8 @@ if __name__ == "__main__":
             category_data = json.loads(c.read())
 
 
-#######################################################################################################################
+#################################################### Seed Mock Users ####################################################################
 
-        # to create mock users
         users_in_db = []
         for user in user_data:
             username, email, fname, lname, gender, ethnicity, occupation, zipcode = (
@@ -72,10 +71,8 @@ if __name__ == "__main__":
         model.db.session.commit()
 
 
-#############################################################################################################################################################
+#################################################### Seed Category Tags ####################################################################
 
-        # Create category tags
-        
         all_categories = []
 
         def extract_categories(obj):
@@ -87,7 +84,7 @@ if __name__ == "__main__":
                 for item in obj:
                     extract_categories(item)
 
-        # call the function
+        
         extract_categories(category_data)
         # print(all_categories)
 
@@ -102,7 +99,7 @@ if __name__ == "__main__":
         model.db.session.commit()
 
 
-#############################################################################################################################################################
+#################################################### Seed Groups ####################################################################
 
         # create groups
 
@@ -124,7 +121,7 @@ if __name__ == "__main__":
         model.db.session.commit()
 
 
-#############################################################################################################################################################
+#################################################### Seed UserTag Association Table Data ####################################################################
 
         # seed UserTag association table data
 
@@ -145,40 +142,10 @@ if __name__ == "__main__":
                     model.db.session.add(user_tag)
                     model.db.session.commit()
 
-        # for user in user_data:
-        #     user_id = user["id"]
-        #     if len(user["hobby"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=1)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        #     if len(user["cultural_background"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=2)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        #     if len(user["support"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=3)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        #     if len(user["company"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=4)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        #     if len(user["college"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=5)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        #     if len(user["high_school"]) > 0:
-        #         user_tag = model.UserTag(user_id=user_id, category_tag_id=6)
-        #         model.db.session.add(user_tag)
-        #         model.db.session.commit()
-        
-
-#############################################################################################################################################################
+    
+#################################################### Seed UserGroup Association Table Data ####################################################################
 
         # seed UserGroup association table data
-
-        
-        
 
         for user in user_data:
             user_id = user["id"]
@@ -207,7 +174,7 @@ if __name__ == "__main__":
 
     
 
-#############################################################################################################################################################
+#################################################### Seed GroupTag Association Table Data ####################################################################
 
         # seed GroupTag association table data
               
@@ -224,18 +191,6 @@ if __name__ == "__main__":
                     model.db.session.add(group_tag)
                     model.db.session.commit()
             category_tag_id += 1
-
-        # for category, items in category_data.items():
-        #     category_tag_id = category_mapping.get(category)
-        #     if category_tag_id is not None:
-        #         for item in items:
-        #             item = item.capitalize()
-        #             group = model.Group.query.filter_by(group_name=item).first()
-        #             if group:
-        #                 group_id = group.group_id
-        #                 group_tag = model.GroupTag(category_tag_id=category_tag_id, group_id=group_id)
-        #                 model.db_session.add(group_tag)
-        #                 model.db_session.commit()
 
 
 

@@ -12,8 +12,6 @@ const {
 } = ReactRouterDOM;
 
 const NavBar = () => {
-  // const [user, setUser] = useState(null);
-
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
 
@@ -43,58 +41,8 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    // Fetch groups when the component mounts
     getGroups();
   }, []);
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-
-  // const getUser = () => {
-  //   fetch("/api/get-user", {
-  //     method: "GET",
-  //     credentials: "include",
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       } else {
-  //         throw new Error("User not authenticated");
-  //       }
-  //     })
-  //     .then((userData) => {
-  //       setUser(userData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Login error:", error);
-  //       setUser(null);
-  //     });
-  // };
-
-  // const handleLogout = () => {
-  //   fetch("/api/user/logout", {
-  //     method: "GET",
-  //     credentials: "include",
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         // setUser(null);
-  //         // updateLoginStatus(false);
-  //         setLoginStatus(false);
-  //         setUserInfo(null);
-  //         history.push("/");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Logout error:", error);
-  //     });
-  // };
-
-  const handleLinkClick = () => {
-    // Reload the page
-    window.location.reload();
-  };
 
   function performLogout() {
     logoutUser().then((res) => {
@@ -146,7 +94,6 @@ const NavBar = () => {
                   className="dropdown-item"
                   href={`/my-groups/${groups[groupName].categoryName}/${groupName}`}
                 >
-                  {/* {groups[groupName].categoryName} -  */}
                   {groupName}
                 </a>
               </li>
@@ -167,36 +114,3 @@ const NavBar = () => {
     </nav>
   );
 };
-
-//   return (
-//     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-//       {/* <Link className="navbar-brand" to="/">
-//         InnerJoin
-//       </Link> */}
-//       <Link to="/">
-//         <img
-//           src="/static/img/app logo.png"
-//           alt="App Logo"
-//           style={{ width: "250px" }}
-//         />
-//       </Link>
-//       <div className="collapse navbar-collapse" id="navbarNav">
-//         <ul className="navbar-nav ml-auto">
-//           <li className="nav-item">
-//             <a>Welcome, {userInfo.fname} </a>{" "}
-//           </li>
-//           <li>
-//             <Link className="navbar-brand" to="/my-groups">
-//               My Groups
-//             </Link>
-//           </li>
-//           <li>
-//             <a href="#" onClick={performLogout}>
-//               Logout
-//             </a>
-//           </li>
-//         </ul>
-//       </div>
-//     </nav>
-//   );
-// };

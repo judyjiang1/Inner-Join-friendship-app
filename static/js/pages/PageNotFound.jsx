@@ -12,13 +12,24 @@ const {
   useRouteError,
 } = ReactRouterDOM;
 
-function PageNotFound(props) {
+function PageNotFound() {
   let history = useHistory();
   document.title = "Page Not Found";
   return (
-    <div>
-      <div>Page Not Found</div>
-      <button onClick={(evt) => history.push("/")}>Back to Home</button>
+    <div className="info-content container">
+      <div
+        style={{
+          color: "white",
+          margin: 20,
+          fontSize: "16px",
+          fontWeight: "bold",
+        }}
+      >
+        This page doesn't exist. Please return to home page.
+      </div>
+      <button className="btn btn-primary" onClick={(evt) => history.push("/")}>
+        Back to Home
+      </button>
     </div>
   );
 }

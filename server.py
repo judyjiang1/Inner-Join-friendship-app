@@ -68,17 +68,15 @@ def process_login():
     password = data.get("password")
 
     user_obj = crud.get_user_by_email(email)
+    hashed_password = user_obj.password
 
-    if not user_obj or user_obj.password != password:
-        return jsonify({'success': False}), 401
-    
-    else:
-         session['user_id'] = user_obj.user_id
-        # flash(f"Welcome back, {user_obj.email}!")
-
-    return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
+    if user_obj and bcrypt.check_password_hash(hashed_password, password): 
+        session['user_id'] = user_obj.user_id
+        return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
                             lname=user_obj.lname,
                             email=user_obj.email)), 200
+    else:
+        return jsonify({'success': False}), 401
         
 
 

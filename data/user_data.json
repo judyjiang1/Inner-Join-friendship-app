@@ -3998,5 +3998,25 @@
     "current or past workplace(s)": "International Business Machines",
     "current or past college(s) attended": "Harvard University",
     "current or past high school(s) attended": "Grier School"
+  },
+  {
+    "id": 201,
+    "first_name": "Test",
+    "last_name": "User",
+    "email": "testuser@test.com",
+    "username": "testuser",
+    "password": "testtesttest",
+    "gender": "Female",
+    "phone_number": "205-172-2688",
+    "birthdate": "5/30/1996",
+    "ethnicity": "Asian",
+    "occupation": "Software Developer",
+    "zip_code": "85001",
+    "hobbies & interests": ["Reading", "Collecting"],
+    "cultural background": "Pacific Islander",
+    "support groups": ["Personal Development", "Stress & Anxiety"],
+    "current or past workplace(s)": "International Business Machines",
+    "current or past college(s) attended": "Harvard University",
+    "current or past high school(s) attended": "Grier School"
   }
 ]

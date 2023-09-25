@@ -2,13 +2,11 @@
 
 import os
 import json
-
 import crud
 import model
 import server
-
 from datetime import datetime
-
+from flask_bcrypt import Bcrypt
 
 
 def calculate_age(birthdate):
@@ -49,10 +47,9 @@ if __name__ == "__main__":
         # to create mock users
         users_in_db = []
         for user in user_data:
-            username, email, password, fname, lname, gender, ethnicity, occupation, zipcode = (
+            username, email, fname, lname, gender, ethnicity, occupation, zipcode = (
                 user["username"],
                 user["email"],
-                user["password"],
                 user["first_name"],
                 user["last_name"],
                 user["gender"],
@@ -62,12 +59,13 @@ if __name__ == "__main__":
             )
             
             age = calculate_age(user["birthdate"])
+
+            bcrypt = Bcrypt()
+            unhashed_password = user['password']
+            password = bcrypt.generate_password_hash(password=unhashed_password).decode('utf-8')
+            
             db_user = model.User.create(username,email,password,fname,lname,gender,age,ethnicity,occupation,zipcode)
 
-            # if len(user["hobby"]) > 0:
-            #     tag1 = model.UserTag(user_id=model.User.user_id,category_tag_id=1)
-            #     db_user.category_tags.append(tag1)
-            
             users_in_db.append(db_user)
         
         model.db.session.add_all(users_in_db)

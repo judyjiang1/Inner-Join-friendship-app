@@ -26,8 +26,10 @@ function Landing() {
   const handleExploreApp = (evt) => {
     evt.preventDefault();
 
-    const email = "rbrakespear1@wisc.edu";
-    const password = "rA0!MvPv<1s";
+    // const email = "rbrakespear1@wisc.edu";
+    // const password = "rA0!MvPv<1s";
+    const email = "testuser@test.com";
+    const password = "testtesttest";
 
     fetch("/api/login", {
       method: "POST",

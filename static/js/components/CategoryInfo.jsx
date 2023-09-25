@@ -608,7 +608,7 @@ const hobbyOptions = [
 const supportOptions = [
   "Stress & Anxiety",
   "Relationships",
-  "Career & Education",
+  "Career and Education",
   "Mental Health",
   "Physical Health",
   "Personal Development",

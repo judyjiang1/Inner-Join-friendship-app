@@ -10,6 +10,7 @@ from sqlalchemy import func
 from flask_migrate import Migrate
 from events import socketio
 from functools import wraps
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
@@ -18,7 +19,7 @@ connect_to_db(app)
 # Migrate(app, db)
 # register flask socket-IO
 socketio.init_app(app)
-
+bcrypt = Bcrypt(app)
 
 
 def protected_api(f):
@@ -91,13 +92,14 @@ def register_user():
     username = data.get("username")
     email = data.get("email")
     password = data.get("password")
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     email_exists = crud.get_user_by_email(email)
     username_exists = crud.get_user_by_username(username)
     if username_exists or email_exists:
         return jsonify({'success': False}), 401
     else:
-        user_obj = User.create(username=username, email=email, password=password, fname=fname, lname=lname)
+        user_obj = User.create(username=username, email=email, password=hashed_password, fname=fname, lname=lname)
         db.session.add(user_obj)
         db.session.commit()
 

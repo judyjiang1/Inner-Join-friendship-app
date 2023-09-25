@@ -291,7 +291,7 @@ function ChatRoom() {
   function endChat() {
     Swal.fire({
       icon: "question",
-      title: "Do you want to end this chat?",
+      title: "Are you sure you want to end this chat?",
       showCancelButton: true,
       cancelButtonText: "No",
       confirmButtonText: "Yes",

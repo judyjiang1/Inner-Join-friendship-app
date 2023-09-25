@@ -119,7 +119,13 @@ function Login() {
                 Log in
               </button>
               {loginError && (
-                <p style={{ color: "#B22222", marginTop: 20 }}>
+                <p
+                  style={{
+                    color: "#B22222",
+                    marginTop: 20,
+                    fontWeight: "bold",
+                  }}
+                >
                   The email or password you entered was incorrect. Please try
                   again.
                 </p>

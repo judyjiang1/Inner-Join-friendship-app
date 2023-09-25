@@ -38,3 +38,4 @@ Werkzeug==2.0.1
 wsproto==1.2.0
 Flask-Migrate
 Flask-SocketIO
+flask-bcrypt 

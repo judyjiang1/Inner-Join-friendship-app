@@ -16,8 +16,6 @@ app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.jinja_env.undefined = StrictUndefined
 connect_to_db(app)
-# Migrate(app, db)
-# register flask socket-IO
 socketio.init_app(app)
 bcrypt = Bcrypt(app)
 
@@ -80,6 +78,7 @@ def process_login():
         return jsonify({'success': False}), 401
  
 
+
 @app.route("/api/register", methods=["POST"])
 def register_user():
     """Create a new user."""
@@ -126,23 +125,15 @@ def select_category():
     
     data = request.get_json()
     selections = data.get('selectedCategories', [])
-    
-    # if 'user_id' in session:
-    #     user_id = session['user_id']
-
-    # user = crud.get_user_by_id(user_id)
-
 
     user = g.user
 
     for category in selections:
         selected_category = crud.get_category_by_name(category.lower())
-        # print(selected_category)
         user_tag=UserTag(user_id=user.user_id,category_tag_id=selected_category.category_tag_id)
         db.session.add(user_tag)
         db.session.commit()
 
-    # print(selections)
     return jsonify({'message': 'Selections saved successfully'})
 
 
@@ -163,10 +154,7 @@ def get_user_categories():
 @app.route("/api/submit-user-info", methods=["POST"])
 @protected_api
 def submit_user_info():
-    # if 'user_id' in session:
-    #     user_id = session['user_id']
-
-    # user = crud.get_user_by_id(user_id)
+    
     user = g.user
     user_id = user.user_id 
 
@@ -209,51 +197,6 @@ def submit_user_info():
 
 
 
-@app.route("/api/get-user-groups_participants", methods=["POST"])
-@protected_api
-def get_user_groups_participants():
-
-    user = g.user
-    user_groups = user.groups
-    user_id = user.user_id
-    
-    
-    # this will show groups and its participants 
-    group_users = {}
-    basic_group_formed = []
-    for group in user_groups:
-        group_id = group.group_id
-        user_count_in_group = (
-        db.session.query(func.count(UserGroup.user_id).label('user_count'))
-        .filter(UserGroup.group_id == group_id)
-        .scalar())
-
-        if user_count_in_group > 1:
-            basic_group_formed.append(group.group_name)
-       
-    
-    for group in basic_group_formed:
-        group_obj = crud.get_group_by_name(group)
-        group_id = group_obj.group_id
-        users_in_group = crud.get_users_in_group(group_id)
-        
-        users_in_group = (
-        db.session.query(User)
-        .join(UserGroup, User.user_id == UserGroup.user_id)
-        .filter(UserGroup.group_id == group_id)
-    .all())
-        
-        user_full_names = []
-        for user in users_in_group:
-            user_full_names.append(user.fname + ' ' + user.lname)
-        group_users[group] = user_full_names
-    
-       
-    # show all the groups of a particular user and its participants 
-    return jsonify(group_users)
-
-
-
 @app.route("/api/get-user-groups", methods=["POST"])
 @protected_api
 def get_user_groups():
@@ -262,7 +205,7 @@ def get_user_groups():
     user_groups = user.groups
     user_id = user.user_id
     
-    # this will show groups and its images 
+    # group is formed when there is more than 1 user in a group
     groups_formed = []
     for group in user_groups:
         group_id = group.group_id
@@ -287,87 +230,6 @@ def get_user_groups():
         groups[group_obj.group_name] = tag_img_dict
     
     return jsonify(groups)
-
-
-
-# @app.route('/api/store-group-in-session/<group_name>', methods=['POST'])
-# @protected_api
-# def store_group_in_session(group_name):
-#     try:
-#         # Store group name in the session
-#         session['group_name'] = group_name
-#         return jsonify({'message': 'Group information stored in session'})
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
-    
-    
-
-# @app.route('/api/my-groups/<group_name>')
-# @protected_api
-# def my_group(group_name):
-#     return jsonify({'group_name': group_name})
-
-
-
-# @app.route('/api/get-group-members', methods=["POST", "GET"])
-# @protected_api
-# def get_group_members():
-
-#     if 'email' in session:
-#         email = session['email']
-#     else:
-#         return jsonify({'error': 'Email not found in session'}), 400
-
-#     user = crud.get_user_by_email(email)
-   
-        
-#     if 'group_name' in session:
-#         group_name = session['group_name']
-#     else:
-#         return jsonify({'error': 'Group name not found in session'}), 400
-
-
-#     group_obj = crud.get_group_by_name(group_name)
-#     group_id = group_obj.group_id
-#     users_in_group = crud.get_users_in_group(group_id)
-    
-#     users_in_group = (
-#     db.session.query(User)
-#     .join(UserGroup, User.user_id == UserGroup.user_id)
-#     .filter(UserGroup.group_id == group_id).all()) 
-
-#     user_full_names = {}
-#     for user in users_in_group:
-#         user_full_names[user.user_id] = user.fname + ' ' + user.lname
-    
-#     return jsonify(user_full_names)
-
-
-# @app.route('/api/get-user')
-# @protected_api
-# def get_user():
-#     if 'email' in session:
-#         email = session['email']
-#     else:
-#         return jsonify({'message': 'User not logged in'}), 401
-
-#     user_obj = crud.get_user_by_email(email)
-#     user_fname = user_obj.fname
-
-#     return jsonify(user_fname)
-
-
-
-# @app.route('/check_login', methods=['GET'])
-# @protected_api
-# def check_login():
-#     if 'email' in session:
-#         email = session['email']
-#         user_obj = crud.get_user_by_email(email)
-#         user_fname = user_obj.fname
-#         return jsonify({'loggedIn': True, 'userfname': user_fname})
-#     else:
-#         return jsonify({'loggedIn': False})
 
 
 
@@ -456,15 +318,14 @@ def logout():
     return jsonify(success=1)  
 
 
+
 @app.route("/api/get-group-members", methods=["POST"])
 @protected_api
 def get_group_members():
     
-
     data = request.get_json()
     group_name = data.get('group_name')
-    # category_name = data.get('category_name')
-
+    
     group_obj = crud.get_group_by_name(group_name)
     group_id = group_obj.group_id
     print(group_id)
@@ -491,10 +352,10 @@ def get_group_members():
     print(lst)
 
     if not lst:
-       return jsonify({'error fetching data'}), 401
+       return jsonify({'no group members found'}), 204
     else:
-
         return jsonify(lst)
+
 
 
 @app.route("/api/get-super-match", methods=["POST"])
@@ -514,7 +375,6 @@ def get_super_match():
         if user.user_id != current_user.user_id:
             all_users.append(user)
 
-    
     super_match_user_list = []
     super_match_user_dict = {}
     for user in all_users:
@@ -551,8 +411,5 @@ def get_super_match():
 
 
 
-
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0", port=3002, debug=True)
-    # socketio.run(app, host='0.0.0.0', port=3001, debug=True)
     socketio.run(app, host='0.0.0.0', port=3001, debug=True, allow_unsafe_werkzeug=True)

@@ -1,3 +1,4 @@
+"""Scraping a website to get a list of colleges."""
 
 import requests
 from bs4 import BeautifulSoup

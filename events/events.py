@@ -113,9 +113,6 @@ def ping(message):
 
     online_members, offline_members = RoomMember.batch_check_members_status(room_id=room_obj.id)
 
-    # print(
-    #     f'Ping [{room_obj.id}-{room_obj.category_name}-{room_obj.group_name}], {user_obj.user_id}-{user_obj.fname}-{user_obj.lname}')
-
     emit(
         'status',
         {

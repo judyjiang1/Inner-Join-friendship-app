@@ -1,3 +1,5 @@
+"""Get mock user data using Mockaroo API."""
+
 import requests, os, json
 
 api_key = os.environ["MOCKAROO_KEY"]

@@ -1,3 +1,5 @@
+"""Scraping a website to get a list of high schools."""
+
 import requests
 from bs4 import BeautifulSoup
 import re

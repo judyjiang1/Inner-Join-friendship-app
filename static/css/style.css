@@ -27,28 +27,15 @@ body {
   /* color: white; */
 }
 
-.Info {
-  text-align: center;
-  display: flex;
-  min-height: 100vh;
-  /* height: 200vh; */
-  align-items: center;
-  justify-content: center;
-  /* color: white; */
-}
-
 .container-fluid {
   padding-right: 0;
   padding-left: 0;
 }
 
 /******************************** landing main info ****************************************/
-/* .landing-div {
-  flex: 1;
-} */
 
 .landing-intro {
-  height: 60vh; /* Set the row height to one-third of the viewport height */
+  height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,10 +53,7 @@ body {
   width: 800px;
   justify-content: center; /* center horizontally */
   align-items: center; /* center vertically */
-
   height: 80vh;
-  /* place-content: flex-start center; */
-  /* flex-wrap: nowrap; */
 }
 
 .landing-text {
@@ -174,13 +158,6 @@ body {
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
 }
-
-/* .login-content .field {
-  height: 50px;
-  width: 100%;
-  display: flex;
-  position: relative;
-} */
 
 .field input {
   height: 100%;
@@ -541,13 +518,6 @@ input {
   align-items: center;
 }
 
-/* .text-to-title-case {
-  font-size: 20px;
-  font-weight: 600;
-  color: rgb(247, 233, 233);
-  text-transform: capitalize;
-} */
-
 .category-text {
   font-size: 18px;
   font-weight: 600;
@@ -563,7 +533,7 @@ input {
   text-transform: capitalize;
 }
 
-/****************************************************/
+/******************************** ChatRoom Page ***********************************/
 .chatRoot {
   width: 100%;
   height: 60vh;
@@ -964,7 +934,7 @@ th .group-user {
   justify-content: center;
   width: fit-content;
 }
-/****************************/
+/***************************** My Super Match Page *********************************/
 .super-match-table-container {
   max-width: 1300px;
   margin: 0 auto;

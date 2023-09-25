@@ -11,16 +11,6 @@ const {
   withRouter,
 } = ReactRouterDOM;
 
-// import {
-//   culturalBackgroundOptions,
-//   collegeOptions,
-//   highSchoolOptions,
-//   companyOptions,
-//   hobbyOptions,
-//   supportOptions,
-// } from "./form_data";
-
-//////////////////////////
 const CategoryInfo = ({ onChange }) => {
   const history = useHistory();
 
@@ -149,14 +139,6 @@ const CategoryInfo = ({ onChange }) => {
     }
   }, [userTags]);
 
-  // console.log("tags", userTags);
-  // console.log(selectHobby);
-  // console.log(selectCulture);
-  // console.log(selectWork);
-  // console.log(selectSupport);
-  // console.log(selectCollege);
-  // console.log(selectHighSchool);
-  /*                           */
   const [hobby, setHobby] = useState([]);
   const [culture, setCulture] = useState([]);
   const [support, setSupport] = useState([]);

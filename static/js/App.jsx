@@ -160,7 +160,7 @@ function App() {
             </div>
           </PrivateRoute>
           <PrivateRoute path="/enter-user-info/" exact>
-            <div className="Info">
+            <div className="App">
               <AllUserInfo></AllUserInfo>
             </div>
           </PrivateRoute>

@@ -136,13 +136,13 @@ function Landing() {
             </h2>
           </div>
           <div>
-            <h5 className="landing-text" style={{ fontWeight: "bold" }}>
+            <h4 className="landing-text" style={{ fontWeight: "bold" }}>
               Discover people who have crossed paths or share commonalities with
               you and start building <span> lifelong </span> friendship.
-            </h5>
+            </h4>
           </div>
           {/* Buttons */}
-          <div className="row">
+          <div className="row" style={{ marginTop: 15 }}>
             <div className="col">
               <Link to="/login" className="btn btn-primary mx-2">
                 Login

@@ -103,7 +103,7 @@ if __name__ == "__main__":
         group_list = []
 
         for key in category_data:
-            group_list.extend([value.capitalize() for value in category_data[key]])
+            group_list.extend([value.lower() for value in category_data[key]])
 
         # print(group_list)
 
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 
             
             for item in user_combined_list:
-                item = item.capitalize()
+                item = item.lower()
                 print(item)
                 group = model.Group.query.filter_by(group_name=item).first()
                 print(group)
@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
         for category, items in category_data.items():
             for item in items:
-                item = item.capitalize()
+                item = item.lower()
                 # print(item)
                 group = model.Group.query.filter_by(group_name=item).first()
                 if group:

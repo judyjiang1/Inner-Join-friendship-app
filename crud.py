@@ -44,6 +44,7 @@ def update_user_info(user_id, gender, birthdate, ethnicity, zipcode, occupation)
     user.occupation = occupation
 
 
+
 # Category_tags
 def get_category_by_id(category_tag_id):
     """Return a category tag by primary key."""

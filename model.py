@@ -110,9 +110,9 @@ class Group(db.Model):
 
     group_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     group_name = db.Column(db.String, nullable=False)
-    matched_at = db.Column(db.String)
-    active_status = db.Column(db.Boolean)
-    user_defined = db.Column(db.Boolean)
+    # matched_at = db.Column(db.String)
+    # active_status = db.Column(db.Boolean)
+    # user_defined = db.Column(db.Boolean)
 
     category_tags = db.relationship("Category_tag", secondary="group_tags", back_populates="groups")
     users = db.relationship("User", secondary="user_groups", back_populates="groups")
@@ -121,9 +121,9 @@ class Group(db.Model):
         return f"<Group group_id={self.group_id}>"
     
     @classmethod
-    def create(cls, group_name, matched_at=None, active_status=None, user_defined=False):
+    def create(cls, group_name):
         """Create and return a new group."""
-        return cls(group_name=group_name, matched_at=matched_at, active_status=active_status, user_defined=user_defined)
+        return cls(group_name=group_name)
     
   
     

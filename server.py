@@ -185,7 +185,8 @@ def submit_user_info():
             combined_list.extend(item)
 
     for item in combined_list:
-        item = item.capitalize()
+        # item = item.capitalize()
+        item = item.lower()
         group = Group.query.filter_by(group_name=item).first()
         if group:
             group_id = group.group_id

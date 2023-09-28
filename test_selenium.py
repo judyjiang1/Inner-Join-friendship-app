@@ -22,8 +22,8 @@ class TestApp(unittest.TestCase):
 
 
     def test_landing_page(self):
-        self.driver.get('http://localhost:3001/')
-        time.sleep(3)
+        self.driver.get('http://localhost:5000/')
+        time.sleep(8)
         landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h2').text
         self.assertEqual(landing_heading, 'An innovative way of making new friends.')
 
@@ -31,7 +31,7 @@ class TestApp(unittest.TestCase):
     def test_login_and_access_all_protected_pages(self):
         
         # Check login
-        self.driver.get('http://localhost:3001/login')
+        self.driver.get('http://localhost:5000/login')
         email_input = self.driver.find_element(By.NAME, 'email')
         password_input = self.driver.find_element(By.NAME, 'password')
         login_button = self.driver.find_element(By.CLASS_NAME, 'login-button')
@@ -45,7 +45,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(my_group_page, 'My Groups')
 
         
-        # check Chat Room page 
+        # Check Chat Room page 
         chat_card = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[2]/div[1]/div/div[2]/img')
         chat_card.click()
         time.sleep(5)
@@ -59,7 +59,7 @@ class TestApp(unittest.TestCase):
         self.assertIn('test', sent_message)
 
 
-        # check Leave chat button and redirect to My Groups page
+        # Check Leave chat button and redirect to My Groups page
         leave_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div/div/button[1]')
         leave_btn.click()
         time.sleep(5)
@@ -72,7 +72,7 @@ class TestApp(unittest.TestCase):
         # Check My Super Match Page
         super_match_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/nav/div/span[2]/a' )
         super_match_btn.click()
-        time.sleep(8)
+        time.sleep(10)
         super_match_heading = self.driver.find_element(By.TAG_NAME, 'h2').text
         self.assertEqual(super_match_heading, 'My Super Match')
     

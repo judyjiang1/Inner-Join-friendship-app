@@ -75,6 +75,8 @@ def process_login():
             return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
                                 lname=user_obj.lname,
                                 email=user_obj.email)), 200
+        else:
+            return jsonify({'success': False}), 401
     else:
         return jsonify({'success': False}), 401
  

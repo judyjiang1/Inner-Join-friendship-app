@@ -30,7 +30,7 @@ class TestApp(unittest.TestCase):
 
     def test_login_and_access_all_protected_pages(self):
         
-        # login
+        # Check login
         self.driver.get('http://localhost:3001/login')
         email_input = self.driver.find_element(By.NAME, 'email')
         password_input = self.driver.find_element(By.NAME, 'password')
@@ -45,7 +45,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(my_group_page, 'My Groups')
 
         
-        # check chatroom page 
+        # check Chat Room page 
         chat_card = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[2]/div[1]/div/div[2]/img')
         chat_card.click()
         time.sleep(5)

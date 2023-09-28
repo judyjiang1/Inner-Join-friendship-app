@@ -19,14 +19,13 @@ def calculate_age(birthdate):
 if __name__ == "__main__":
     from server import app
 
-    db_file_path = 'client.db'
+    db_path = 'chat.db'
 
-    # drop the database file if it exists
-    if os.path.exists(db_file_path):
-        os.remove(db_file_path)
-        print(f'Database at {db_file_path} has been removed.')
+    if os.path.exists(db_path):
+        os.remove(db_path)
+        print(f'{db_path} has been deleted.')
     else:
-        print(f'Database at {db_file_path} does not exist.')
+        print(f'{db_path} does not exist.')
 
 
     with app.app_context():

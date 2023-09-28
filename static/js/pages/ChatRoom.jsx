@@ -116,7 +116,7 @@ function ChatRoom() {
   }, []);
 
   useEffect(() => {
-    document.title = "Chat Rooms";
+    document.title = "Chat Room";
   }, []);
 
   function onConnect() {

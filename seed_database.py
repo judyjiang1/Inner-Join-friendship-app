@@ -18,8 +18,6 @@ def calculate_age(birthdate):
 
 if __name__ == "__main__":
     from server import app
-    # os.system("dropdb friends")
-    # os.system("createdb friends")
 
     db_file_path = 'client.db'
 

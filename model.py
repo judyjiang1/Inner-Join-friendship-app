@@ -344,10 +344,7 @@ class Message(db.Model):
 
 def connect_to_db(
         flask_app,
-        # using sqlite
         db_uri="sqlite:///client.db",
-        # using postgresql
-        # db_uri = "postgresql:///friends",
         echo=False
 ):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

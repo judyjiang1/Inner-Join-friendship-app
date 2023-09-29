@@ -522,7 +522,7 @@ input {
   font-size: 18px;
   font-weight: 600;
   color: rgb(247, 233, 233);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   margin-bottom: 25px;
 }
 
@@ -853,7 +853,7 @@ input {
   /* font-size: 20 px; */
   font-weight: 600;
   color: rgb(247, 233, 233);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   margin: 40px 25px 25px 25px;
 }
 .chatRoom-group-text {
@@ -935,7 +935,7 @@ th .group-user {
   width: fit-content;
 }
 /***************************** My Super Match Page *********************************/
-.super-match-table-container {
+/* .super-match-table-container {
   max-width: 1300px;
   margin: 0 auto;
   padding: 20px;
@@ -944,7 +944,7 @@ th .group-user {
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.178);
   backdrop-filter: blur(20px);
-}
+} */
 
 .super-match-wrapper {
   max-height: 1100px;
@@ -968,4 +968,5 @@ th .group-user {
   /* background: rgba(255, 255, 255, 0.178); */
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(20px);
+  color: white;
 }

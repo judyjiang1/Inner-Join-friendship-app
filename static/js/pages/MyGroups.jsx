@@ -107,7 +107,8 @@ function MyGroups() {
         style={{
           background: "rgba(255, 255, 255, 0.178)",
           backdropFilter: "blur(20px)",
-          marginTop: 25,
+          marginTop: 50,
+          marginBottom: 100,
         }}
       >
         <h1
@@ -129,6 +130,7 @@ function MyGroups() {
           <select
             id="categoryFilter"
             className="form-select"
+            style={{ textTransform: "uppercase" }}
             onChange={(e) => setSelectedCategory(e.target.value)}
             value={selectedCategory}
           >

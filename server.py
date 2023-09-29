@@ -132,6 +132,10 @@ def select_category():
 
     user = g.user
 
+    if user.category_tags:
+        user.category_tags = []
+        db.session.commit()
+
     for category in selections:
         selected_category = crud.get_category_by_name(category.lower())
         user_tag=UserTag(user_id=user.user_id,category_tag_id=selected_category.category_tag_id)
@@ -176,6 +180,10 @@ def submit_user_info():
     formatted_date = crud.format_birthdate(birthMonth, birthDay, birthYear)
 
     crud.update_user_info(user_id, gender, formatted_date, ethnicity, zipcode, occupation)
+
+    if user.groups:
+        user.groups = []
+        db.session.commit()
     
     combined_list = []
 

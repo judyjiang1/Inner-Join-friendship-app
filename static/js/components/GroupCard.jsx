@@ -1,6 +1,13 @@
 function GroupCard(props) {
   const { categoryName, groupName, imgUrl, handleImageClick } = props;
 
+  const toTitle = (str) => {
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+  const categoryNameTitle = toTitle(categoryName);
+
   return (
     <div
       className="card p-3"
@@ -14,7 +21,7 @@ function GroupCard(props) {
       onClick={handleImageClick}
     >
       <div style={{ textAlign: "left" }}>
-        <h5 className="category-text">{categoryName}</h5>
+        <h5 className="category-text">{categoryNameTitle}</h5>
       </div>
       <div>
         <img

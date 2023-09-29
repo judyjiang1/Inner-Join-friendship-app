@@ -81,6 +81,13 @@ function mergeMessages(arr_a, arr_b) {
 function ChatRoom() {
   const { groupName, categoryName } = useParams();
 
+  const toTitle = (str) => {
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
+  const categoryNameTitle = toTitle(categoryName);
+
   const history = useHistory();
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
@@ -421,7 +428,7 @@ function ChatRoom() {
     <>
       <NavBar setLoginStatus={setLoginStatus} />
 
-      <h2 className="chatRoom-category-text">{categoryName}</h2>
+      <h2 className="chatRoom-category-text">{categoryNameTitle}</h2>
       <h3 className="chatRoom-group-text">{groupName} Group</h3>
       <div className="containerfluid">
         <div className="row">

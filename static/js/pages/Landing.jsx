@@ -108,6 +108,39 @@ function Landing() {
                   My Groups
                 </Link>
               </li>
+              <span className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle text-white"
+                  style={{ marginRight: "10px" }}
+                  to="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Edit My Input
+                </Link>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a
+                      className="nav-link text-black"
+                      style={{ marginRight: "10px" }}
+                      href="/select-categories"
+                    >
+                      Edit My Category Selection
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="nav-link text-black"
+                      style={{ marginRight: "10px" }}
+                      href="/enter-user-info"
+                    >
+                      Edit My Info & Group Selection
+                    </a>
+                  </li>
+                </ul>
+              </span>
               <li className="nav-item">
                 <a
                   className="nav-link text-white"

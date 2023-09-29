@@ -168,13 +168,19 @@ function AllUserInfo() {
         setButtons: setDialogButtons,
       }}
     >
-      <div className="row">
-        <GeneralInfo className="col" onChange={handleChange} />
-        <CategoryInfo className="col" onChange={handleChange} />
-        <div className="info-submit-btn">
-          <button className="info-btn" onClick={handleSubmit}>
-            Submit
-          </button>
+      <div className="container">
+        <div
+          className="row"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <GeneralInfo className="col" onChange={handleChange} />
+          <CategoryInfo className="col" onChange={handleChange} />
+
+          <div className="info-submit-btn">
+            <button className="info-btn" onClick={handleSubmit}>
+              Submit
+            </button>
+          </div>
         </div>
       </div>
       <Dialog></Dialog>

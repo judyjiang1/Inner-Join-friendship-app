@@ -431,7 +431,7 @@ function ChatRoom() {
       <h2 className="chatRoom-category-text">{categoryNameTitle}</h2>
       <h3 className="chatRoom-group-text">{groupName} Group</h3>
       <div className="containerfluid">
-        <div className="row">
+        <div className="row" style={{ marginTop: 40, marginBottom: 20 }}>
           <div className="col chatRoom-btn">
             <button
               className="btn btn-primary mx-2"

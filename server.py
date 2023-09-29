@@ -48,13 +48,13 @@ def protected_api(func):
 @app.route('/')
 def homepage():
     """View homepage."""
-    return render_template("homepage.html")
+    return render_template("homepage.html", GOOGLE_MAP_API_KEY=os.environ["GOOGLE_MAP_API_KEY"])
 
 
 
 @app.route('/<path:sub_path>')
 def route(sub_path):
-    return render_template('homepage.html')
+    return render_template('homepage.html', GOOGLE_MAP_API_KEY=os.environ["GOOGLE_MAP_API_KEY"])
 
 
 

@@ -83,7 +83,7 @@ function ChatRoom() {
 
   const formatTitle = (string) => {
     return string.replace(/\w\S*/g, (text) => {
-      return text.charAt(0).toUpperCase() + text.substring(1).toLowerCase();
+      return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
     });
   };
   const categoryNameTitle = formatTitle(categoryName);

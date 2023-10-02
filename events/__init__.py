@@ -4,6 +4,7 @@ from model import User
 from model import ChatRoom
 from functools import wraps
 
+# use a multi-threaded approach to handle connections and events
 socketio = SocketIO(
     async_mode='threading',
 )
@@ -14,7 +15,7 @@ def login_check(f):
     def wrapper(*args, **kwargs):
         room = args[0].get('room')
         if room is None:
-            return emit('status', {'code': -1, 'msg': 'room id missing', 'room': room})
+            return emit('status', {'code': -1, 'msg': 'room id is missing', 'room': room})
 
         room_obj: ChatRoom = ChatRoom.query.filter(ChatRoom.id == room).first()
         g.room = room_obj

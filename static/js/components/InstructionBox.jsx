@@ -14,7 +14,7 @@ const {
 const messages = [
   "InnerJoin is a social web application built upon \
   the Similarity Attraction Theory. While 'Inner Join' in SQL identifies matching data between tables, \
-  this website seeks out common attributes among users, facilitating connections among individuals who share \
+  this website seeks out commonalities among users, facilitating connections among individuals who share \
   similar life experiences.",
   'Click "Explore the App" to log in as a demo user and explore the application (if you are already logged in, make sure to logout to enable this feature)',
   "Create a new account 👤",

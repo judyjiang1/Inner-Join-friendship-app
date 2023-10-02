@@ -13,8 +13,8 @@ from datetime import datetime, timezone
 @socketio.on('joined', namespace='/chat/')
 @login_check
 def joined(message):
-    """Sent by clients when they enter a room.
-    A status message is broadcast to all people in the room."""
+    """a 'joined' event is sent by clients when they enter a room.
+    A status message is emitted to all people in the room."""
 
     room_obj: ChatRoom = g.room
     user_obj: User = g.user
@@ -28,7 +28,7 @@ def joined(message):
         {
             'code': 3,
             'kind': 'on-entrance',
-            'msg': f'{g.user.username} entered this chat',
+            'msg': f'{g.user.username} has entered the room',
             'user': member_info
         },
         room=room_obj.id
@@ -38,8 +38,8 @@ def joined(message):
 @socketio.on('text', namespace='/chat/')
 @login_check
 def text(message):
-    """Sent by a client when the user entered a new message.
-    The message is sent to all people in the room."""
+    """Sent by a client when the user enter a new message.
+    The message is emitted to all people in the room."""
     room_obj: ChatRoom = g.room
     user_obj: User = g.user
     content = message.get('content')
@@ -76,7 +76,7 @@ def text(message):
 @login_check
 def left(message):
     """Sent by clients when they leave a room.
-    A status message is broadcast to all people in the room."""
+    A status message is emitted to all people in the room."""
     room_obj: ChatRoom = g.room
     room_id = g.room.id
     user_obj: User = g.user
@@ -90,7 +90,7 @@ def left(message):
         {
             'code': 2,
             'kind': 'on-left',
-            'msg': f'{g.user.username} left room',
+            'msg': f'{g.user.username} has left the room',
             'user_id': user_obj.user_id
         },
         room=room_id
@@ -101,9 +101,8 @@ def left(message):
 @login_check
 def ping(message):
     """
-    user send ping to query members' online status.
-    :param message:
-    :return:
+    user sends ping to query members' online status.
+    A status message is emitted.
     """
 
     room_obj: ChatRoom = g.room

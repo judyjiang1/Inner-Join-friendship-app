@@ -169,9 +169,7 @@ class ChatRoom(db.Model):
 
     @classmethod
     def discover_group_members(cls, room_id):
-        """
-        discover members of a group
-        """
+        """Discover members of a group."""
         res = []
         room_obj: cls = cls.find_chatroom_by_id(room_id=room_id)
         if room_obj is None:
@@ -219,13 +217,12 @@ class ChatRoom(db.Model):
 class RoomMember(db.Model):
     __tablename__ = 'chat_room_member'
 
-    ONLINE_THRESHOLD = 3  # after 3 minutes user will be presumed offline
+    # users is presumed to be offline after 3 minutes
+    ONLINE_THRESHOLD = 3  
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-
     room_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
-
     last_speak = db.Column(db.Integer, default=-1, server_default='-1')
     last_seen = db.Column(db.Integer, default=get_utc_timestamp)
     joined_at = db.Column(db.Integer, default=get_utc_timestamp)
@@ -299,7 +296,7 @@ class RoomMember(db.Model):
     @classmethod
     def ensure_membership(cls, room_id, user_id):
         """
-        make sure user membership exist
+        make sure user membership exists
         """
         # check if user exists
         user_obj: User = User.query.filter(User.user_id == user_id).first()
@@ -308,25 +305,26 @@ class RoomMember(db.Model):
         # check if room exists
         if db.session.query(cls.id).filter(cls.id == room_id).count() == 0:
             return {}
-
-        member_ship: cls = cls.query.filter(RoomMember.room_id == room_id).filter(
+        
+        # check if user is in a room, if not, add it
+        membership: cls = cls.query.filter(RoomMember.room_id == room_id).filter(
             cls.user_id == user_id).first()
-        if member_ship is None:
-            member_ship = cls()
-            member_ship.user_id = user_id
-            member_ship.room_id = room_id
+        if membership is None:
+            membership = cls()
+            membership.user_id = user_id
+            membership.room_id = room_id
 
         # update user online status
-        member_ship.last_seen = get_utc_timestamp()
-        member_ship.is_online = True
+        membership.last_seen = get_utc_timestamp()
+        membership.is_online = True
 
-        db.session.add(member_ship)
+        db.session.add(membership)
         db.session.commit()
 
         return dict(
             user_id=user_id, fname=user_obj.fname, lname=user_obj.lname, email=user_obj.email,
-            joined_at=member_ship.joined_at, last_seen=member_ship.last_seen, lask_speak=member_ship.last_speak,
-            is_online=member_ship.is_online)
+            joined_at=membership.joined_at, last_seen=membership.last_seen, lask_speak=membership.last_speak,
+            is_online=membership.is_online)
 
 
 
@@ -334,7 +332,6 @@ class Message(db.Model):
     __tablename__ = 'chat_room_message'
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-
     room_id = db.Column(db.Integer, nullable=False)
     sender_id = db.Column(db.Integer, nullable=False)
     content = db.Column(db.String, nullable=False)

@@ -20,7 +20,7 @@ async function authCheck() {
 async function getChatRoomInitInfo({ group_name, category_name }) {
   return sendRequest({
     url: "/api/open-chatroom",
-    method: "post",
+    method: "POST",
     data: { group_name, category_name, action: "init" },
   });
 }

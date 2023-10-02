@@ -22,7 +22,7 @@ const NavBar = () => {
   const getGroups = async () => {
     try {
       const response = await fetch("/api/get-user-groups", {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

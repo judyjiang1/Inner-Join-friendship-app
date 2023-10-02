@@ -13,8 +13,8 @@ const {
   useParams,
 } = ReactRouterDOM;
 
-const formatTime = (ts) => {
-  return moment(ts).format("YYYY-MM-DD hh:mm:ss");
+const formatTime = (timestamp) => {
+  return moment(timestamp).format("YYYY-MM-DD hh:mm:ss");
 };
 
 function RoomMember({
@@ -27,7 +27,7 @@ function RoomMember({
   current_user_id,
   ...props
 }) {
-  let st = is_online ? (
+  let status = is_online ? (
     <span className="badge bg-success text-white">Online</span>
   ) : (
     <span className="badge bg-danger text-white">Offline</span>
@@ -38,7 +38,7 @@ function RoomMember({
       {current_user_id === user_id ? (
         <span className="badge bg-warning text-white">Me</span>
       ) : (
-        st
+        status
       )}
     </div>
   );
@@ -81,17 +81,20 @@ function mergeMessages(arr_a, arr_b) {
 function ChatRoom() {
   const { groupName, categoryName } = useParams();
 
-  const toTitle = (str) => {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  const formatTitle = (string) => {
+    return string.replace(/\w\S*/g, (text) => {
+      return text.charAt(0).toUpperCase() + text.substring(1).toLowerCase();
     });
   };
-  const categoryNameTitle = toTitle(categoryName);
+  const categoryNameTitle = formatTitle(categoryName);
 
   const history = useHistory();
+
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
+
   const chatArea = useRef();
+
   const currentUserObj = userInfo;
 
   const [activeRoom, setActiveRoom] = useState({
@@ -106,6 +109,7 @@ function ChatRoom() {
 
   let isMounted = false;
   let isConnected = false;
+
   const [chatStatus, setChatStatus] = useState({
     isMounted,
     isConnected,
@@ -129,17 +133,18 @@ function ChatRoom() {
   function onConnect() {
     isConnected = true;
     if (isMounted)
-      setActiveRoom((old) => {
-        socketIO.emit("joined", { room: old.id });
-        return old;
+      // a callback function that emits a "joined" event to the server using the socketIO instance
+      setActiveRoom((prev) => {
+        socketIO.emit("joined", { room: prev.id });
+        return prev;
       });
 
-    setChatStatus((old) => {
-      return { ...old, isConnected: true, socketIO: socketIO };
+    setChatStatus((prev) => {
+      return { ...prev, isConnected: true, socketIO: socketIO };
     });
 
     if (isMounted) {
-      console.log("ws connected");
+      console.log("websocket connected");
       Swal.fire({
         icon: "success",
         title: "Chat service connected",
@@ -148,17 +153,16 @@ function ChatRoom() {
         timer: 2000,
       });
     } else {
-      console.log("ddddd");
+      console.log("not mounted, please double check");
     }
   }
 
   function onDisconnect() {
     isConnected = false;
-    setChatStatus((old) => {
-      return { ...old, isConnected: false, socketIO: null };
+    setChatStatus((prev) => {
+      return { ...prev, isConnected: false, socketIO: null };
     });
-
-    console.log("ws disconnected");
+    console.log("websocket disconnected");
   }
 
   function onStatusEvent(value) {
@@ -168,7 +172,7 @@ function ChatRoom() {
     if (code === 4) {
       // on ping
       const { online_members, offline_members } = value;
-      console.log("on ping response");
+      // console.log("on ping response");
       if (isMounted)
         setMembers((prev) => {
           return prev.map((el) => {
@@ -209,18 +213,12 @@ function ChatRoom() {
           });
         });
     }
-    // setStatusEvents(previous => [...previous, value]);
   }
 
   function onMessageEvent(value) {
     if (!isMounted) return null;
     const { room_id, sender_id, created_at } = value.msg;
-
     setTimeout(scroll_bottom, 100);
-
-    // if (chatArea.current.getAttribute('data-id') === `${room_id}`) {
-    //     setTimeout(scroll_bottom, 100)
-    // }
     if (isMounted) setMessages((prev) => mergeMessages([...prev], [value.msg]));
 
     // receive a message, update online status / last_seen / last_speak
@@ -237,6 +235,7 @@ function ChatRoom() {
       });
   }
 
+  // client-side establishes a WebSocket connection to the server
   let socketIO = null;
   const getSocket = async (ensureExists) => {
     return new Promise((resolve) => {
@@ -250,6 +249,7 @@ function ChatRoom() {
               autoConnect: false,
             });
 
+            // socketio event handlers, events are emitted by the server
             socket.on("connect", onConnect);
             socket.on("disconnect", onDisconnect);
             socket.on("status", onStatusEvent);
@@ -305,6 +305,7 @@ function ChatRoom() {
     }).then((r) => {
       if (r.isConfirmed) {
         clearInterval(pingTask);
+        // check if socketIO is not null and if it is connected
         if (chatStatus.socketIO?.connected) {
           chatStatus.socketIO.emit("left", { room: activeRoom.id });
         }
@@ -315,6 +316,7 @@ function ChatRoom() {
     });
   }
 
+  // re-render RoomMember component when members changed
   const memberEleArr = useMemo(
     () =>
       sortMembers(members).map((m) => {
@@ -335,8 +337,8 @@ function ChatRoom() {
 
   useEffect(() => {
     console.log("mounted");
-    setChatStatus((old) => {
-      return { ...old, isMounted: true };
+    setChatStatus((prev) => {
+      return { ...prev, isMounted: true };
     });
     return () => {
       console.log("unmounted");
@@ -373,6 +375,7 @@ function ChatRoom() {
       });
   }, []);
 
+  // clean-up logic
   useEffect(() => {
     return () => {
       if (pingTask) clearInterval(pingTask);
@@ -388,6 +391,7 @@ function ChatRoom() {
     };
   }, []);
 
+  // to submit a text message, client sends a "text" event to the server
   function submitMessage(evt) {
     evt.preventDefault();
     if (chatStatus.socketIO?.connected) {
@@ -404,24 +408,14 @@ function ChatRoom() {
     }
   }
 
-  const [showPopup, setShowPopup] = useState(false);
-
-  const togglePopup = () => {
-    setShowPopup(!showPopup);
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
+  const [showTablePopup, setShowTablePopup] = useState(false);
+  const toggleTablePopup = () => {
+    setShowTablePopup(!showTablePopup);
   };
 
   const [showMapPopup, setShowMapPopup] = useState(false);
-
   const toggleMapPopup = () => {
     setShowMapPopup(!showMapPopup);
-  };
-
-  const handleCloseMapPopup = () => {
-    setShowMapPopup(false);
   };
 
   return (
@@ -443,22 +437,19 @@ function ChatRoom() {
             </button>
 
             <button
-              onClick={togglePopup}
+              onClick={toggleTablePopup}
               className="btn btn-primary mx-2"
               style={{ paddingBottom: 10 }}
             >
               Show Group Member Info
             </button>
 
-            {showPopup && (
+            {showTablePopup && (
               <div className="popup">
                 <div className="popup-content">
-                  {/* <span className="close" onClick={handleClosePopup}>
-                    &times;
-                  </span> */}
                   <GroupMemberTable
                     groupName={groupName}
-                    handleClosePopup={handleClosePopup}
+                    handleClosePopup={toggleTablePopup}
                   />
                 </div>
               </div>
@@ -477,7 +468,7 @@ function ChatRoom() {
                 <div className="popup-content">
                   <GroupMap
                     groupName={groupName}
-                    handleCloseMapPopup={handleCloseMapPopup}
+                    handleCloseMapPopup={toggleMapPopup}
                   />
                 </div>
               </div>

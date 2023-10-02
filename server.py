@@ -146,7 +146,7 @@ def select_category():
 
 
 
-@app.route("/api/get-user-tags", methods=["POST"])
+@app.route("/api/get-user-tags")
 @protected_api
 def get_user_categories():
     """Get current user's category tags."""
@@ -209,7 +209,7 @@ def submit_user_info():
 
 
 
-@app.route("/api/get-user-groups", methods=["POST"])
+@app.route("/api/get-user-groups")
 @protected_api
 def get_user_groups():
     """Get current user's groups."""
@@ -246,7 +246,7 @@ def get_user_groups():
 
 
 
-@app.route('/api/open-chatroom', methods=['post'])
+@app.route('/api/open-chatroom', methods=['POST'])
 @protected_api
 def user_open_chatroom():
     """
@@ -373,7 +373,7 @@ def get_group_members():
 
 
 
-@app.route("/api/get-super-match", methods=["POST"])
+@app.route("/api/get-super-match", methods=["GET"])
 @protected_api
 def get_super_match():
     """Get all the users who share at least 2 common groups with the current user."""

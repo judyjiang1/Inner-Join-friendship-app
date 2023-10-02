@@ -6,7 +6,6 @@ from functools import wraps
 
 socketio = SocketIO(
     async_mode='threading',
-    # transports=['websocket']
 )
 
 

@@ -12,10 +12,14 @@ const {
 } = ReactRouterDOM;
 
 const messages = [
+  "InnerJoin is a social web application built upon \
+  the Similarity Attraction Theory. While 'Inner Join' in SQL identifies matching data between tables, \
+  this website seeks out common attributes among users, facilitating connections among individuals who share \
+  similar life experiences.",
   'Click "Explore the App" to log in as a demo user and explore the application (if you are already logged in, make sure to logout to enable this feature)',
   "Create a new account 👤",
   "Enter your information and select preferences 🧑‍💻 👩‍💻 ",
-  'Groups will be created according to your preferences. Navigate to "My Groups" page to view your groups or navigate to "My Super Match" page to view your super match users!',
+  'Groups will be created according to your preferences. Navigate to "My Groups" page to view your groups or navigate to "My Super Match" page to view individuals who share at least two common groups as you, enhancing the potential for deeper connections!',
   "Click on each group to join the group chat and begin forging new friendships!",
 ];
 
@@ -27,7 +31,7 @@ function InstructionBox({ isOpen }) {
   }
 
   function handleNext() {
-    if (step < 5) {
+    if (step < 6) {
       setStep((s) => s + 1);
     }
   }
@@ -37,11 +41,12 @@ function InstructionBox({ isOpen }) {
       {isOpen && (
         <div className="steps">
           <div className="numbers">
-            <div className={step >= 1 ? "active" : ""}>Step 1</div>
-            <div className={step >= 2 ? "active" : ""}>Step 2</div>
-            <div className={step >= 3 ? "active" : ""}>Step 3</div>
-            <div className={step >= 4 ? "active" : ""}>Step 4</div>
-            <div className={step >= 5 ? "active" : ""}>Step 5</div>
+            <div className={step >= 1 ? "active" : ""}>About</div>
+            <div className={step >= 2 ? "active" : ""}>Step 1</div>
+            <div className={step >= 3 ? "active" : ""}>Step 2</div>
+            <div className={step >= 4 ? "active" : ""}>Step 3</div>
+            <div className={step >= 5 ? "active" : ""}>Step 4</div>
+            <div className={step >= 6 ? "active" : ""}>Step 5</div>
           </div>
 
           <StepMessage>{messages[step - 1]}</StepMessage>

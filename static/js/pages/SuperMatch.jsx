@@ -5,7 +5,7 @@ function SuperMatch() {
   useEffect(() => {
     document.title = "My Super Match";
     fetch("/api/get-super-match", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },

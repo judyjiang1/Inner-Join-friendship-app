@@ -171,13 +171,13 @@ function Landing() {
           <div>
             <h4 className="landing-text" style={{ fontWeight: "bold" }}>
               Discover people who have crossed paths or share commonalities with
-              you and start building <span> lifelong </span> friendship.
+              you and embark on a journey of building lasting friendships.
             </h4>
           </div>
           {/* Buttons */}
           <div className="row" style={{ marginTop: 15 }}>
             <div className="col">
-              <Link to="/login" className="btn btn-primary mx-2">
+              <Link to="/login" className="ml-2 btn btn-primary mx-2">
                 Login
               </Link>
               <Link to="/register" className="btn btn-primary mx-2">
@@ -203,7 +203,9 @@ function Landing() {
                   isOpen ? "btn btn-secondary mx-2" : "btn btn-primary mx-2"
                 }`}
               >
-                {isOpen ? "Hide Instructions" : "View Instructions"}
+                {isOpen
+                  ? "Hide About & Instructions"
+                  : "View About & Instructions"}
               </button>
             </div>
           </div>

@@ -27,7 +27,7 @@ const CategoryInfo = ({ onChange }) => {
     async function fetchData() {
       try {
         const response = await fetch("/api/get-user-tags", {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },

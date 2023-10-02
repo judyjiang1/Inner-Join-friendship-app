@@ -22,7 +22,7 @@ function MyGroups() {
     async function fetchData() {
       try {
         const response = await fetch("/api/get-user-groups", {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },

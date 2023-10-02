@@ -12,7 +12,6 @@ class TestApp(unittest.TestCase):
 
 
     def setUp(self):
-        # service_object = Service("/Users/judyjiang/Development/chromedriver-mac-arm64/chromedriver")
         service_object = Service(binary_path)
         self.driver = webdriver.Chrome(service=service_object)
 

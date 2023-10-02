@@ -73,17 +73,3 @@ high_schools = ["Academy at the Lakes",
     "Wilbraham & Monson Academy"]
 
 colleges = ['Massachusetts Institute of Technology', 'Stanford University', 'Duke University', 'University of Pennsylvania', 'Northwestern University', 'Claremont McKenna College', 'University of Chicago', 'Carnegie Mellon University', 'Johns Hopkins University', 'Princeton University', 'Brown University', 'Harvard University', 'Cornell University', 'Columbia University in the City of New York', 'Yale University', 'University of Notre Dame', 'University of California - Berkeley', 'University of Southern California', 'Georgetown University', 'Bowdoin College', 'Vanderbilt University', 'Dartmouth College', 'Rice University', 'Washington University in St Louis', 'University of Michigan - Ann Arbor', 'Georgia Institute of Technology - Main Campus', 'Williams College', 'California Institute of Technology', 'University of California - Los Angeles', 'New York University', 'Harvey Mudd College', 'University of Virginia - Main Campus', 'University of Wisconsin - Madison', 'Tufts University', 'Emory University', 'University of Maryland - College Park', 'Lehigh University', 'University of Washington - Seattle Campus', 'Colgate University', 'George Washington University', 'Boston University', 'Teachers College at Columbia University', 'University of North Carolina at Chapel Hill', 'University of Illinois at Urbana-Champaign', 'Boston College', 'Pomona College', 'Purdue University - Main Campus', 'Virginia Tech', 'University of California - San Diego', 'University of California - Santa Barbara']
-
-#13
-print(len(hobbies))
-#25
-print(len(cultural_backgrounds))
-#7
-print(len(support))
-#100
-print(len(companies))
-#50
-print(len(high_schools))
-
-#50
-print(len(colleges))

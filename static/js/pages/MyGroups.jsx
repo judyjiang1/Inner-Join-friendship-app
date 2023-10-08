@@ -17,7 +17,7 @@ function MyGroups() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    document.title = "My Groups";
+    document.title = "InnerJoin | My Groups";
 
     async function fetchData() {
       try {

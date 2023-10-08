@@ -13,7 +13,7 @@ const {
 } = ReactRouterDOM;
 
 function SelectCategory(props) {
-  document.title = "Select category";
+  document.title = "InnerJoin | Select category";
 
   const history = useHistory();
 
@@ -72,9 +72,9 @@ function SelectCategory(props) {
 
   return (
     <div className="category-content">
-      <h2 className="text">
+      <h1 className="text">
         Please select at least one category you would like to be matched with!
-      </h2>
+      </h1>
       <form className="category-form">
         {categories.map((category) => (
           <div className="category-item" key={category}>
@@ -92,7 +92,7 @@ function SelectCategory(props) {
       </form>
       <div className="submit-btn-margin">
         <button className="category-submit-btn" onClick={handleSubmit}>
-          Submit
+          Continue
         </button>
       </div>
     </div>

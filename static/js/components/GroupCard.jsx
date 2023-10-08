@@ -27,7 +27,7 @@ function GroupCard(props) {
         <img
           src={imgUrl}
           className="card-img-top"
-          alt=""
+          alt="category-image"
           style={{ maxHeight: "200px", objectFit: "cover" }}
         />
       </div>

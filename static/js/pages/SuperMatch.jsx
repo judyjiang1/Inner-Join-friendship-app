@@ -3,7 +3,7 @@ function SuperMatch() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [numGroupGortOrder, setnumGroupGortOrder] = useState("asc");
   useEffect(() => {
-    document.title = "My Super Match";
+    document.title = "InnerJoin | My Super Match";
     fetch("/api/get-super-match", {
       method: "GET",
       headers: {
@@ -69,8 +69,9 @@ function SuperMatch() {
             marginRight: 25,
           }}
         >
-          <h2
+          <h1
             style={{
+              fontSize: 35,
               marginTop: 20,
               marginBottom: 20,
               fontWeight: "bold",
@@ -79,7 +80,7 @@ function SuperMatch() {
             }}
           >
             My Super Match
-          </h2>
+          </h1>
           <p
             style={{
               fontSize: "18px",

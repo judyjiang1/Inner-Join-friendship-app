@@ -15,7 +15,7 @@ function Register() {
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
 
-  document.title = "User Registration";
+  document.title = "InnerJoin | User Registration";
   const [registerError, setRegisterError] = useState(false);
   let history = useHistory();
   const [fname, setFname] = useState(" ");
@@ -79,7 +79,7 @@ function Register() {
 
   return (
     <div className="register-content">
-      <h2 className="text">Create a new account</h2>
+      <h1 className="text">Create a new account</h1>
 
       <form onSubmit={handleRegister}>
         <Field

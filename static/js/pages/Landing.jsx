@@ -15,7 +15,7 @@ function Landing() {
   const { loginStatus, setLoginStatus, userInfo, setUserInfo } =
     useContext(AuthContext);
 
-  document.title = "Welcome";
+  document.title = "InnerJoin | Welcome";
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -26,8 +26,6 @@ function Landing() {
   const handleExploreApp = (evt) => {
     evt.preventDefault();
 
-    // const email = "rbrakespear1@wisc.edu";
-    // const password = "rA0!MvPv<1s";
     const email = "testuser@test.com";
     const password = "testtesttest";
 
@@ -76,7 +74,7 @@ function Landing() {
           <img
             src="/static/img/app logo.png"
             alt="App Logo"
-            style={{ width: "200px" }}
+            style={{ width: "200px", marginLeft: 20 }}
           />
         </Link>
         <div className="navbar-nav ms-auto">
@@ -160,22 +158,29 @@ function Landing() {
 
       <div className="landing-intro">
         <div className="center container">
-          <div>
-            <h2
+          <div style={{ width: "100%" }}>
+            <h1
               className="landing-text"
-              style={{ marginTop: 150, fontWeight: "bold" }}
+              style={{ marginTop: 150, fontWeight: "bold", fontSize: 42 }}
             >
-              An innovative way of making new friends.
+              An innovative way of making new friends
+              {/* Find Your Kindred Spirits <br></br>
+              <span style={{ fontStyle: "italic", fontSize: 38 }}>
+                Form Connections in the Most Unconventional Ways
+              </span> */}
+            </h1>
+          </div>
+          <div>
+            <h2 className="landing-text">
+              Discover people who have crossed paths or share commonalities with
+              you
+            </h2>
+            <h2 className="landing-text" style={{ marginBottom: 35 }}>
+              Embark on a journey of building lifelong friendships
             </h2>
           </div>
-          <div>
-            <h4 className="landing-text" style={{ fontWeight: "bold" }}>
-              Discover people who have crossed paths or share commonalities with
-              you and embark on a journey of building lasting friendships.
-            </h4>
-          </div>
           {/* Buttons */}
-          <div className="row" style={{ marginTop: 15 }}>
+          <div className="row" style={{ marginTop: 12 }}>
             <div className="col">
               <Link to="/login" className="ml-2 btn btn-primary mx-2">
                 Login
@@ -203,9 +208,7 @@ function Landing() {
                   isOpen ? "btn btn-secondary mx-2" : "btn btn-primary mx-2"
                 }`}
               >
-                {isOpen
-                  ? "Hide About & Instructions"
-                  : "View About & Instructions"}
+                {isOpen ? "Hide About & Instructions" : "About & Instructions"}
               </button>
             </div>
           </div>

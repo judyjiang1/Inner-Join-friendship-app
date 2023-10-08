@@ -41,7 +41,7 @@ const GroupMemberTable = ({ groupName, handleClosePopup }) => {
           onClick={handleClosePopup}
           className="btn btn-primary mx-2 close-table-btn"
         >
-          Close Table
+          Close
         </button>
       </div>
       <div className="table-wrapper">

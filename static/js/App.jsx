@@ -20,7 +20,7 @@ const AuthContext = createContext();
 
 function PrivateRoute({ children, ...rest }) {
   const { loginStatus } = useContext(AuthContext);
-  console.log(loginStatus);
+  // console.log(loginStatus);
   return (
     <Route
       {...rest}
@@ -44,7 +44,7 @@ function PublicRoute({ children, ...rest }) {
   const { loginStatus } = useContext(AuthContext);
   const history = useHistory();
 
-  console.log(loginStatus);
+  // console.log(loginStatus);
   return (
     <Route
       {...rest}
@@ -156,6 +156,6 @@ function App() {
 }
 
 checkAuthStatus().then((res) => {
-  console.log(res);
+  // console.log(res);
   ReactDOM.render(<App />, document.querySelector("#root"));
 });

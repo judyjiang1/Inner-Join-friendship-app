@@ -178,9 +178,10 @@ const CategoryInfo = ({ onChange }) => {
 
   return (
     <div className="info-content">
-      <h3 className="category-text">
-        Please Make Selection(s) For Each Category Below{" "}
-      </h3>
+      <h1 className="category-text">Group Selection </h1>
+      <p className="selection">
+        Please make selection(s) for each category below.{" "}
+      </p>
       <div className="category-select">
         {selectHobby && (
           <div style={{ marginBottom: "20px" }}>

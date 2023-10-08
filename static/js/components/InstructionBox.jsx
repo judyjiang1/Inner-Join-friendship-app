@@ -17,7 +17,7 @@ const messages = [
   this website seeks out commonalities among users, facilitating connections among individuals who share \
   similar life experiences.",
   'Click "Explore the App" to log in as a demo user and explore the application (if you are already logged in, make sure to logout to enable this feature)',
-  "Create a new account 👤",
+  'Click "Register" to create a new account 👤',
   "Enter your information and select preferences 🧑‍💻 👩‍💻 ",
   'Groups will be created according to your preferences. Navigate to "My Groups" page to view your groups or navigate to "My Super Match" page to view individuals who share at least two common groups as you, enhancing the potential for deeper connections!',
   "Click on each group to join the group chat and begin forging new friendships!",

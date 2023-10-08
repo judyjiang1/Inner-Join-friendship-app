@@ -28,7 +28,7 @@ class TestMyApp(TestCase):
         data = {'email': 'asdfs@dgfgfr.com', 'password': 'adfdgfdsdaf'}
         response = self.app.post('/api/login', json=data)
         self.assertEqual(response.status_code, 401)
-        self.assertEqual(json.loads(response.data), {'success': False})
+        self.assertEqual(json.loads(response.data), {'success': False, 'message': 'invalid user'})
 
 
 if __name__ == "__main__":

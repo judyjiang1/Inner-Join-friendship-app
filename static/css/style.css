@@ -32,6 +32,13 @@ body {
   padding-left: 0;
 }
 
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border: 2px solid #007bff;
+  outline: none;
+}
+
 /******************************** landing main info ****************************************/
 
 .landing-intro {
@@ -50,17 +57,19 @@ body {
 .center {
   display: flex;
   height: 150px;
-  width: 800px;
-  justify-content: center; /* center horizontally */
-  align-items: center; /* center vertically */
-  height: 80vh;
+  width: 1100px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 25px;
 }
 
 .landing-text {
   color: white;
   text-align: center;
-  margin-bottom: 30px;
   line-height: 2;
+  font-weight: bold;
+  font-size: 22px;
 }
 
 /**************** Instruction Box ****************/
@@ -115,9 +124,8 @@ body {
   cursor: pointer;
   padding: 10px 15px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 14px;
   /* font-weight: bold; */
-
   display: flex;
   align-items: center;
   gap: 10px;
@@ -140,6 +148,9 @@ body {
 }
 
 /***************************************** Login Page *****************************************/
+.login-page-btn:hover {
+  background-color: #007bff;
+}
 
 .login-content {
   text-align: center;
@@ -189,7 +200,7 @@ body {
   color: #ffffff;
 }
 
-.login-button {
+.login-page-btn {
   white-space: nowrap;
   margin: 10px, 25px, 25px, 25px;
   width: 100%;
@@ -209,23 +220,6 @@ body {
 .login-btn-div {
   padding-bottom: 15px;
   padding-top: 10px;
-}
-
-.home-button {
-  white-space: nowrap;
-  margin: 25px, 25px, 25px, 25px;
-  width: 100%;
-  height: 50px;
-  color: rgb(238, 226, 226);
-  font-size: 18px;
-  font-weight: 600;
-  /* background: #0d6efd; */
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  border-radius: 8px;
 }
 
 .home-btn-div {
@@ -363,6 +357,10 @@ input {
   margin-bottom: 25px;
 }
 
+.general-button:hover {
+  background-color: #007bff;
+}
+
 /********************************** Select Category Page ********************************/
 .category-content {
   text-align: center;
@@ -396,6 +394,11 @@ input {
   outline: none;
   cursor: pointer;
   border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.category-submit-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
 
 .submit-btn-margin {
@@ -460,7 +463,7 @@ input {
 }
 
 .info-content .category-text {
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 550;
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
@@ -468,14 +471,21 @@ input {
   margin-top: 50px;
 }
 
+.info-content .selection {
+  color: rgb(247, 233, 233);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
 .info-submit-btn {
   padding-top: 35px;
   justify-content: center;
 }
+
 .info-btn {
   white-space: nowrap;
-  margin: 25px, 25px, 25px, 25px;
-  width: 100%;
+  width: 25%;
   height: 50px;
   color: rgb(238, 226, 226);
   font-size: 18px;
@@ -486,7 +496,13 @@ input {
   outline: none;
   cursor: pointer;
   border-radius: 8px;
+  transition: box-shadow 0.3s ease;
 }
+
+.info-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
 .category-select label {
   padding-left: 0px;
 }
@@ -535,8 +551,8 @@ input {
 
 /******************************** ChatRoom Page ***********************************/
 .chatRoot {
-  width: 100%;
-  height: 60vh;
+  width: 80%;
+  height: 75vh;
   display: flex;
   min-height: 500px;
 }
@@ -598,10 +614,8 @@ input {
   margin: 30px 20px;
   width: 100%;
   height: 100%;
-
   display: flex;
   background-color: rgba(86, 86, 86, 0.59);
-
   border-radius: 8px;
 }
 
@@ -854,14 +868,14 @@ input {
   font-weight: 600;
   color: rgb(247, 233, 233);
   /* text-transform: capitalize; */
-  margin: 70px 40px 25px 25px;
+  margin: 70px 40px 25px 220px;
 }
 .chatRoom-group-text {
   /* font-size: 14 px; */
   font-weight: 600;
   color: rgb(247, 233, 233);
   text-transform: capitalize;
-  margin-left: 25px;
+  margin-left: 220px;
   margin-bottom: 25px;
 }
 

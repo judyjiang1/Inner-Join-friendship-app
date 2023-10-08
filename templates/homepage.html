@@ -6,22 +6,12 @@
 
 {% block body %}
 <div id="root" class="container-fluid"></div>
+<div id="map"></div>
+<script src="/static/js/components/GroupMap.jsx" type="text/jsx"></script>
 {% endblock %} 
 
 
 {% block js %}
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAP_API_KEY }}&callback=initMap"
-  type="text/javascript"
-></script>
-<script>
-  function initMap() {
-    console.log("init map");
-  }
-</script>
-<div id="map" style="display: none"></div>
 <script src="/static/js/utils/utils.js"></script>
 <script
   src="/static/js/components/RegisterFormField.jsx"
@@ -41,7 +31,6 @@
   src="/static/js/components/GroupMemberTable.jsx"
   type="text/jsx"
 ></script>
-<script src="/static/js/components/GroupMap.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Landing.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Login.jsx" type="text/jsx"></script>
 <script src="/static/js/pages/Register.jsx" type="text/jsx"></script>

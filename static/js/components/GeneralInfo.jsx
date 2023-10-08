@@ -66,7 +66,7 @@ const GeneralInfo = ({ onChange }) => {
 
   return (
     <div className="info-content">
-      <h2 className="text">General Information</h2>
+      <h1 className="text">General Information</h1>
       <div className="form-group">
         <label htmlFor="gender" className="form-label">
           Gender: <span className="text-danger">*</span>

@@ -16,7 +16,7 @@ function Login() {
     useContext(AuthContext);
   const [loginError, setLoginError] = useState(false);
 
-  document.title = "User Login";
+  document.title = "InnerJoin | User Login";
 
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -117,7 +117,7 @@ function Login() {
           </div>
           <div>
             <div className="login-btn-div">
-              <button type="submit" className="login-button">
+              <button type="submit" className="login-page-btn">
                 Log in
               </button>
               {loginError && (
@@ -135,7 +135,7 @@ function Login() {
             </div>
             <div className="home-btn-div">
               <button
-                className="home-button"
+                className="login-page-btn"
                 onClick={(evt) => history.push("/")}
               >
                 Back to Home
@@ -145,7 +145,7 @@ function Login() {
           <p className="no-acct-txt">
             Don't have an account?
             <Link to="/register">
-              <button className="home-button">Sign Up</button>
+              <button className="login-page-btn">Sign Up</button>
             </Link>
           </p>
         </form>

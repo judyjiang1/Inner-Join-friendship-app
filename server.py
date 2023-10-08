@@ -7,13 +7,13 @@ from model import (connect_to_db, db, User, Category_tag, Group, UserTag, UserGr
 import crud
 from jinja2 import StrictUndefined
 from sqlalchemy import func
-from flask_migrate import Migrate
 from events import socketio
 from functools import wraps
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
+google_map_api_key = os.environ["GOOGLE_MAP_API_KEY"]
 app.jinja_env.undefined = StrictUndefined
 connect_to_db(app)
 socketio.init_app(app)
@@ -30,17 +30,15 @@ def protected_api(func):
             user_obj: User = User.query.filter(User.user_id == user_id).first()
             
             if user_obj is None:
-                return jsonify(success=0, msg='invalid user'), 401
+                return jsonify(success=False, msg='invalid user'), 401
 
-            else:
-                # cache user obj with g
-                g.user = user_obj
-        else:
-            # block unAuthorized visit and protect backend api
-            return jsonify(success=0, msg='login required'), 401     
-        
-        return func(*args, **kwargs)
-
+            # cache user obj with g
+            g.user = user_obj
+            return func(*args, **kwargs)
+       
+        # block unAuthorized visit and protect backend api
+        return jsonify(success=False, msg='login required'), 401     
+    
     return wrapper
 
 
@@ -48,14 +46,18 @@ def protected_api(func):
 @app.route('/')
 def homepage():
     """View homepage."""
-    return render_template("homepage.html", GOOGLE_MAP_API_KEY=os.environ["GOOGLE_MAP_API_KEY"])
+    return render_template("homepage.html")
 
 
 
 @app.route('/<path:sub_path>')
 def route(sub_path):
-    return render_template('homepage.html', GOOGLE_MAP_API_KEY=os.environ["GOOGLE_MAP_API_KEY"])
+    return render_template('homepage.html')
 
+
+@app.route('/api/get-map-api-key', methods=['GET'])
+def get_api_key():
+    return jsonify({"google_map_api_key": google_map_api_key})
 
 
 @app.route("/api/login", methods=["POST"])
@@ -76,9 +78,9 @@ def process_login():
                                 lname=user_obj.lname,
                                 email=user_obj.email)), 200
         else:
-            return jsonify({'success': False}), 401
+            return jsonify({'success': False, 'message': 'invalid password'}), 401
     else:
-        return jsonify({'success': False}), 401
+        return jsonify({'success': False, 'message': 'invalid user'}), 401
  
 
 
@@ -107,7 +109,7 @@ def register_user():
 
         return jsonify(dict(success=True, user_id=user_obj.user_id, username=user_obj.username, fname=user_obj.fname,
                             lname=user_obj.lname,
-                            email=user_obj.email)), 200
+                            email=user_obj.email))
 
 
 
@@ -142,7 +144,7 @@ def select_category():
         db.session.add(user_tag)
         db.session.commit()
 
-    return jsonify({'message': 'Selections saved successfully'})
+    return jsonify({'success': True, 'message': 'Selections saved successfully'}), 200
 
 
 
@@ -204,7 +206,7 @@ def submit_user_info():
             db.session.add(user_group)
             db.session.commit()
 
-    response = {'message': 'Information submitted successfully'}
+    response = {'success': True, 'message': 'User information submitted successfully'}
     return jsonify(response), 200
 
 
@@ -218,7 +220,7 @@ def get_user_groups():
     user_groups = user.groups
     user_id = user.user_id
     
-    # group is formed when there is more than 1 user in a group
+    # group is formed when there are at least 2 members in a group
     groups_formed = []
     for group in user_groups:
         group_id = group.group_id
@@ -269,15 +271,15 @@ def user_open_chatroom():
         db.session.add(room_obj)
         db.session.commit()
 
-    # if this chatroom members' count smaller than 2, then find group members
+    # if this chatroom members' count smaller than 1, then find group members
     if db.session.query(RoomMember.id).join(ChatRoom, RoomMember.room_id == ChatRoom.id).filter(
-            ChatRoom.id == room_obj.id).count() < 2:
+            ChatRoom.id == room_obj.id).count() < 1:
         ChatRoom.discover_group_members(room_id=room_obj.id)
 
     RoomMember.ensure_membership(room_id=room_obj.id, user_id=user_obj.user_id)
 
     if action is None:
-        return jsonify(success=1)
+        return jsonify(success=True)
 
     online_members, offline_members = RoomMember.batch_check_members_status(room_id=room_obj.id)
 
@@ -311,7 +313,7 @@ def user_open_chatroom():
         messages.append(dict(message_id=message_id, room_id=room_id, content=content, created_at=created_at,
                              sender_id=sender_id, sender_fname=sender_fname, sender_lname=sender_lname,
                              sender_email=sender_email))
-    return jsonify(success=1, messages=messages, members=members,
+    return jsonify(success=True, messages=messages, members=members,
                    room=dict(id=room_obj.id, group_name=room_obj.group_name, category_name=room_obj.category_name))
 
 
@@ -329,7 +331,7 @@ def logout():
         ))
         db.session.commit()
     session.clear()
-    return jsonify(success=1)  
+    return jsonify(success=True)  
 
 
 
@@ -350,7 +352,7 @@ def get_group_members():
         .filter(UserGroup.group_id == group_id)
     .all())
 
-    lst = []
+    group_member_list = []
     
     for user in users_in_group:
         dict = {}
@@ -363,17 +365,17 @@ def get_group_members():
         dict["ethnicity"] = user.ethnicity
         dict["occupation"] = user.occupation
         dict["zipcode"] = user.zipcode 
-        lst.append(dict)
-    print(lst)
+        group_member_list.append(dict)
+    # print(group_member_list)
 
-    if not lst:
-       return jsonify({'no group members found'}), 204
+    if not group_member_list:
+       return jsonify({'success': True, 'message': 'no group members found'}), 204
     else:
-        return jsonify(lst)
+        return jsonify(group_member_list)
 
 
 
-@app.route("/api/get-super-match", methods=["GET"])
+@app.route("/api/get-super-match")
 @protected_api
 def get_super_match():
     """Get all the users who share at least 2 common groups with the current user."""
@@ -419,7 +421,7 @@ def get_super_match():
                 super_match_user_list.append(super_match_user_dict)
 
     if not super_match_user_list:
-       return jsonify({'no super match users found'}), 204
+       return jsonify({'success': True, 'message': 'no super match users found'}), 204
     else:
         return jsonify(super_match_user_list)
 

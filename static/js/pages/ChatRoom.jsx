@@ -120,14 +120,7 @@ function ChatRoom() {
   let __room_id__ = -1;
 
   useEffect(() => {
-    isMounted = true;
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    document.title = "Chat Room";
+    document.title = "InnerJoin | Chat Room";
   }, []);
 
   function onConnect() {
@@ -139,12 +132,14 @@ function ChatRoom() {
         return prev;
       });
 
-    setChatStatus((prev) => {
-      return { ...prev, isConnected: true, socketIO: socketIO };
-    });
+    if (isMounted) {
+      setChatStatus((prev) => {
+        return { ...prev, isConnected: true, socketIO: socketIO };
+      });
+    }
 
     if (isMounted) {
-      console.log("websocket connected");
+      // console.log("websocket connected");
       Swal.fire({
         icon: "success",
         title: "Chat service connected",
@@ -153,16 +148,18 @@ function ChatRoom() {
         timer: 2000,
       });
     } else {
-      console.log("not mounted, please double check");
+      // console.log("not mounted, please double check");
     }
   }
 
   function onDisconnect() {
+    // console.log("websocket disconnected");
     isConnected = false;
-    setChatStatus((prev) => {
-      return { ...prev, isConnected: false, socketIO: null };
-    });
-    console.log("websocket disconnected");
+    if (isMounted) {
+      setChatStatus((prev) => {
+        return { ...prev, isConnected: false, socketIO: null };
+      });
+    }
   }
 
   function onStatusEvent(value) {
@@ -255,6 +252,13 @@ function ChatRoom() {
             socket.on("status", onStatusEvent);
             socket.on("message", onMessageEvent);
 
+            socket.on("disconnected", (err) => {
+              console.error("disconnected", err);
+            });
+            socket.on("connect_error", () => {
+              console.log("server is currently not available for connection");
+            });
+
             socket.connect();
 
             socketIO = socket;
@@ -304,14 +308,7 @@ function ChatRoom() {
       confirmButtonText: "Yes",
     }).then((r) => {
       if (r.isConfirmed) {
-        clearInterval(pingTask);
-        // check if socketIO is not null and if it is connected
-        if (chatStatus.socketIO?.connected) {
-          chatStatus.socketIO.emit("left", { room: activeRoom.id });
-        }
-        setTimeout(() => {
-          gotoMyGroups();
-        }, 200);
+        gotoMyGroups();
       }
     });
   }
@@ -336,12 +333,21 @@ function ChatRoom() {
   ));
 
   useEffect(() => {
-    console.log("mounted");
-    setChatStatus((prev) => {
-      return { ...prev, isMounted: true };
+    // console.log("mounted");
+    isMounted = true;
+    setChatStatus((old) => {
+      return { ...old, isMounted: true };
     });
     return () => {
-      console.log("unmounted");
+      // console.log("unmounted");
+      isMounted = false;
+
+      clearInterval(pingTask);
+
+      if (socketIO?.connected) {
+        socketIO.emit("left", { room: __room_id__ });
+        socketIO.disconnect();
+      }
     };
   }, []);
 
@@ -361,16 +367,17 @@ function ChatRoom() {
         setMembers(res.members);
 
         __room_id__ = room_id;
+
         pingTask = setInterval(() => {
-          getSocket(isMounted).then((socket) => {
-            if (socket?.connected) socket.emit("ping", { room: room_id });
+          getSocket().then((socket) => {
+            if (isMounted && socket?.connected)
+              socket.emit("ping", { room: room_id });
           });
         }, 3000);
 
         getSocket(true).then((socket) => {});
       })
       .catch((err) => {
-        if (pingTask) clearInterval(pingTask);
         history.push("/login");
       });
   }, []);
@@ -422,8 +429,12 @@ function ChatRoom() {
     <>
       <NavBar setLoginStatus={setLoginStatus} />
 
-      <h2 className="chatRoom-category-text">{categoryNameTitle}</h2>
-      <h3 className="chatRoom-group-text">{groupName} Group</h3>
+      <h1 className="chatRoom-category-text" style={{ fontSize: 30 }}>
+        {categoryNameTitle}
+      </h1>
+      <h2 className="chatRoom-group-text" style={{ fontSize: 30 }}>
+        {groupName} Group
+      </h2>
       <div className="containerfluid">
         <div className="row" style={{ marginTop: 40, marginBottom: 20 }}>
           <div className="col chatRoom-btn">
@@ -477,7 +488,7 @@ function ChatRoom() {
         </div>
       </div>
 
-      <div className="chatRoot">
+      <div className="chatRoot container-fluid" style={{ marginBottom: 200 }}>
         <div className="chatArea">
           <div className="groupMembers">
             <h4>Group Members</h4>

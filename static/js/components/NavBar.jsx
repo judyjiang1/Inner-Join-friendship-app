@@ -57,7 +57,7 @@ const NavBar = () => {
         <img
           src="/static/img/app logo.png"
           alt="App Logo"
-          style={{ width: "200px" }}
+          style={{ width: "200px", marginLeft: 20 }}
         />
       </Link>
       <div className="navbar-nav ms-auto">

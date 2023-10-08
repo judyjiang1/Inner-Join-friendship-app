@@ -17,7 +17,7 @@ function AllUserInfo() {
   const [dialogInfo, setDialogInfo] = useState(null);
   const [dialogButtons, setDialogButtons] = useState(null);
 
-  document.title = "Enter your information";
+  document.title = "InnerJoin | Enter your information";
   let history = useHistory();
   const [formData, setFormData] = useState({
     gender: "",
@@ -119,7 +119,10 @@ function AllUserInfo() {
       setDialogTitle("Warning");
       setDialogInfo(<div>Please enter a valid birth year.</div>);
       setDialogButtons(
-        <button className="btn btn-info" onClick={(evt) => setDialogShown("")}>
+        <button
+          className="btn btn-primary"
+          onClick={(evt) => setDialogShown("")}
+        >
           Got it
         </button>
       );
@@ -171,12 +174,17 @@ function AllUserInfo() {
       <div className="container">
         <div
           className="row"
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 80,
+            marginBottom: 100,
+          }}
         >
           <GeneralInfo className="col" onChange={handleChange} />
           <CategoryInfo className="col" onChange={handleChange} />
 
-          <div className="info-submit-btn">
+          <div className="row info-submit-btn">
             <button className="info-btn" onClick={handleSubmit}>
               Submit
             </button>

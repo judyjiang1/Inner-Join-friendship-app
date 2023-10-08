@@ -139,7 +139,7 @@ function ChatRoom() {
     }
 
     if (isMounted) {
-      // console.log("websocket connected");
+      console.log("websocket connected");
       Swal.fire({
         icon: "success",
         title: "Chat service connected",
@@ -153,7 +153,7 @@ function ChatRoom() {
   }
 
   function onDisconnect() {
-    // console.log("websocket disconnected");
+    console.log("websocket disconnected");
     isConnected = false;
     if (isMounted) {
       setChatStatus((prev) => {
@@ -429,11 +429,11 @@ function ChatRoom() {
     <>
       <NavBar setLoginStatus={setLoginStatus} />
 
-      <h1 className="chatRoom-category-text" style={{ fontSize: 30 }}>
-        {categoryNameTitle}
-      </h1>
-      <h2 className="chatRoom-group-text" style={{ fontSize: 30 }}>
+      <h1 className="chatRoom-group-text" style={{ fontSize: 36 }}>
         {groupName} Group
+      </h1>
+      <h2 className="chatRoom-category-text" style={{ fontSize: 20 }}>
+        ({categoryNameTitle})
       </h2>
       <div className="containerfluid">
         <div className="row" style={{ marginTop: 40, marginBottom: 20 }}>

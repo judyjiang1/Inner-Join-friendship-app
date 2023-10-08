@@ -22,8 +22,8 @@ class TestApp(unittest.TestCase):
     def test_landing_page(self):
         self.driver.get('http://localhost:5000/')
         time.sleep(8)
-        landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h2').text
-        self.assertEqual(landing_heading, 'An innovative way of making new friends.')
+        landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h1').text
+        self.assertEqual(landing_heading, 'An innovative way of making new friends')
 
 
     def test_login_and_access_all_protected_pages(self):
@@ -32,7 +32,7 @@ class TestApp(unittest.TestCase):
         self.driver.get('http://localhost:5000/login')
         email_input = self.driver.find_element(By.NAME, 'email')
         password_input = self.driver.find_element(By.NAME, 'password')
-        login_button = self.driver.find_element(By.CLASS_NAME, 'login-button')
+        login_button = self.driver.find_element(By.CLASS_NAME, 'login-page-btn')
         email_input.send_keys('testuser@test.com')
         password_input.send_keys('testtesttest')
         login_button.click()
@@ -48,7 +48,7 @@ class TestApp(unittest.TestCase):
         chat_card.click()
         time.sleep(5)
         chat_input = self.driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/div[2]/div[2]/form/input')
-        chat_input.send_keys('test')
+        chat_input.send_keys('testing')
         send_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div[2]/div/div[2]/div[2]/form/button')
         send_btn.click()
         time.sleep(3)
@@ -71,15 +71,15 @@ class TestApp(unittest.TestCase):
         super_match_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/nav/div/span[2]/a' )
         super_match_btn.click()
         time.sleep(10)
-        super_match_heading = self.driver.find_element(By.TAG_NAME, 'h2').text
+        super_match_heading = self.driver.find_element(By.TAG_NAME, 'h1').text
         self.assertEqual(super_match_heading, 'My Super Match')
     
         # Check logout and redirect to landing page
-        logout_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/nav/div/span[4]/a')
+        logout_btn = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/nav/div/span[5]/a')
         logout_btn.click()
         time.sleep(3)
-        landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h2').text
-        self.assertEqual(landing_heading, 'An innovative way of making new friends.')
+        landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h1').text
+        self.assertEqual(landing_heading, 'An innovative way of making new friends')
 
 
 

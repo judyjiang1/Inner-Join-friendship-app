@@ -868,15 +868,17 @@ input {
   font-weight: 600;
   color: rgb(247, 233, 233);
   /* text-transform: capitalize; */
-  margin: 70px 40px 25px 220px;
+  margin-bottom: 25px;
+  text-align: center;
 }
 .chatRoom-group-text {
   /* font-size: 14 px; */
   font-weight: 600;
   color: rgb(247, 233, 233);
   text-transform: capitalize;
-  margin-left: 220px;
+  margin: 70px 0px 25px;
   margin-bottom: 25px;
+  text-align: center;
 }
 
 .chatRoom-btn {

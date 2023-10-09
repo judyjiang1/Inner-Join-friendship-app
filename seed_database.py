@@ -18,14 +18,17 @@ def calculate_age(birthdate):
 
 if __name__ == "__main__":
     from server import app
+    os.system("dropdb innerjoin")
+    os.system("createdb innerjoin")
 
-    db_path = 'chat.db'
+    # supports sqlite as well, uncomment to use sqlite db
+    # db_path = 'chat.db'
 
-    if os.path.exists(db_path):
-        os.remove(db_path)
-        print(f'{db_path} has been deleted.')
-    else:
-        print(f'{db_path} does not exist.')
+    # if os.path.exists(db_path):
+    #     os.remove(db_path)
+    #     print(f'{db_path} has been deleted.')
+    # else:
+    #     print(f'{db_path} does not exist.')
 
 
     with app.app_context():

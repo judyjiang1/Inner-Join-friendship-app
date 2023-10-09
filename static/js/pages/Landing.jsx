@@ -163,7 +163,7 @@ function Landing() {
               className="landing-text"
               style={{ marginTop: 150, fontWeight: "bold", fontSize: 42 }}
             >
-              An innovative way of making new friends
+              An Innovative Way of Making New Friends
               {/* Find Your Kindred Spirits <br></br>
               <span style={{ fontStyle: "italic", fontSize: 38 }}>
                 Form Connections in the Most Unconventional Ways
@@ -176,7 +176,8 @@ function Landing() {
               you
             </h2>
             <h2 className="landing-text" style={{ marginBottom: 35 }}>
-              Embark on a journey of building lifelong friendships
+              Embark on a journey of building lifelong friendships and finding
+              your kindred spirits
             </h2>
           </div>
           {/* Buttons */}

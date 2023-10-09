@@ -23,7 +23,7 @@ class TestApp(unittest.TestCase):
         self.driver.get('http://localhost:5000/')
         time.sleep(8)
         landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h1').text
-        self.assertEqual(landing_heading, 'An innovative way of making new friends')
+        self.assertEqual(landing_heading, 'An Innovative Way of Making New Friends')
 
 
     def test_login_and_access_all_protected_pages(self):
@@ -54,7 +54,7 @@ class TestApp(unittest.TestCase):
         time.sleep(3)
         last_msg_sent_xpath = "(//div[starts-with(@id, 'message-')])[last()]"
         sent_message = self.driver.find_element(By.XPATH, last_msg_sent_xpath).text
-        self.assertIn('test', sent_message)
+        self.assertIn('testing', sent_message)
 
 
         # Check Leave chat button and redirect to My Groups page
@@ -79,7 +79,7 @@ class TestApp(unittest.TestCase):
         logout_btn.click()
         time.sleep(3)
         landing_heading = self.driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div/div[1]/h1').text
-        self.assertEqual(landing_heading, 'An innovative way of making new friends')
+        self.assertEqual(landing_heading, 'An Innovative Way of Making New Friends')
 
 
 

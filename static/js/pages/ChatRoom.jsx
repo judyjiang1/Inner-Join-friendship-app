@@ -139,7 +139,7 @@ function ChatRoom() {
     }
 
     if (isMounted) {
-      console.log("websocket connected");
+      // console.log("websocket connected");
       Swal.fire({
         icon: "success",
         title: "Chat service connected",
@@ -153,7 +153,7 @@ function ChatRoom() {
   }
 
   function onDisconnect() {
-    console.log("websocket disconnected");
+    // console.log("websocket disconnected");
     isConnected = false;
     if (isMounted) {
       setChatStatus((prev) => {
@@ -255,8 +255,18 @@ function ChatRoom() {
             socket.on("disconnected", (err) => {
               console.error("disconnected", err);
             });
+
             socket.on("connect_error", () => {
-              console.log("server is currently not available for connection");
+              console.log(
+                "Server is currently unavailable for connection. Reconnecting..."
+              );
+              // set timer to disconnect socket if server continues to be unavailable
+              setTimeout(() => {
+                socket.disconnect();
+                console.log(
+                  "Connection timed out. Server not available. Please try again later."
+                );
+              }, 8000);
             });
 
             socket.connect();
@@ -429,7 +439,7 @@ function ChatRoom() {
     <>
       <NavBar setLoginStatus={setLoginStatus} />
 
-      <h1 className="chatRoom-group-text" style={{ fontSize: 36 }}>
+      <h1 className="chatRoom-group-text" style={{ fontSize: 35 }}>
         {groupName} Group
       </h1>
       <h2 className="chatRoom-category-text" style={{ fontSize: 20 }}>

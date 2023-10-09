@@ -1,6 +1,7 @@
 """Data models for inner-join friendship app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import BigInteger
 from datetime import datetime, timezone
 
 db = SQLAlchemy()
@@ -223,9 +224,9 @@ class RoomMember(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     room_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
-    last_speak = db.Column(db.Integer, default=-1, server_default='-1')
-    last_seen = db.Column(db.Integer, default=get_utc_timestamp)
-    joined_at = db.Column(db.Integer, default=get_utc_timestamp)
+    last_speak = db.Column(BigInteger, default=-1, server_default='-1')
+    last_seen = db.Column(BigInteger, default=get_utc_timestamp)
+    joined_at = db.Column(BigInteger, default=get_utc_timestamp)
     is_online = db.Column(db.Boolean, default=True, server_default='1')
 
     @classmethod
@@ -335,13 +336,14 @@ class Message(db.Model):
     room_id = db.Column(db.Integer, nullable=False)
     sender_id = db.Column(db.Integer, nullable=False)
     content = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.Integer, default=get_utc_timestamp)
+    created_at = db.Column(BigInteger, default=get_utc_timestamp)
 
 
 
 def connect_to_db(
         flask_app,
-        db_uri="sqlite:///chat.db",
+        # db_uri="sqlite:///chat.db",
+        db_uri="postgresql:///innerjoin",
         echo=False
 ):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

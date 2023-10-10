@@ -257,14 +257,12 @@ function ChatRoom() {
             });
 
             socket.on("connect_error", () => {
-              console.log(
-                "Server is currently unavailable for connection. Reconnecting..."
-              );
+              console.log("Server temporarily unavailable. Reconnecting...");
               // set timer to disconnect socket if server continues to be unavailable
               setTimeout(() => {
                 socket.disconnect();
                 console.log(
-                  "Connection timed out. Server not available. Please try again later."
+                  "Connection timed out. The server is currently unavailable. Please try again at a later time."
                 );
               }, 8000);
             });

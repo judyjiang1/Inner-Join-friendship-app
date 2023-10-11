@@ -110,7 +110,7 @@ const GeneralInfo = ({ onChange }) => {
           id="birthday"
           name="birthday"
           className="form-control"
-          min="1980-04-01"
+          min="1960-01-01"
           max="2005-01-01"
           required
           onChange={handleBirthdayChange}

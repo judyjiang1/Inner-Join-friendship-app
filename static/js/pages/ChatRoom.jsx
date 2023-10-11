@@ -82,8 +82,12 @@ function ChatRoom() {
   const { groupName, categoryName } = useParams();
 
   const formatTitle = (string) => {
-    return string.replace(/\w\S*/g, (text) => {
-      return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+    return string.replace(/\w\S*/g, (title) => {
+      if (title.toLowerCase() === "or") {
+        return title;
+      } else {
+        return title.charAt(0).toUpperCase() + title.substr(1).toLowerCase();
+      }
     });
   };
   const categoryNameTitle = formatTitle(categoryName);

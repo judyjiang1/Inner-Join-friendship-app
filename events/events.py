@@ -38,7 +38,7 @@ def joined(message):
 @socketio.on('text', namespace='/chat/')
 @login_check
 def text(message):
-    """Sent by a client when the user enter a new message.
+    """Sent by clients when users send a new message.
     The message is emitted to all people in the room."""
     room_obj: ChatRoom = g.room
     user_obj: User = g.user
@@ -75,7 +75,7 @@ def text(message):
 @socketio.on('left', namespace='/chat/')
 @login_check
 def left(message):
-    """Sent by clients when they leave a room.
+    """Send by clients when they leave a room.
     A status message is emitted to all people in the room."""
     room_obj: ChatRoom = g.room
     room_id = g.room.id
@@ -100,10 +100,8 @@ def left(message):
 @socketio.on('ping', namespace='/chat/')
 @login_check
 def ping(message):
-    """
-    user sends ping to query members' online status.
-    A status message is emitted.
-    """
+    """User sends ping to update their last seen timestamp and check members' online status.
+    A status message is emitted."""
 
     room_obj: ChatRoom = g.room
     user_obj: User = g.user

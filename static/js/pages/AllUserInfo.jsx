@@ -117,7 +117,9 @@ function AllUserInfo() {
       )
     ) {
       setDialogTitle("Warning");
-      setDialogInfo(<div>Please enter a valid birth year.</div>);
+      setDialogInfo(
+        <div>Please enter a valid year within the range of 1960-2005.</div>
+      );
       setDialogButtons(
         <button
           className="btn btn-primary"

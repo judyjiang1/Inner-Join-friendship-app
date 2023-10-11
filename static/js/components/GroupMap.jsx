@@ -3,7 +3,7 @@ let isMapLoaded = false;
 function initMap(users) {
   const map = new window.google.maps.Map(document.getElementById("map"), {
     center: { lat: 39.8283, lng: -98.5795 },
-    zoom: 4,
+    zoom: 5,
   });
 
   const groupedUsers = {};
@@ -56,7 +56,7 @@ function initMap(users) {
               text: labelUserContent,
               color: "#4B0082",
               fontWeight: "bold",
-              fontSize: "16px",
+              fontSize: "14px",
             },
           });
 

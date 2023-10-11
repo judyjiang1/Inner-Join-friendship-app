@@ -1,12 +1,16 @@
 function GroupCard(props) {
   const { categoryName, groupName, imgUrl, handleImageClick } = props;
 
-  const toTitle = (str) => {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  const formatTitle = (string) => {
+    return string.replace(/\w\S*/g, (title) => {
+      if (title.toLowerCase() === "or") {
+        return title;
+      } else {
+        return title.charAt(0).toUpperCase() + title.substr(1).toLowerCase();
+      }
     });
   };
-  const categoryNameTitle = toTitle(categoryName);
+  const categoryNameTitle = formatTitle(categoryName);
 
   return (
     <div

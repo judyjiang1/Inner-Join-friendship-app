@@ -219,7 +219,8 @@ class RoomMember(db.Model):
     __tablename__ = 'chat_room_member'
 
     # users is presumed to be offline after 3 minutes
-    ONLINE_THRESHOLD = 3  
+    # threshold updated to 6 seconds for demo purposes 
+    ONLINE_THRESHOLD = 0.1  
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     room_id = db.Column(db.Integer, nullable=False)

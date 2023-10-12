@@ -125,7 +125,7 @@ function Landing() {
                       style={{ marginRight: "10px" }}
                       href="/select-categories"
                     >
-                      Edit My Category Selection
+                      Edit Category Selection
                     </a>
                   </li>
                   <li>

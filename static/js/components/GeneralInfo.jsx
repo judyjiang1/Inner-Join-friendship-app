@@ -92,10 +92,10 @@ const GeneralInfo = ({ onChange }) => {
         </label>
         <input
           type="text"
-          className="form-control"
+          className="form-control zipcode"
           id="zipCode"
           name="zipCode"
-          placeholder="99999"
+          placeholder="Enter your 5-digit ZIP code"
           onChange={handleChange}
           required
         />

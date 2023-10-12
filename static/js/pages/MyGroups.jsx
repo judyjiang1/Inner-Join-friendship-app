@@ -149,8 +149,8 @@ function MyGroups() {
           </select>
         </div>
         <p style={{ color: "rgb(247, 233, 233)", marginBottom: 30 }}>
-          Note: Groups are formed only when a minimum of two individuals choose
-          to join the group.
+          Note: Groups are created only when a minimum of two individuals have
+          chosen to join the group.
         </p>
         <div className="row">{groupCards}</div>
       </div>

@@ -33,7 +33,11 @@ function RoomMember({
     <span className="badge bg-danger text-white">Offline</span>
   );
   return (
-    <div className="member" id={`member-${user_id}`}>
+    <div
+      className="member"
+      id={`member-${user_id}`}
+      style={{ padding: "5px 5px 5px 5px" }}
+    >
       {fname} {lname}{" "}
       {current_user_id === user_id ? (
         <span className="badge bg-warning text-white">Me</span>

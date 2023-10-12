@@ -329,7 +329,7 @@ input {
 
 .acct-created-content {
   text-align: center;
-  width: 460px;
+  width: 500px;
   border-radius: 10px;
   padding: 40px 30px;
   background: rgba(255, 255, 255, 0.178);
@@ -337,7 +337,7 @@ input {
 }
 
 .acct-created .text {
-  font-size: 25px;
+  font-size: 35px;
   font-weight: 600;
   color: rgb(247, 233, 233);
   padding-top: 10px;
@@ -345,14 +345,14 @@ input {
 
 .congrat-msg {
   color: rgb(247, 233, 233);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .enter-info-msg {
   color: rgb(247, 233, 233);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: 600;
   margin-top: 25px;
   margin-bottom: 25px;
 }
@@ -361,10 +361,20 @@ input {
   background-color: #007bff;
 }
 
+.success-pg-btn {
+  font-weight: 600;
+  font-size: 18px;
+  height: 50px;
+}
+
+.success-pg-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
 /********************************** Select Category Page ********************************/
 .category-content {
   text-align: center;
-  width: 460px;
+  width: 560px;
   border-radius: 10px;
   padding: 40px 30px;
   margin-top: 100px;
@@ -373,7 +383,7 @@ input {
 }
 
 .category-content .text {
-  font-size: 25px;
+  font-size: 32px;
   font-weight: 600;
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
@@ -382,7 +392,7 @@ input {
 .category-submit-btn {
   white-space: nowrap;
   margin: 25px, 25px, 25px, 25px;
-  width: 100%;
+  width: 60%;
   height: 50px;
   color: rgb(238, 226, 226);
   font-size: 18px;
@@ -403,6 +413,7 @@ input {
 
 .submit-btn-margin {
   padding-top: 25px;
+  margin-bottom: 25px;
 }
 
 .category-form {
@@ -413,9 +424,13 @@ input {
   margin-bottom: 10px;
 }
 
-.category-text {
-  margin-left: 10px;
-  font-size: 18px;
+.select-category-text {
+  font-size: 23px;
+  font-weight: 600;
+  color: rgb(247, 233, 233);
+  /* text-transform: capitalize; */
+  margin-bottom: 25px;
+  padding-left: 15px;
 }
 
 /********************************** Enter Info Page ********************************/
@@ -432,9 +447,9 @@ input {
 }
 
 .info-content .text {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
   text-align: center;
@@ -463,12 +478,12 @@ input {
 }
 
 .info-content .category-text {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 550;
   margin-bottom: 35px;
   color: rgb(247, 233, 233);
   text-align: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .info-content .selection {
@@ -549,6 +564,10 @@ input {
   text-transform: capitalize;
 }
 
+.zipcode::placeholder {
+  color: #cdcdcd;
+}
+
 /******************************** ChatRoom Page ***********************************/
 .chatRoot {
   width: 80%;
@@ -627,7 +646,6 @@ input {
   background-color: rgba(101, 134, 145, 0.47);
   backdrop-filter: blur(10px);
   border-radius: 8px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -695,18 +713,15 @@ input {
 
 .chatRoot > .chatArea > .groupMembers > .memberCase > .member {
   justify-self: stretch;
-
-  min-height: 24px;
+  height: auto;
+  max-height: 46px;
   width: calc(100% - 20px);
-
   margin: 8px 10px;
   background-color: #eeeeee;
   color: #565656;
   border-radius: 8px;
-
   font-size: 12px;
   backdrop-filter: blur(10px);
-
   display: flex;
   justify-content: space-around;
   align-items: center;

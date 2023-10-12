@@ -12,7 +12,7 @@ const {
 } = ReactRouterDOM;
 
 const messages = [
-  "InnerJoin is a social web application built upon \
+  "InnerJoin is a social web application built based on \
   the Similarity Attraction Theory. While 'Inner Join' in SQL identifies matching data between tables, \
   this website seeks out commonalities among users, facilitating connections among individuals who share \
   similar life experiences.",
@@ -20,7 +20,7 @@ const messages = [
   'Click "Register" to create a new account 👤',
   "Enter your information and select preferences 🧑‍💻 👩‍💻 ",
   'Groups will be created according to your preferences. Navigate to "My Groups" page to view your groups or navigate to "My Super Match" page to view individuals who share at least two common groups as you, enhancing the potential for deeper connections!',
-  "Click on each group to join the group chat and begin forging new friendships!",
+  "Click on any group to join a real-time group chat and begin forging new friendships! 👫👭👬",
 ];
 
 function InstructionBox({ isOpen }) {

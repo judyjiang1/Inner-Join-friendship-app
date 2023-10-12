@@ -17,7 +17,7 @@ function AllUserInfo() {
   const [dialogInfo, setDialogInfo] = useState(null);
   const [dialogButtons, setDialogButtons] = useState(null);
 
-  document.title = "InnerJoin | Enter your information";
+  document.title = "InnerJoin | Enter Information";
   let history = useHistory();
   const [formData, setFormData] = useState({
     gender: "",
@@ -48,11 +48,8 @@ function AllUserInfo() {
     return zipCodePattern.test(zipCode);
   };
 
-  const isValidBirthday = (month, day, year) => {
-    const yearPattern = /^(?:19[8-9]\d{1})|(?:20(?:(?:0[0-9])|(?:0[0-5])))$/;
-    var isBirthYearValid = yearPattern.test(year);
-
-    return isBirthYearValid;
+  const yearInRange = (year) => {
+    return /^(196\d|197\d|198\d|199\d|200[0-5])$/.test(year);
   };
 
   const isRequiredFieldsEmpty = () => {
@@ -110,9 +107,9 @@ function AllUserInfo() {
       );
       setDialogShown("show");
     } else if (
-      !isValidBirthday(
-        formData.birthMonth,
-        formData.birthDay,
+      !yearInRange(
+        // formData.birthMonth,
+        // formData.birthDay,
         formData.birthYear
       )
     ) {

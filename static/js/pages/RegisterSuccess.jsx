@@ -31,12 +31,12 @@ function RegisterSuccess(props) {
           </div>
           <div>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary success-pg-btn"
               onClick={(evt) => {
                 history.push("/select-categories/");
               }}
             >
-              Enter your information
+              Enter Information
             </button>
           </div>
         </div>

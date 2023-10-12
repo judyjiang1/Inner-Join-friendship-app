@@ -146,7 +146,7 @@ function Landing() {
                   href="#"
                   onClick={performLogout}
                 >
-                  Logout
+                  Log out
                 </a>
               </li>
             </>

@@ -140,7 +140,7 @@ const NavBar = () => {
             href="#"
             onClick={performLogout}
           >
-            Logout
+            Log out
           </a>
         </span>
       </div>

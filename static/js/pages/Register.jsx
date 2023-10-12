@@ -79,7 +79,7 @@ function Register() {
 
   return (
     <div className="register-content">
-      <h1 className="text">Create a new account</h1>
+      <h1 className="text">Create Account</h1>
 
       <form onSubmit={handleRegister}>
         <Field

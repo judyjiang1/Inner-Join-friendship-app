@@ -72,7 +72,10 @@ function SelectCategory(props) {
 
   return (
     <div className="category-content">
-      <h1 className="text">
+      <h1
+        className="text"
+        style={{ marginTop: 25, marginLeft: 20, marginRight: 20 }}
+      >
         Please select at least one category you would like to be matched with!
       </h1>
       <form className="category-form">
@@ -85,7 +88,7 @@ function SelectCategory(props) {
                 checked={selectedCategories.includes(category)}
                 onChange={handleCheckboxChange}
               />
-              <span className="category-text">{category}</span>
+              <span className="select-category-text">{category}</span>
             </label>
           </div>
         ))}

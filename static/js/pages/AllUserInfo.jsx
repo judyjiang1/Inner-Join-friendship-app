@@ -17,7 +17,7 @@ function AllUserInfo() {
   const [dialogInfo, setDialogInfo] = useState(null);
   const [dialogButtons, setDialogButtons] = useState(null);
 
-  document.title = "InnerJoin | Enter Information";
+  document.title = "InnerJoin | User Input Form";
   let history = useHistory();
   const [formData, setFormData] = useState({
     gender: "",

@@ -720,7 +720,24 @@ input {
   background-color: #eeeeee;
   color: #565656;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.me {
+  justify-self: stretch;
+  height: auto;
+  max-height: 46px;
+  width: calc(100% - 20px);
+  margin: 8px 10px;
+  background-color: #eeeeee;
+  color: #565656;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;

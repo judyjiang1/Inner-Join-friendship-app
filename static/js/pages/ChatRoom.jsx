@@ -28,22 +28,36 @@ function RoomMember({
   ...props
 }) {
   let status = is_online ? (
-    <span className="badge bg-success text-white">Online</span>
+    <span className="badge bg-success text-white" style={{ fontSize: 12 }}>
+      Online
+    </span>
   ) : (
-    <span className="badge bg-danger text-white">Offline</span>
+    <span className="badge bg-danger text-white" style={{ fontSize: 12 }}>
+      Offline
+    </span>
   );
-  return (
+  return current_user_id === user_id ? (
+    <div
+      className="me"
+      id={`member-${user_id}`}
+      style={{ padding: "5px 5px 5px 5px" }}
+    >
+      {fname} {lname}{" "}
+      <span
+        className="badge bg-warning text-black"
+        style={{ fontSize: 16, fontWeight: 600 }}
+      >
+        Me
+      </span>
+    </div>
+  ) : (
     <div
       className="member"
       id={`member-${user_id}`}
       style={{ padding: "5px 5px 5px 5px" }}
     >
-      {fname} {lname}{" "}
-      {current_user_id === user_id ? (
-        <span className="badge bg-warning text-white">Me</span>
-      ) : (
-        status
-      )}
+      {fname} {lname}
+      <span>{status}</span>
     </div>
   );
 }

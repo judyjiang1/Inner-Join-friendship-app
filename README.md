@@ -203,13 +203,13 @@ export GOOGLE_MAP_API_KEY="YOUR_KEY_HERE"
 10. Optional: Run tests
 
 ```
-(env) $ python3 test_api.py
+(env) $ pytest test_api.py
 ```
 
 ```
-(env) $ python3 test_database.py
+(env) $ pytest test_database.py
 ```
 
 ```
-(env) $ python3 test_E2E.py
+(env) $ pytest test_E2E.py
 ```

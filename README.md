@@ -1,14 +1,11 @@
-<!-- <img src="https://github.com/judyjiang1/Inner-Join-friendship-app/blob/main/static/img/app%20logo.png" alt="Alt Text" width="260"> -->
-
-# <a> <img src="https://github.com/judyjiang1/Inner-Join-friendship-app/blob/main/static/img/app%20logo.png" width="30%" alt="InnerJoin Logo"> </a>
-
-</br>
+<img src="static/img/app%20logo.png" alt="InnerJoin App Logo" width="260">
+<br></br>
 
 # Hackbright x Walmart Capstone Project
 
 ## Overview
 
-InnerJoin is an innovative social web application built upon the Similarity Attraction Theory. It allows users to discover and connect with individuals who share commonalities across various categories, including attending the same schools, working at the same companies, sharing common hobbies, cultural backgrounds, or life experiences. Users can effortlessly select their preferred categories and provide their information. Based on their choices, users are grouped with like-minded individuals in each category.
+InnerJoin is an innovative social web application built based on the Similarity Attraction Theory. It allows users to discover and connect with individuals who share commonalities across various categories, including attending the same schools, working at the same companies, sharing common hobbies, cultural backgrounds, or life experiences. Users can effortlessly select their preferred categories and provide their information. Based on their choices, users are grouped with like-minded individuals in each category.
 
 With a simple click, users can enter group chats, embarking on the journey of building lifelong friendships. Additionally, users have the option to access a list of "Super Match" group members — individuals who share at least two common groups with them, enhancing the potential for deeper connections.
 

@@ -100,6 +100,7 @@ InnerJoin is an innovative web application built based on the Similarity Attract
 
 - Users choose their preferred categories, provide general information, and select specific groups within each of their chosen categories
 - Users can update these user input by clicking on "Edit My Input" in the navigation bar
+  <img src="static/img/app-img-gif/user-input.png" alt="User Input Form" width="700">
 
 ### My Super Match Page
 

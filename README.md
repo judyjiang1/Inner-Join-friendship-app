@@ -1,6 +1,4 @@
-<img src="static/img/app%20logo.png" alt="InnerJoin App Logo" width="260">
-<br>
-<br>
+<img src="static/img/logo-black-font.png" alt="InnerJoin App Logo" width="260">
 
 # Hackbright Final Project
 
@@ -107,14 +105,14 @@ InnerJoin is an innovative web application built based on the Similarity Attract
 
 - Show a table of users who share at least two common groups as logged-in user
 - Show information about each user and the total number of common groups
-  <img src="static/img/app-img-gif/super-match.gif" alt="Super Match page" width="500">
+  <img src="static/img/app-img-gif/super-match.gif" alt="Super Match page" width="700">
 
 ### My Groups Page
 
 - Display a list of groups based on users' selections
 - Groups are created only when a minimum of two people have chosen them
 
-  <img src="static/img/app-img-gif/my-groups.gif" alt="My Groups Page" width="500">
+  <img src="static/img/app-img-gif/my-groups.gif" alt="My Groups Page" width="700">
 
 ### Chat Room Page for Each Group
 
@@ -130,16 +128,16 @@ InnerJoin is an innovative web application built based on the Similarity Attract
 - Sort group members alphabetically, prioritizing the self user, followed by online users, and then offline users
 - Maintains a connection attempt with the server even when it's temporarily unavailable and will disconnect after a timeout period, ensuring a reliable chat experience
 
-  <img src="static/img/app-img-gif/online-switch-room.gif" alt="Switch Chat Room" width="500">
+  <img src="static/img/app-img-gif/online-switch-room.gif" alt="Switch Chat Room" width="700">
   <br>
   <br>
-  <img src="static/img/app-img-gif/chat-messages.gif" alt="Chat Messages" width="500">
+  <img src="static/img/app-img-gif/chat-messages.gif" alt="Chat Messages" width="700">
    <br>
   <br>
-  <img src="static/img/app-img-gif/group-table.png" alt="Group Member Table" width="500">
+  <img src="static/img/app-img-gif/group-table.png" alt="Group Member Table" width="700">
    <br>
   <br>
-  <img src="static/img/app-img-gif/group-map.png" alt="Group Map" width="500">
+  <img src="static/img/app-img-gif/group-map.png" alt="Group Map" width="700">
 
 ## <a name="installation"></a> How to Run
 

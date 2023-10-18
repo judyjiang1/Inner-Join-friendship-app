@@ -1,15 +1,22 @@
 <img src="static/img/app%20logo.png" alt="InnerJoin App Logo" width="260">
-<br></br>
+<br>
+<br>
 
-# Hackbright x Walmart Capstone Project
+# Hackbright Final Project
 
-## Overview
+## <a name="overview"></a>Overview
 
-InnerJoin is an innovative social web application built based on the Similarity Attraction Theory. It allows users to discover and connect with individuals who share commonalities across various categories, including attending the same schools, working at the same companies, sharing common hobbies, cultural backgrounds, or life experiences. Users can effortlessly select their preferred categories and provide their information. Based on their choices, users are grouped with like-minded individuals in each category.
+InnerJoin is an innovative web application built based on the Similarity Attraction Theory. This platform enables users to discover and connect with individuals who share commonalities across various categories, including attending the same schools, working at the same companies, sharing common hobbies, cultural backgrounds, or life experiences. Users can effortlessly select their preferred categories and provide their information. Based on their choices, users are grouped with others who share similar interests and experiences within each category. With a simple click, users can enter group chats, view members' online statuses, and seamlessly switch between different chat rooms, embarking on a journey of building lifelong friendships. Additionally, users have the option to access a list of "Super Match" group members — individuals who share at least two common groups with them, enhancing the potential for deeper connections.
 
-With a simple click, users can enter group chats, embarking on the journey of building lifelong friendships. Additionally, users have the option to access a list of "Super Match" group members — individuals who share at least two common groups with them, enhancing the potential for deeper connections.
+## Table of Contents
 
-## Technology Stack
+[Overview](#overview) <br>
+[Technology Stack](#tech-stack)<br>
+[Main Features](#features)<br>
+[Project Details](#details)<br>
+[How to Run](#installation)<br>
+
+## <a name="tech-stack"></a> Technology Stack
 
 ### Frontend
 
@@ -31,12 +38,12 @@ With a simple click, users can enter group chats, embarking on the journey of bu
 ### APIs & Libraries
 
 - Flask-SocketIO
-- Google Map API
+- Google Maps API
 - Mockaroo API
 - Beautiful Soup
 - Selenium
 
-## Main Features
+## <a name="features"></a>Main Features
 
 - **React-Powered Component-Based Architecture:** <br>
   This web app leverages React extensively, following a component-based architecture for a modern and efficient user interface.
@@ -70,7 +77,7 @@ With a simple click, users can enter group chats, embarking on the journey of bu
 
 - **RESTful Endpoints:**<br>The app provides RESTful API endpoints, ensuring a consistent and predictable interaction with backend services.
 
-## Details
+## <a name="details"></a>Project Details
 
 ### Landing Page
 
@@ -100,11 +107,14 @@ With a simple click, users can enter group chats, embarking on the journey of bu
 
 - Show a table of users who share at least two common groups as logged-in user
 - Show information about each user and the total number of common groups
+  <img src="static/img/app-img-gif/super-match.gif" alt="Super Match page" width="500">
 
 ### My Groups Page
 
 - Display a list of groups based on users' selections
 - Groups are created only when a minimum of two people have chosen them
+
+  <img src="static/img/app-img-gif/my-groups.gif" alt="My Groups Page" width="500">
 
 ### Chat Room Page for Each Group
 
@@ -120,7 +130,18 @@ With a simple click, users can enter group chats, embarking on the journey of bu
 - Sort group members alphabetically, prioritizing the self user, followed by online users, and then offline users
 - Maintains a connection attempt with the server even when it's temporarily unavailable and will disconnect after a timeout period, ensuring a reliable chat experience
 
-## How to Run
+  <img src="static/img/app-img-gif/online-switch-room.gif" alt="Switch Chat Room" width="500">
+  <br>
+  <br>
+  <img src="static/img/app-img-gif/chat-messages.gif" alt="Chat Messages" width="500">
+   <br>
+  <br>
+  <img src="static/img/app-img-gif/group-table.png" alt="Group Member Table" width="500">
+   <br>
+  <br>
+  <img src="static/img/app-img-gif/group-map.png" alt="Group Map" width="500">
+
+## <a name="installation"></a> How to Run
 
 ### Requirements
 
